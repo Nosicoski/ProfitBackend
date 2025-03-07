@@ -15,6 +15,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     public FrmPrincipal() {
         initComponents();
+       
+
     }
 
     /**
@@ -38,7 +40,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
 
-        btnFacturacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/Facturacion.png"))); // NOI18N
         btnFacturacion.setText("Facturación");
         btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,7 +47,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/Product.png"))); // NOI18N
         btnProductos.setText("Productos");
         btnProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,13 +54,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnExtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/Extras2.png"))); // NOI18N
         btnExtras.setText("Extras");
 
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/Cliente.png"))); // NOI18N
         btnClientes.setText("Clientes");
 
-        btnProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/proveedor.png"))); // NOI18N
         btnProveedores.setText("Proveedores");
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,12 +65,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/Ajustes.png"))); // NOI18N
         btnAjustes.setText("Ajustes");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.juanma.profit.drawable/IconLogo.png"))); // NOI18N
         jLabel1.setText("PROFIT");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -87,7 +82,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,7 +112,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnExtras))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 331, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );

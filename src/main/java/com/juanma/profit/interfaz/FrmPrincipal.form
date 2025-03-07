@@ -32,7 +32,7 @@
                   <Component id="jSeparator1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="btnProductos" min="-2" pref="140" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnFacturacion" min="-2" pref="140" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnClientes" min="-2" pref="140" max="-2" attributes="0"/>
@@ -68,7 +68,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="3" max="-2" attributes="0"/>
-              <EmptySpace pref="279" max="32767" attributes="0"/>
+              <EmptySpace pref="331" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -78,9 +78,6 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnFacturacion">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/Facturacion.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
       </Properties>
       <Events>
@@ -89,9 +86,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnProductos">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/Product.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Productos"/>
       </Properties>
       <Events>
@@ -100,25 +94,16 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnExtras">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/Extras2.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Extras"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnClientes">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/Cliente.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Clientes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnProveedores">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/proveedor.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Proveedores"/>
       </Properties>
       <Events>
@@ -127,9 +112,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAjustes">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/Ajustes.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Ajustes"/>
       </Properties>
     </Component>
@@ -139,9 +121,6 @@
           <Font name="Segoe UI" size="24" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com.juanma.profit.drawable/IconLogo.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="PROFIT"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">

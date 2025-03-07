@@ -167,8 +167,40 @@ public class FrmLogin extends javax.swing.JFrame {
     
     
     private void BtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarSesionActionPerformed
-      FrmPrincipal principal = new FrmPrincipal();
-       principal.setVisible(true);
+      //Aca voy a hacer la logica para confirmar si el usuario puede iniciar sesion (verifico los datos txt usuario y contraseña)
+      
+        
+       String usuario = TxtUsuario.getText();
+       String contraseña = new String(TxtContraseña.getPassword());
+       //Empty = vacio
+        if (usuario.isEmpty() || contraseña.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+                "Por favor, complete todos los campos.",
+                "Campos vacíos",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+        //Con este boolean consulto a la clase persistencia y almaceno el dato esValido.
+        boolean esValido = UsuarioPersistencia.validarUsuario(usuario, contraseña);
+        //Ahora hay que fijarse , si es valido que abra el frmPrincipal
+        if (esValido) {
+        // 4) Si es válido, mostrar mensaje de bienvenida y abrir FrmPrincipal
+        JOptionPane.showMessageDialog(this,
+                "Bienvenido, " + usuario + "!",
+                "Inicio de sesión exitoso",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        FrmPrincipal principal = new FrmPrincipal();
+        principal.setVisible(true);
+        this.dispose(); // Cierra el formulario de login
+    } else {
+        // 5) Si es inválido, mostrar error
+        JOptionPane.showMessageDialog(this,
+                "Usuario o contraseña incorrectos",
+                "Error de Login",
+                JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_BtnIniciarSesionActionPerformed
 
     
