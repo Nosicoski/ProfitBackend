@@ -8,6 +8,6 @@ package com.juanma.profit.entidad;
  *
  * @author juanm
  */
-public class Clientes {
+public class Cliente {
     
 }
