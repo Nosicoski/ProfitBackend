@@ -81,6 +81,11 @@ public class FrmLogin extends javax.swing.JFrame {
         });
 
         BtnIniciarSesion.setText("Iniciar sesión");
+        BtnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnIniciarSesionMouseClicked(evt);
+            }
+        });
         BtnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnIniciarSesionActionPerformed(evt);
@@ -152,16 +157,35 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_LblOlvidoContraseñaMouseClicked
 
     private void LblNoTieneCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblNoTieneCuentaMouseClicked
-      this.dispose(); // Cierra la ventana actual (login)
-    
     FrmCrearCuenta crearCuenta = new FrmCrearCuenta();
     crearCuenta.setVisible(true);
     }//GEN-LAST:event_LblNoTieneCuentaMouseClicked
 
+    
+    
+    
+    
+    
     private void BtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarSesionActionPerformed
-        // TODO add your handling code here:
+      FrmPrincipal principal = new FrmPrincipal();
+       principal.setVisible(true);
     }//GEN-LAST:event_BtnIniciarSesionActionPerformed
 
+    
+    
+    
+    
+    
+    
+    private void BtnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSesionMouseClicked
+       FrmPrincipal principal = new FrmPrincipal();
+       principal.setVisible(true);
+    }//GEN-LAST:event_BtnIniciarSesionMouseClicked
+
+    
+    
+    
+    
     /** 
      * @param args the command line arguments
      */
@@ -197,6 +221,24 @@ public class FrmLogin extends javax.swing.JFrame {
         });
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnIniciarSesion;
     private javax.swing.JCheckBox CbxMostrar;

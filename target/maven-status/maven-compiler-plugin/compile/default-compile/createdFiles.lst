@@ -1,8 +1,11 @@
+com\juanma\profit\interfaz\FrmPrincipal$3.class
 com\juanma\profit\interfaz\FrmRecuperarContraseña.class
 com\juanma\profit\interfaz\FrmLogin$5.class
 com\juanma\profit\interfaz\FrmRegistro$1.class
+com\juanma\profit\interfaz\FrmPrincipal$1.class
 com\juanma\profit\interfaz\FrmLogin.class
 com\juanma\profit\interfaz\FrmLogin$4.class
+com\juanma\profit\interfaz\FrmPrincipal$2.class
 com\juanma\profit\interfaz\FrmLogin$2.class
 com\juanma\profit\interfaz\FrmCrearCuenta.class
 com\juanma\profit\interfaz\FrmCrearCuenta$3.class
@@ -11,6 +14,9 @@ com\juanma\profit\interfaz\FrmLogin$1.class
 com\juanma\profit\entidad\Usuario.class
 com\juanma\profit\interfaz\FrmCrearCuenta$1.class
 com\juanma\profit\interfaz\FrmLogin$3.class
+com\juanma\profit\interfaz\FrmLogin$6.class
 com\juanma\profit\interfaz\FrmRecuperarContraseña$1.class
 com\juanma\profit\interfaz\FrmRegistro.class
+com\juanma\profit\interfaz\FrmPrincipal.class
 com\juanma\profit\persistencia\UsuarioPersistencia.class
+com\juanma\profit\interfaz\FrmPrincipal$4.class
