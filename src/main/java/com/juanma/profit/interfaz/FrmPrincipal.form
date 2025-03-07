@@ -81,17 +81,17 @@
               <Component id="btnProductos" min="-2" pref="172" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnFacturacion" min="-2" pref="177" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="btnProveedores" min="-2" pref="167" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnAjustes" min="-2" pref="173" max="-2" attributes="0"/>
+              <Component id="BtnAjustes" min="-2" pref="173" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnExtras" min="-2" pref="170" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnClientes1" min="-2" pref="176" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnClientes" min="-2" pref="176" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
           <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
       </Group>
@@ -99,17 +99,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnProductos" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnFacturacion" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnProveedores" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                  <Component id="btnAjustes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="BtnAjustes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnExtras" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                  <Component id="btnClientes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnClientes1" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="btnClientes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="589" max="32767" attributes="0"/>
+              <EmptySpace pref="537" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="53" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
           </Group>
@@ -130,6 +130,7 @@
         <Property name="text" type="java.lang.String" value="Productos"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProductosMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProductosActionPerformed"/>
       </Events>
     </Component>
@@ -151,10 +152,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProveedoresActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnAjustes">
+    <Component class="javax.swing.JButton" name="BtnAjustes">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ajustes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAjustesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
