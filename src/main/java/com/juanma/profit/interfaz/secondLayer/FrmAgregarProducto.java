@@ -150,7 +150,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText();
     String fechaAgregadoStr = txtFechaDeAgregadoDelProductoAgregar.getText();
     
-    // Convertir las fechas de String a Date
+    // Convertir las fechas de String a Date ( lo saque de chatgpt porque las fechas se guardaban muy feo)
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     try {
         Date fechaCaducidad = dateFormat.parse(fechaCaducidadStr);

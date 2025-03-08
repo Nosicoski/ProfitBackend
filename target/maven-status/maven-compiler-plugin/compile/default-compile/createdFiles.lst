@@ -21,6 +21,7 @@ com\juanma\profit\entidad\Producto.class
 com\juanma\profit\interfaz\FrmLogin$2.class
 com\juanma\profit\interfaz\FrmCrearCuenta.class
 com\juanma\profit\entidad\Cliente.class
+com\juanma\profit\interfaz\secondLayer\FrmProductos$8.class
 com\juanma\profit\persistencia\FacturacionPersistencia.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$3.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$5.class
