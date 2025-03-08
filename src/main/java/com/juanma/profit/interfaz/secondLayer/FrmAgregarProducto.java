@@ -6,109 +6,25 @@ package com.juanma.profit.interfaz.secondLayer;
 
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import org.json.simple.parser.ParseException;
+
 
 /**
  *
  * @author juanm
  */
 public class FrmAgregarProducto extends javax.swing.JFrame {
-private JTextField txtNombreDelProductoAgregar;
-    private JTextField txtCodigoDelProductoAgregar;
-    private JTextField txtProveedorDelProductoAgregar;
-    private JFormattedTextField txtFechaCaducidadProductoAgregar;
-    private JFormattedTextField txtFechaDeAgregadoDelProductoAgregar;
-    private JButton btnAgregarProducto;
-    
-    private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+
     /**
      * Creates new form FrmAgregarProducto
      */
     public FrmAgregarProducto() {
-         setTitle("Agregar Producto");
-        setSize(400, 300);
-        setLayout(new GridLayout(6, 2));
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Crear campos de entrada
-        add(new JLabel("Nombre del Producto:"));
-        txtNombreDelProductoAgregar = new JTextField();
-        add(txtNombreDelProductoAgregar);
-
-        add(new JLabel("Código del Producto:"));
-        txtCodigoDelProductoAgregar = new JTextField();
-        add(txtCodigoDelProductoAgregar);
-
-        add(new JLabel("Proveedor:"));
-        txtProveedorDelProductoAgregar = new JTextField();
-        add(txtProveedorDelProductoAgregar);
-
-        add(new JLabel("Fecha de Agregado (dd/MM/yyyy):"));
-        txtFechaDeAgregadoDelProductoAgregar = new JFormattedTextField(formatoFecha);
-        txtFechaDeAgregadoDelProductoAgregar.setColumns(10);
-        add(txtFechaDeAgregadoDelProductoAgregar);
-
-        add(new JLabel("Fecha de Caducidad (dd/MM/yyyy):"));
-        txtFechaCaducidadProductoAgregar = new JFormattedTextField(formatoFecha);
-        txtFechaCaducidadProductoAgregar.setColumns(10);
-        add(txtFechaCaducidadProductoAgregar);
-
-        // Botón para agregar producto
-        btnAgregarProducto = new JButton("Agregar Producto");
-        add(btnAgregarProducto);
-
-        // Acción del botón
-        btnAgregarProducto.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarProducto();
-            }
-private void agregarProducto() {
-        String nombre = txtNombreDelProductoAgregar.getText().trim();
-        String codigo = txtCodigoDelProductoAgregar.getText().trim();
-        String proveedor = txtProveedorDelProductoAgregar.getText().trim();
-        String fechaAgregadoStr = txtFechaDeAgregadoDelProductoAgregar.getText().trim();
-        String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText().trim();
-
-        // Validar que los campos no estén vacíos
-        if (nombre.isEmpty() || codigo.isEmpty() || proveedor.isEmpty() || fechaAgregadoStr.isEmpty() || fechaCaducidadStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            Date fechaAgregado = formatoFecha.parse(fechaAgregadoStr);
-            Date fechaCaducidad = formatoFecha.parse(fechaCaducidadStr);
-
-            Producto nuevoProducto = new Producto(nombre, codigo, proveedor, fechaAgregado, fechaCaducidad);
-
-            // Guardar producto en JSON
-            ProductoPersistencia.guardarProducto(nuevoProducto);
-
-            JOptionPane.showMessageDialog(this, "Producto agregado correctamente.");
-            limpiarCampos();
-
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Usa dd/MM/yyyy.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-        });
-
-        setVisible(true);
-    }
-
+        initComponents();
+         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+   
     }
 
     /**
@@ -163,6 +79,11 @@ private void agregarProducto() {
 
         btnAgregarProducto.setText("Agregar");
         btnAgregarProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarProductoMouseClicked(evt);
+            }
+        });
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarProductoActionPerformed(evt);
@@ -223,12 +144,41 @@ private void agregarProducto() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtNombreDelProductoAgregar.getText();
+    String codigo = txtCodigoDelProductoAgregar.getText();
+    String proveedor = txtProveedorDelProductoAgregar.getText();
+    String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText();
+    String fechaAgregadoStr = txtFechaDeAgregadoDelProductoAgregar.getText();
+    
+    // Convertir las fechas de String a Date
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+        Date fechaCaducidad = dateFormat.parse(fechaCaducidadStr);
+        Date fechaAgregado = dateFormat.parse(fechaAgregadoStr);
+
+        // Crear un nuevo objeto Producto
+        Producto producto = new Producto(nombre, codigo, proveedor, fechaAgregado, fechaCaducidad);
+
+        // Guardar el producto en la persistencia
+        ProductoPersistencia.agregarProducto(producto);
+
+        // Cerrar la ventana de agregar producto
+        this.dispose();
+
+    } catch (java.text.ParseException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void txtNombreDelProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDelProductoAgregarActionPerformed
+
+    private void btnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProductoMouseClicked
+       
+    }//GEN-LAST:event_btnAgregarProductoMouseClicked
 
     /**
      * @param args the command line arguments
