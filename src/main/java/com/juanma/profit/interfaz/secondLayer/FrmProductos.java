@@ -7,6 +7,7 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -29,13 +30,14 @@ public class FrmProductos extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
+        
         cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
 
     }
 
-    private void configurarFiltrado() {
+    public void configurarFiltrado() {
         // Obtener el modelo de la tabla
         tableModel = (DefaultTableModel) jTable2.getModel();
 
@@ -223,7 +225,36 @@ public class FrmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    
+    int filaSeleccionada = jTable2.getSelectedRow();
+
+  
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    
+    String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1); 
+
+    
+    int confirmacion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Está seguro de que desea eliminar este producto?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION
+    );
+
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+       
+        ProductoPersistencia.eliminarProducto(codigo);
+
+        
+        cargarProductosEnTabla();
+
+        JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
@@ -245,7 +276,7 @@ public class FrmProductos extends javax.swing.JFrame {
     private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
         filtrarTabla();
     }//GEN-LAST:event_txtBuscarProductoKeyReleased
-    private void cargarProductosEnTabla() {
+    public void cargarProductosEnTabla() {
         // Obtener todos los productos desde la persistencia
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
 
