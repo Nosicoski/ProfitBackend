@@ -64,6 +64,7 @@ public class FrmLogin extends javax.swing.JFrame {
         LblOlvidoContraseña.setForeground(new java.awt.Color(0, 102, 204));
         LblOlvidoContraseña.setText("¿Olvidó la contraseña?");
         LblOlvidoContraseña.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        LblOlvidoContraseña.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LblOlvidoContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LblOlvidoContraseñaMouseClicked(evt);
@@ -74,6 +75,7 @@ public class FrmLogin extends javax.swing.JFrame {
         LblNoTieneCuenta.setForeground(new java.awt.Color(0, 102, 204));
         LblNoTieneCuenta.setText("¿No tiene una cuenta? ");
         LblNoTieneCuenta.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        LblNoTieneCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LblNoTieneCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LblNoTieneCuentaMouseClicked(evt);
@@ -81,6 +83,7 @@ public class FrmLogin extends javax.swing.JFrame {
         });
 
         btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnIniciarSesionMouseClicked(evt);
