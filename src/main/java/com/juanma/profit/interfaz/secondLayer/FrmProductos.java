@@ -7,6 +7,7 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -18,22 +19,25 @@ import javax.swing.table.TableRowSorter;
  * @author juanm
  */
 public class FrmProductos extends javax.swing.JFrame {
-    
- private DefaultTableModel tableModel; // Modelo de la tabla
+
+    private DefaultTableModel tableModel; // Modelo de la tabla
     private TableRowSorter<DefaultTableModel> rowSorter; // Filtrador de filas
+
     /**
      * Creates new form Productos
      */
     public FrmProductos() {
         initComponents();
-         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-                 cargarProductosEnTabla(); // Cargar productos al iniciar
-
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        
+        cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
 
     }
-  private void configurarFiltrado() {
+
+    public void configurarFiltrado() {
         // Obtener el modelo de la tabla
         tableModel = (DefaultTableModel) jTable2.getModel();
 
@@ -41,23 +45,6 @@ public class FrmProductos extends javax.swing.JFrame {
         rowSorter = new TableRowSorter<>(tableModel);
         jTable2.setRowSorter(rowSorter);
 
-        // Agregar un DocumentListener al JTextField de búsqueda
-        txtBuscarProducto.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-        });
     }
 
     private void filtrarTabla() {
@@ -72,6 +59,7 @@ public class FrmProductos extends javax.swing.JFrame {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda));
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,6 +108,7 @@ public class FrmProductos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane2.setViewportView(jTable2);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
@@ -159,6 +148,11 @@ public class FrmProductos extends javax.swing.JFrame {
         txtBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarProductoActionPerformed(evt);
+            }
+        });
+        txtBuscarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarProductoKeyReleased(evt);
             }
         });
 
@@ -231,7 +225,36 @@ public class FrmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    
+    int filaSeleccionada = jTable2.getSelectedRow();
+
+  
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    
+    String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1); 
+
+    
+    int confirmacion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Está seguro de que desea eliminar este producto?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION
+    );
+
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+       
+        ProductoPersistencia.eliminarProducto(codigo);
+
+        
+        cargarProductosEnTabla();
+
+        JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
@@ -239,16 +262,21 @@ public class FrmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarProductoActionPerformed
 
     private void BtnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProductoMouseClicked
-    FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
-    agregarProducto.setVisible(true);
-    
-    
+        FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
+        agregarProducto.setVisible(true);
+
+
     }//GEN-LAST:event_BtnAgregarProductoMouseClicked
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-       cargarProductosEnTabla();
+        cargarProductosEnTabla();
+        configurarFiltrado();
     }//GEN-LAST:event_btnActualizarActionPerformed
- private void cargarProductosEnTabla() {
+
+    private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
+        filtrarTabla();
+    }//GEN-LAST:event_txtBuscarProductoKeyReleased
+    public void cargarProductosEnTabla() {
         // Obtener todos los productos desde la persistencia
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
 
@@ -275,6 +303,7 @@ public class FrmProductos extends javax.swing.JFrame {
         // Asignar el modelo a la tabla
         jTable2.setModel(tableModel);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -310,7 +339,7 @@ public class FrmProductos extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregarProducto;

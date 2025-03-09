@@ -8,9 +8,7 @@ import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -24,7 +22,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     public FrmAgregarProducto() {
         initComponents();
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-   
+    
+     
     }
 
     /**
@@ -49,7 +48,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         txtCodigoDelProductoAgregar = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -144,7 +143,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        String nombre = txtNombreDelProductoAgregar.getText();
+    String nombre = txtNombreDelProductoAgregar.getText();
     String codigo = txtCodigoDelProductoAgregar.getText();
     String proveedor = txtProveedorDelProductoAgregar.getText();
     String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText();
@@ -169,6 +168,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
     
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
@@ -229,4 +229,5 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreDelProductoAgregar;
     private javax.swing.JTextField txtProveedorDelProductoAgregar;
     // End of variables declaration//GEN-END:variables
+
 }

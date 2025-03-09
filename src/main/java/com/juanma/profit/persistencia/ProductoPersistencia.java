@@ -23,7 +23,7 @@ public class ProductoPersistencia {
     private static final String ARCHIVO_PRODUCTOS = "DB/productos.json";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    // Guardar productos en JSON
+    
     private static void guardarProductos(List<Producto> productos) {
         File archivo = new File(ARCHIVO_PRODUCTOS);
         File directorio = archivo.getParentFile();
@@ -50,7 +50,7 @@ public class ProductoPersistencia {
         }
     }
 
-    // Cargar productos desde JSON
+    
     private static List<Producto> cargarProductos() {
         List<Producto> productos = new ArrayList<>();
         File archivo = new File(ARCHIVO_PRODUCTOS);
@@ -80,19 +80,18 @@ public class ProductoPersistencia {
         return productos;
     }
 
-    // Agregar un producto
+
     public static void agregarProducto(Producto producto) {
         List<Producto> productos = cargarProductos();
         productos.add(producto);
         guardarProductos(productos);
     }
 
-    // Obtener todos los productos
+ 
     public static List<Producto> obtenerTodos() {
         return cargarProductos();
     }
 
-    // Eliminar un producto por código
     public static void eliminarProducto(String codigo) {
         List<Producto> productos = cargarProductos();
         productos.removeIf(p -> p.getCodigo().equals(codigo));

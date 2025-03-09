@@ -37,7 +37,7 @@ public class FrmLogin extends javax.swing.JFrame {
         TxtContraseña = new javax.swing.JPasswordField();
         LblOlvidoContraseña = new javax.swing.JLabel();
         LblNoTieneCuenta = new javax.swing.JLabel();
-        BtnIniciarSesion = new javax.swing.JButton();
+        btnIniciarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -80,15 +80,15 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        BtnIniciarSesion.setText("Iniciar sesión");
-        BtnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnIniciarSesionMouseClicked(evt);
+                btnIniciarSesionMouseClicked(evt);
             }
         });
-        BtnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnIniciarSesionActionPerformed(evt);
+                btnIniciarSesionActionPerformed(evt);
             }
         });
 
@@ -103,7 +103,7 @@ public class FrmLogin extends javax.swing.JFrame {
             .addComponent(TxtContraseña)
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
-                .addComponent(BtnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 96, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(LblOlvidoContraseña)
@@ -134,7 +134,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(LblOlvidoContraseña)
                     .addComponent(LblNoTieneCuenta))
                 .addGap(28, 28, 28)
-                .addComponent(BtnIniciarSesion)
+                .addComponent(btnIniciarSesion)
                 .addContainerGap(319, Short.MAX_VALUE))
         );
 
@@ -142,83 +142,69 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LblOlvidoContraseñaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblOlvidoContraseñaMouseClicked
-      LblOlvidoContraseña.setEnabled(false); // Deshabilita el botón ANTES de abrir la ventana
-    
-    FrmRecuperarContraseña recuperar = new FrmRecuperarContraseña();
-    
-    recuperar.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent e) { // Detecta cuando se cierra
-            LblOlvidoContraseña.setEnabled(true); // Habilita el botón al cerrar la ventana
-        }
-    });
-    
-    recuperar.setVisible(true);
+        LblOlvidoContraseña.setEnabled(false); // Deshabilita el botón ANTES de abrir la ventana
+
+        FrmRecuperarContraseña recuperar = new FrmRecuperarContraseña();
+
+        recuperar.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) { // Detecta cuando se cierra
+                LblOlvidoContraseña.setEnabled(true); // Habilita el botón al cerrar la ventana
+            }
+        });
+
+        recuperar.setVisible(true);
     }//GEN-LAST:event_LblOlvidoContraseñaMouseClicked
 
     private void LblNoTieneCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblNoTieneCuentaMouseClicked
-    FrmCrearCuenta crearCuenta = new FrmCrearCuenta();
-    crearCuenta.setVisible(true);
+        FrmCrearCuenta crearCuenta = new FrmCrearCuenta();
+        crearCuenta.setVisible(true);
     }//GEN-LAST:event_LblNoTieneCuentaMouseClicked
 
-    
-    
-    
-    
-    
-    private void BtnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarSesionActionPerformed
-      //Aca voy a hacer la logica para confirmar si el usuario puede iniciar sesion (verifico los datos txt usuario y contraseña)
-      
-        
-       String usuario = TxtUsuario.getText();
-       String contraseña = new String(TxtContraseña.getPassword());
-       //Empty = vacio
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        //Aca voy a hacer la logica para confirmar si el usuario puede iniciar sesion (verifico los datos txt usuario y contraseña)
+
+        String usuario = TxtUsuario.getText();
+        String contraseña = new String(TxtContraseña.getPassword());
+        //Empty = vacio
         if (usuario.isEmpty() || contraseña.isEmpty()) {
-        JOptionPane.showMessageDialog(this,
-                "Por favor, complete todos los campos.",
-                "Campos vacíos",
-                JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-        
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, complete todos los campos.",
+                    "Campos vacíos",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         //Con este boolean consulto a la clase persistencia y almaceno el dato esValido.
         boolean esValido = UsuarioPersistencia.validarUsuario(usuario, contraseña);
         //Ahora hay que fijarse , si es valido que abra el frmPrincipal
         if (esValido) {
-        // 4) Si es válido, mostrar mensaje de bienvenida y abrir FrmPrincipal
-        JOptionPane.showMessageDialog(this,
-                "Bienvenido, " + usuario + "!",
-                "Inicio de sesión exitoso",
-                JOptionPane.INFORMATION_MESSAGE);
+            // 4) Si es válido, mostrar mensaje de bienvenida y abrir FrmPrincipal
+            JOptionPane.showMessageDialog(this,
+                    "Bienvenido, " + usuario + "!",
+                    "Inicio de sesión exitoso",
+                    JOptionPane.INFORMATION_MESSAGE);
 
+            FrmPrincipal principal = new FrmPrincipal();
+            principal.setVisible(true);
+            this.dispose(); // Cierra el formulario de login
+        } else {
+            // 5) Si es inválido, mostrar error
+            JOptionPane.showMessageDialog(this,
+                    "Usuario o contraseña incorrectos",
+                    "Error de Login",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+
+    private void btnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseClicked
         FrmPrincipal principal = new FrmPrincipal();
         principal.setVisible(true);
-        this.dispose(); // Cierra el formulario de login
-    } else {
-        // 5) Si es inválido, mostrar error
-        JOptionPane.showMessageDialog(this,
-                "Usuario o contraseña incorrectos",
-                "Error de Login",
-                JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_BtnIniciarSesionActionPerformed
+    }//GEN-LAST:event_btnIniciarSesionMouseClicked
 
-    
-    
-    
-    
-    
-    
-    private void BtnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarSesionMouseClicked
-       FrmPrincipal principal = new FrmPrincipal();
-       principal.setVisible(true);
-    }//GEN-LAST:event_BtnIniciarSesionMouseClicked
-
-    
-    
-    
-    
-    /** 
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -253,31 +239,14 @@ public class FrmLogin extends javax.swing.JFrame {
         });
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnIniciarSesion;
     private javax.swing.JCheckBox CbxMostrar;
     private javax.swing.JLabel LblNoTieneCuenta;
     private javax.swing.JLabel LblOlvidoContraseña;
     private javax.swing.JPasswordField TxtContraseña;
     private javax.swing.JTextField TxtUsuario;
+    private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
