@@ -32,11 +32,11 @@
                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNombreDelProductoAgregar" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtProveedorDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
-                  <Component id="txtFechaCaducidadProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
-                  <Component id="txtFechaDeAgregadoDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
-                  <Component id="txtCodigoDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtNombreDelProductoEditar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtProveedorDelProductoEditar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtFechaCaducidadProductoEditar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtFechaDeAgregadoDelProductoEditar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtCodigoDelProductoEditar" alignment="0" pref="415" max="32767" attributes="0"/>
                   <Component id="btnAgregarProducto" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="29" max="32767" attributes="0"/>
@@ -50,23 +50,23 @@
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtNombreDelProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtNombreDelProductoEditar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtCodigoDelProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtCodigoDelProductoEditar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtProveedorDelProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtProveedorDelProductoEditar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtFechaCaducidadProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtFechaCaducidadProductoEditar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="txtFechaDeAgregadoDelProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtFechaDeAgregadoDelProductoEditar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="btnAgregarProducto" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace pref="258" max="32767" attributes="0"/>
@@ -81,7 +81,7 @@
           <Font name="Segoe UI" size="18" style="3"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+        <Property name="text" type="java.lang.String" value="Editar Producto"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder/>
@@ -129,27 +129,27 @@
         <Property name="text" type="java.lang.String" value="Fecha de caducidad del producto"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNombreDelProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtNombreDelProductoEditar">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreDelProductoAgregarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreDelProductoEditarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtProveedorDelProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtProveedorDelProductoEditar">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFechaCaducidadProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtFechaCaducidadProductoEditar">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFechaDeAgregadoDelProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtFechaDeAgregadoDelProductoEditar">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Texto"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCodigoDelProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtCodigoDelProductoEditar">
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarProducto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar"/>
+        <Property name="text" type="java.lang.String" value="Editar"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
             <BevelBorder/>

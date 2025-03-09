@@ -29,8 +29,7 @@ public class FrmProductos extends javax.swing.JFrame {
     public FrmProductos() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        
-        
+
         cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
@@ -75,7 +74,7 @@ public class FrmProductos extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         BtnAgregarProducto = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtBuscarProducto = new javax.swing.JTextField();
@@ -117,6 +116,7 @@ public class FrmProductos extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         BtnAgregarProducto.setText("Agregar");
+        BtnAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnAgregarProductoMouseClicked(evt);
@@ -128,14 +128,16 @@ public class FrmProductos extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modificar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("Modificar");
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
         jButton3.setText("Eliminar");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -157,8 +159,10 @@ public class FrmProductos extends javax.swing.JFrame {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
@@ -178,7 +182,7 @@ public class FrmProductos extends javax.swing.JFrame {
                         .addGap(739, 739, 739)
                         .addComponent(BtnAgregarProducto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addContainerGap(799, Short.MAX_VALUE))
@@ -198,7 +202,7 @@ public class FrmProductos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAgregarProducto)
-                    .addComponent(jButton2)
+                    .addComponent(btnEditar)
                     .addComponent(jButton3)
                     .addComponent(btnActualizar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
@@ -220,41 +224,47 @@ public class FrmProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnAgregarProductoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int filaSeleccionadaModificar = jTable2.getSelectedRow();
+
+    // Verificar si se ha seleccionado una fila
+    if (filaSeleccionadaModificar == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si no hay fila seleccionada
+    }
+        
+        
+        FrmEditarProducto editarProducto = new FrmEditarProducto();
+        editarProducto.setVisible(true);
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    
-    int filaSeleccionada = jTable2.getSelectedRow();
 
-  
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        int filaSeleccionada = jTable2.getSelectedRow();
 
-    
-    String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1); 
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de que desea eliminar este producto?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-    );
+        String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1);
 
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que desea eliminar este producto?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
 
-    if (confirmacion == JOptionPane.YES_OPTION) {
-       
-        ProductoPersistencia.eliminarProducto(codigo);
+        if (confirmacion == JOptionPane.YES_OPTION) {
 
-        
-        cargarProductosEnTabla();
+            ProductoPersistencia.eliminarProducto(codigo);
 
-        JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    }
+            cargarProductosEnTabla();
+
+            JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
@@ -344,7 +354,7 @@ public class FrmProductos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregarProducto;
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

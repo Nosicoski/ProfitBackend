@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author juanm
  */
-public class FrmAgregarProducto extends javax.swing.JFrame {
+public class FrmEditarProducto extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmAgregarProducto
      */
-    public FrmAgregarProducto() {
+    public FrmEditarProducto() {
         initComponents();
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     
@@ -41,18 +41,18 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtNombreDelProductoAgregar = new javax.swing.JTextField();
-        txtProveedorDelProductoAgregar = new javax.swing.JTextField();
-        txtFechaCaducidadProductoAgregar = new javax.swing.JTextField();
-        txtFechaDeAgregadoDelProductoAgregar = new javax.swing.JTextField();
-        txtCodigoDelProductoAgregar = new javax.swing.JTextField();
+        txtNombreDelProductoEditar = new javax.swing.JTextField();
+        txtProveedorDelProductoEditar = new javax.swing.JTextField();
+        txtFechaCaducidadProductoEditar = new javax.swing.JTextField();
+        txtFechaDeAgregadoDelProductoEditar = new javax.swing.JTextField();
+        txtCodigoDelProductoEditar = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Agregar Producto");
+        jLabel1.setText("Editar Producto");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
@@ -70,15 +70,15 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel6.setText("Fecha de caducidad del producto");
 
-        txtNombreDelProductoAgregar.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreDelProductoEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreDelProductoAgregarActionPerformed(evt);
+                txtNombreDelProductoEditarActionPerformed(evt);
             }
         });
 
-        txtFechaDeAgregadoDelProductoAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtFechaDeAgregadoDelProductoEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        btnAgregarProducto.setText("Agregar");
+        btnAgregarProducto.setText("Editar");
         btnAgregarProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -105,11 +105,11 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(txtNombreDelProductoAgregar)
-                    .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaCaducidadProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaDeAgregadoDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtCodigoDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtNombreDelProductoEditar)
+                    .addComponent(txtProveedorDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtFechaCaducidadProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtFechaDeAgregadoDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtCodigoDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -120,23 +120,23 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombreDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombreDelProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCodigoDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCodigoDelProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtProveedorDelProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaCaducidadProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFechaCaducidadProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtFechaDeAgregadoDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFechaDeAgregadoDelProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(258, Short.MAX_VALUE))
@@ -146,38 +146,13 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-    String nombre = txtNombreDelProductoAgregar.getText();
-    String codigo = txtCodigoDelProductoAgregar.getText();
-    String proveedor = txtProveedorDelProductoAgregar.getText();
-    String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText();
-    String fechaAgregadoStr = txtFechaDeAgregadoDelProductoAgregar.getText();
-    
-    // Convertir las fechas de String a Date ( lo saque de chatgpt porque las fechas se guardaban muy feo)
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    try {
-        Date fechaCaducidad = dateFormat.parse(fechaCaducidadStr);
-        Date fechaAgregado = dateFormat.parse(fechaAgregadoStr);
-
-        // Crear un nuevo objeto Producto
-        Producto producto = new Producto(nombre, codigo, proveedor, fechaAgregado, fechaCaducidad);
-
-        // Guardar el producto en la persistencia
-        ProductoPersistencia.agregarProducto(producto);
-
-        // Cerrar la ventana de agregar producto
-        this.dispose();
-
-    } catch (java.text.ParseException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
     
     
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
-    private void txtNombreDelProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarActionPerformed
+    private void txtNombreDelProductoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreDelProductoAgregarActionPerformed
+    }//GEN-LAST:event_txtNombreDelProductoEditarActionPerformed
 
     private void btnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProductoMouseClicked
        
@@ -200,20 +175,21 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEditarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAgregarProducto().setVisible(true);
+                new FrmEditarProducto().setVisible(true);
             }
         });
     }
@@ -226,11 +202,11 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txtCodigoDelProductoAgregar;
-    private javax.swing.JTextField txtFechaCaducidadProductoAgregar;
-    private javax.swing.JTextField txtFechaDeAgregadoDelProductoAgregar;
-    private javax.swing.JTextField txtNombreDelProductoAgregar;
-    private javax.swing.JTextField txtProveedorDelProductoAgregar;
+    private javax.swing.JTextField txtCodigoDelProductoEditar;
+    private javax.swing.JTextField txtFechaCaducidadProductoEditar;
+    private javax.swing.JTextField txtFechaDeAgregadoDelProductoEditar;
+    private javax.swing.JTextField txtNombreDelProductoEditar;
+    private javax.swing.JTextField txtProveedorDelProductoEditar;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -70,10 +70,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
-        setMaximumSize(new java.awt.Dimension(1860, 500));
         setMinimumSize(new java.awt.Dimension(30, 30));
 
         btnFacturacion.setText("Facturación");
+        btnFacturacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFacturacionActionPerformed(evt);
@@ -81,6 +81,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         btnProductos.setText("Productos");
+        btnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProductosMouseClicked(evt);
@@ -93,10 +94,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         btnExtras.setText("Extras");
+        btnExtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnClientes.setText("Agenda");
+        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProveedoresActionPerformed(evt);
@@ -104,6 +108,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         BtnAjustes.setText("Ajustes");
+        BtnAjustes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnAjustes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAjustesActionPerformed(evt);
@@ -116,6 +121,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnClientes1.setText("Clientes");
+        btnClientes1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
