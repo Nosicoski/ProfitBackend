@@ -18,22 +18,24 @@ import javax.swing.table.TableRowSorter;
  * @author juanm
  */
 public class FrmProductos extends javax.swing.JFrame {
-    
- private DefaultTableModel tableModel; // Modelo de la tabla
+
+    private DefaultTableModel tableModel; // Modelo de la tabla
     private TableRowSorter<DefaultTableModel> rowSorter; // Filtrador de filas
+
     /**
      * Creates new form Productos
      */
     public FrmProductos() {
         initComponents();
-         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-                 cargarProductosEnTabla(); // Cargar productos al iniciar
-
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
 
     }
-  private void configurarFiltrado() {
+
+    private void configurarFiltrado() {
         // Obtener el modelo de la tabla
         tableModel = (DefaultTableModel) jTable2.getModel();
 
@@ -41,23 +43,6 @@ public class FrmProductos extends javax.swing.JFrame {
         rowSorter = new TableRowSorter<>(tableModel);
         jTable2.setRowSorter(rowSorter);
 
-        // Agregar un DocumentListener al JTextField de búsqueda
-        txtBuscarProducto.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filtrarTabla();
-            }
-        });
     }
 
     private void filtrarTabla() {
@@ -72,6 +57,7 @@ public class FrmProductos extends javax.swing.JFrame {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda));
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,6 +106,7 @@ public class FrmProductos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane2.setViewportView(jTable2);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
@@ -159,6 +146,11 @@ public class FrmProductos extends javax.swing.JFrame {
         txtBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarProductoActionPerformed(evt);
+            }
+        });
+        txtBuscarProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarProductoKeyReleased(evt);
             }
         });
 
@@ -239,16 +231,21 @@ public class FrmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarProductoActionPerformed
 
     private void BtnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProductoMouseClicked
-    FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
-    agregarProducto.setVisible(true);
-    
-    
+        FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
+        agregarProducto.setVisible(true);
+
+
     }//GEN-LAST:event_BtnAgregarProductoMouseClicked
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-       cargarProductosEnTabla();
+        cargarProductosEnTabla();
+        configurarFiltrado();
     }//GEN-LAST:event_btnActualizarActionPerformed
- private void cargarProductosEnTabla() {
+
+    private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
+        filtrarTabla();
+    }//GEN-LAST:event_txtBuscarProductoKeyReleased
+    private void cargarProductosEnTabla() {
         // Obtener todos los productos desde la persistencia
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
 
@@ -275,6 +272,7 @@ public class FrmProductos extends javax.swing.JFrame {
         // Asignar el modelo a la tabla
         jTable2.setModel(tableModel);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -310,7 +308,7 @@ public class FrmProductos extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregarProducto;

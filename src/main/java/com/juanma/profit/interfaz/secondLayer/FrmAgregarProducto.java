@@ -24,7 +24,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     public FrmAgregarProducto() {
         initComponents();
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-   
+          
+
     }
 
     /**
@@ -49,7 +50,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         txtCodigoDelProductoAgregar = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -33,7 +33,7 @@
           <Component id="TxtContraseña" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-              <Component id="BtnIniciarSesion" min="-2" pref="165" max="-2" attributes="0"/>
+              <Component id="btnIniciarSesion" min="-2" pref="165" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
@@ -69,7 +69,7 @@
                   <Component id="LblNoTieneCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="BtnIniciarSesion" min="-2" max="-2" attributes="0"/>
+              <Component id="btnIniciarSesion" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="319" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -159,13 +159,13 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LblNoTieneCuentaMouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="BtnIniciarSesion">
+    <Component class="javax.swing.JButton" name="btnIniciarSesion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnIniciarSesionMouseClicked"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnIniciarSesionActionPerformed"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnIniciarSesionMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarSesionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
