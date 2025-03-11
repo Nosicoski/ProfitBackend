@@ -26,11 +26,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="TxtUsuario" alignment="0" max="32767" attributes="0"/>
           <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
           <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
           <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
-          <Component id="TxtContraseña" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
               <Component id="btnIniciarSesion" min="-2" pref="165" max="-2" attributes="0"/>
@@ -42,8 +40,15 @@
               <Component id="LblNoTieneCuenta" min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="CbxMostrar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="TxtUsuario" max="32767" attributes="0"/>
+                  <Component id="TxtContraseña" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="CbxMostrar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -68,7 +73,7 @@
                   <Component id="LblOlvidoContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LblNoTieneCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Component id="btnIniciarSesion" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="319" max="32767" attributes="0"/>
           </Group>
@@ -94,6 +99,11 @@
     <Component class="javax.swing.JTextField" name="TxtUsuario">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -118,8 +128,18 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Mostrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CbxMostrarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="TxtContrase&#xf1;a">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LblOlvidoContrase&#xf1;a">
       <Properties>
@@ -167,7 +187,15 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnIniciarSesion">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="3"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Mano"/>
         </Property>

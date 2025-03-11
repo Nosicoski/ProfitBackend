@@ -49,6 +49,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         TxtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TxtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -59,6 +60,13 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Usuario:");
 
         CbxMostrar.setText("Mostrar");
+        CbxMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CbxMostrarActionPerformed(evt);
+            }
+        });
+
+        TxtContraseña.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         LblOlvidoContraseña.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         LblOlvidoContraseña.setForeground(new java.awt.Color(0, 102, 204));
@@ -82,7 +90,9 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
+        btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btnIniciarSesion.setText("Iniciar sesión");
+        btnIniciarSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -99,11 +109,9 @@ public class FrmLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TxtUsuario)
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(TxtContraseña)
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,8 +121,13 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LblNoTieneCuenta))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(CbxMostrar)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(TxtUsuario)
+                    .addComponent(TxtContraseña)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(CbxMostrar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -136,7 +149,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblOlvidoContraseña)
                     .addComponent(LblNoTieneCuenta))
-                .addGap(28, 28, 28)
+                .addGap(41, 41, 41)
                 .addComponent(btnIniciarSesion)
                 .addContainerGap(319, Short.MAX_VALUE))
         );
@@ -206,6 +219,16 @@ public class FrmLogin extends javax.swing.JFrame {
         FrmPrincipal principal = new FrmPrincipal();
         principal.setVisible(true);
     }//GEN-LAST:event_btnIniciarSesionMouseClicked
+
+    private void CbxMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbxMostrarActionPerformed
+        if (CbxMostrar.isSelected()) {
+
+            TxtContraseña.setEchoChar((char) 0); // Elimina los asteriscos
+        } else {
+            // Ocultar la contraseña con asteriscos
+            TxtContraseña.setEchoChar('*'); // Restaura los asteriscos        
+    }//GEN-LAST:event_CbxMostrarActionPerformed
+    }
 
     /**
      * @param args the command line arguments
