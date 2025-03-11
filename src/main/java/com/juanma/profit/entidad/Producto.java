@@ -16,16 +16,19 @@ public class Producto {
     private String nombre;
     private String codigo;
     private String proveedor;
-    private Date fechaAgregado;
-    private Date fechaCaducidad;
+    private double precioCompra;
+    private double precioVenta;
 
-    public Producto(String nombre, String codigo, String proveedor, Date fechaAgregado, Date fechaCaducidad) {
+    public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta) {
+        this.id = id;
         this.nombre = nombre;
         this.codigo = codigo;
         this.proveedor = proveedor;
-        this.fechaAgregado = fechaAgregado;
-        this.fechaCaducidad = fechaCaducidad;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
     }
+
+    
 
     public Producto() {
     }
@@ -54,22 +57,14 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Date getFechaAgregado() {
-        return fechaAgregado;
+    public double getPrecioCompra() {
+        return precioCompra;
     }
 
-    public void setFechaAgregado(Date fechaAgregado) {
-        this.fechaAgregado = fechaAgregado;
+    public double getPrecioVenta() {
+        return precioVenta;
     }
 
-    public Date getFechaCaducidad() {
-        return fechaCaducidad;
-    }
-
-    public void setFechaCaducidad(Date fechaCaducidad) {
-        this.fechaCaducidad = fechaCaducidad;
-    }
-    
-    
+  
     
 }

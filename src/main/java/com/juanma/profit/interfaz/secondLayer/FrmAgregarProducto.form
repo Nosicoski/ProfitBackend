@@ -29,8 +29,8 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="txtNombreDelProductoAgregar" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtProveedorDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
-                  <Component id="txtFechaCaducidadProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
-                  <Component id="txtFechaDeAgregadoDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtPrecioCompraAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
+                  <Component id="txtPrecioVentaAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
                   <Component id="txtCodigoDelProductoAgregar" alignment="0" pref="415" max="32767" attributes="0"/>
                   <Component id="btnAgregarProducto" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
@@ -62,14 +62,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtFechaCaducidadProductoAgregar" min="-2" max="-2" attributes="0"/>
+              <Component id="txtPrecioCompraAgregar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="txtFechaDeAgregadoDelProductoAgregar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+              <Component id="txtPrecioVentaAgregar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
               <Component id="btnAgregarProducto" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace pref="238" max="32767" attributes="0"/>
+              <EmptySpace pref="239" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -122,7 +122,7 @@
           <Font name="Segoe UI" size="14" style="3"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Fecha de agregado del producto"/>
+        <Property name="text" type="java.lang.String" value="Precio venta del producto"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -131,7 +131,7 @@
           <Font name="Segoe UI" size="14" style="3"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Fecha de caducidad del producto"/>
+        <Property name="text" type="java.lang.String" value="Precio compra del producto"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNombreDelProductoAgregar">
@@ -141,9 +141,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtProveedorDelProductoAgregar">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFechaCaducidadProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtPrecioCompraAgregar">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFechaDeAgregadoDelProductoAgregar">
+    <Component class="javax.swing.JTextField" name="txtPrecioVentaAgregar">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Texto"/>

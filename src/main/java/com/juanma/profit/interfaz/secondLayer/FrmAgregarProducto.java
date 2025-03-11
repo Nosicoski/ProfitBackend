@@ -43,8 +43,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtNombreDelProductoAgregar = new javax.swing.JTextField();
         txtProveedorDelProductoAgregar = new javax.swing.JTextField();
-        txtFechaCaducidadProductoAgregar = new javax.swing.JTextField();
-        txtFechaDeAgregadoDelProductoAgregar = new javax.swing.JTextField();
+        txtPrecioCompraAgregar = new javax.swing.JTextField();
+        txtPrecioVentaAgregar = new javax.swing.JTextField();
         txtCodigoDelProductoAgregar = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
 
@@ -69,11 +69,11 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Fecha de agregado del producto");
+        jLabel5.setText("Precio venta del producto");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Fecha de caducidad del producto");
+        jLabel6.setText("Precio compra del producto");
 
         txtNombreDelProductoAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +81,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             }
         });
 
-        txtFechaDeAgregadoDelProductoAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtPrecioVentaAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btnAgregarProducto.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btnAgregarProducto.setText("Agregar");
@@ -108,8 +108,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreDelProductoAgregar)
                     .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaCaducidadProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaDeAgregadoDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addComponent(txtCodigoDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -138,14 +138,14 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaCaducidadProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtFechaDeAgregadoDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
+                .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79)
                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
 
         pack();
@@ -153,31 +153,21 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
     String nombre = txtNombreDelProductoAgregar.getText();
-    String codigo = txtCodigoDelProductoAgregar.getText();
-    String proveedor = txtProveedorDelProductoAgregar.getText();
-    String fechaCaducidadStr = txtFechaCaducidadProductoAgregar.getText();
-    String fechaAgregadoStr = txtFechaDeAgregadoDelProductoAgregar.getText();
-    
-    // Convertir las fechas de String a Date ( lo saque de chatgpt porque las fechas se guardaban muy feo)
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    try {
-        Date fechaCaducidad = dateFormat.parse(fechaCaducidadStr);
-        Date fechaAgregado = dateFormat.parse(fechaAgregadoStr);
+String codigo = txtCodigoDelProductoAgregar.getText();
+String proveedor = txtProveedorDelProductoAgregar.getText();
+String precioCompraStr = txtPrecioCompraAgregar.getText();
+String precioVentaStr = txtPrecioVentaAgregar.getText();
+// Parsear como dobles
+try {
+    double precioCompra = Double.parseDouble(precioCompraStr);
+    double precioVenta = Double.parseDouble(precioVentaStr);
+Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precioVenta);
+    ProductoPersistencia.agregarProducto(producto);
+    this.dispose();
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precios.", "Error", JOptionPane.ERROR_MESSAGE);
+}
 
-        // Crear un nuevo objeto Producto
-        Producto producto = new Producto(nombre, codigo, proveedor, fechaAgregado, fechaCaducidad);
-
-        // Guardar el producto en la persistencia
-        ProductoPersistencia.agregarProducto(producto);
-
-        // Cerrar la ventana de agregar producto
-        this.dispose();
-
-    } catch (java.text.ParseException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    
     
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
@@ -233,9 +223,9 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtCodigoDelProductoAgregar;
-    private javax.swing.JTextField txtFechaCaducidadProductoAgregar;
-    private javax.swing.JTextField txtFechaDeAgregadoDelProductoAgregar;
     private javax.swing.JTextField txtNombreDelProductoAgregar;
+    private javax.swing.JTextField txtPrecioCompraAgregar;
+    private javax.swing.JTextField txtPrecioVentaAgregar;
     private javax.swing.JTextField txtProveedorDelProductoAgregar;
     // End of variables declaration//GEN-END:variables
 

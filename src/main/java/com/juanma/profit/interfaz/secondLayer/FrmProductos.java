@@ -312,8 +312,8 @@ public class FrmProductos extends javax.swing.JFrame {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Código");
         tableModel.addColumn("Proveedor");
-        tableModel.addColumn("Fecha de Agregado");
-        tableModel.addColumn("Fecha de Caducidad");
+        tableModel.addColumn("Precio de Compra");
+        tableModel.addColumn("Precio de Venta");
 
         // Llenar el modelo con los datos de los productos
         for (Producto producto : productos) {
@@ -321,8 +321,8 @@ public class FrmProductos extends javax.swing.JFrame {
                 producto.getNombre(),
                 producto.getCodigo(),
                 producto.getProveedor(),
-                producto.getFechaAgregado(),
-                producto.getFechaCaducidad()
+                "$ " + String.format("%.2f", producto.getPrecioCompra()),
+    "$ " + String.format("%.2f", producto.getPrecioVenta())
             };
             tableModel.addRow(row);
         }
