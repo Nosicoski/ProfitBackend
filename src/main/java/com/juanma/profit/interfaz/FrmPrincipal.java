@@ -72,6 +72,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(153, 153, 153));
         setMinimumSize(new java.awt.Dimension(30, 30));
 
+        btnFacturacion.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Facturacion.png")); // NOI18N
         btnFacturacion.setText("Facturación");
         btnFacturacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +81,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnProductos.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Product.png")); // NOI18N
         btnProductos.setText("Productos");
         btnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,12 +95,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnExtras.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Extras2.png")); // NOI18N
         btnExtras.setText("Extras");
         btnExtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        btnClientes.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\agenda.png")); // NOI18N
         btnClientes.setText("Agenda");
         btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        btnProveedores.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\proveedor.png")); // NOI18N
         btnProveedores.setText("Proveedores");
         btnProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +112,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        BtnAjustes.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Ajustes.png")); // NOI18N
         BtnAjustes.setText("Ajustes");
         BtnAjustes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnAjustes.addActionListener(new java.awt.event.ActionListener() {
@@ -117,9 +123,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\IconLogo.png")); // NOI18N
         jLabel1.setText("PROFIT");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnClientes1.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Cliente.png")); // NOI18N
         btnClientes1.setText("Clientes");
         btnClientes1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -157,8 +165,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnAjustes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 537, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 528, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(111, 111, 111))
         );
 
