@@ -18,7 +18,7 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);// centra la pestaña
     }
 
     /**
