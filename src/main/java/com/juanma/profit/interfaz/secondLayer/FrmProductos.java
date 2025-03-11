@@ -28,15 +28,15 @@ public class FrmProductos extends javax.swing.JFrame {
      * Creates new form Productos
      */
     public FrmProductos() {
-       
 
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
- setLocationRelativeTo(null);
+      
         cargarProductosEnTabla();
-        // Configurar el filtrado dinámico
+
         configurarFiltrado();
- pack();
+        setLocationRelativeTo(null);// centra la pestaña
+        pack(); 
     }
 
     public void configurarFiltrado() {
@@ -245,13 +245,12 @@ public class FrmProductos extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int filaSeleccionadaModificar = jTable2.getSelectedRow();
 
-    // Verificar si se ha seleccionado una fila
-    if (filaSeleccionadaModificar == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si no hay fila seleccionada
-    }
-        
-        
+        // Verificar si se ha seleccionado una fila
+        if (filaSeleccionadaModificar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si no hay fila seleccionada
+        }
+
         FrmEditarProducto editarProducto = new FrmEditarProducto();
         editarProducto.setVisible(true);
 
