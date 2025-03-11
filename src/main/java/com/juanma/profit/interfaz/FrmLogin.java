@@ -59,6 +59,11 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Usuario:");
 
         CbxMostrar.setText("Mostrar");
+        CbxMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CbxMostrarActionPerformed(evt);
+            }
+        });
 
         LblOlvidoContraseña.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         LblOlvidoContraseña.setForeground(new java.awt.Color(0, 102, 204));
@@ -207,6 +212,15 @@ public class FrmLogin extends javax.swing.JFrame {
         principal.setVisible(true);
     }//GEN-LAST:event_btnIniciarSesionMouseClicked
 
+    private void CbxMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbxMostrarActionPerformed
+if (CbxMostrar.isSelected()) {
+        
+        TxtContraseña.setEchoChar((char) 0); // Elimina los asteriscos
+    } else {
+        // Ocultar la contraseña con asteriscos
+        TxtContraseña.setEchoChar('*'); // Restaura los asteriscos        
+    }//GEN-LAST:event_CbxMostrarActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
