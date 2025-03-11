@@ -28,15 +28,15 @@ public class FrmProductos extends javax.swing.JFrame {
      * Creates new form Productos
      */
     public FrmProductos() {
-       
 
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+      
         cargarProductosEnTabla();
-        // Configurar el filtrado dinámico
+
         configurarFiltrado();
- pack();
+        setLocationRelativeTo(null);// centra la pestaña
+        pack(); 
     }
 
     public void configurarFiltrado() {
@@ -99,6 +99,8 @@ public class FrmProductos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTable2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -111,9 +113,10 @@ public class FrmProductos extends javax.swing.JFrame {
             }
         ));
         jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Productos");
         jLabel1.setToolTipText("");
@@ -217,9 +220,9 @@ public class FrmProductos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnEditar)
-                                        .addComponent(jButton3))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(BtnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(38, 38, 38))
@@ -245,13 +248,12 @@ public class FrmProductos extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int filaSeleccionadaModificar = jTable2.getSelectedRow();
 
-    // Verificar si se ha seleccionado una fila
-    if (filaSeleccionadaModificar == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si no hay fila seleccionada
-    }
-        
-        
+        // Verificar si se ha seleccionado una fila
+        if (filaSeleccionadaModificar == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si no hay fila seleccionada
+        }
+
         FrmEditarProducto editarProducto = new FrmEditarProducto();
         editarProducto.setVisible(true);
 
@@ -313,8 +315,8 @@ public class FrmProductos extends javax.swing.JFrame {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Código");
         tableModel.addColumn("Proveedor");
-        tableModel.addColumn("Fecha de Agregado");
-        tableModel.addColumn("Fecha de Caducidad");
+        tableModel.addColumn("Precio de Compra");
+        tableModel.addColumn("Precio de Venta");
 
         // Llenar el modelo con los datos de los productos
         for (Producto producto : productos) {
@@ -322,8 +324,8 @@ public class FrmProductos extends javax.swing.JFrame {
                 producto.getNombre(),
                 producto.getCodigo(),
                 producto.getProveedor(),
-                producto.getFechaAgregado(),
-                producto.getFechaCaducidad()
+                "$ " + String.format("%.2f", producto.getPrecioCompra()),
+    "$ " + String.format("%.2f", producto.getPrecioVenta())
             };
             tableModel.addRow(row);
         }

@@ -38,8 +38,8 @@ public class ProductoPersistencia {
             obj.put("nombre", p.getNombre());
             obj.put("codigo", p.getCodigo());
             obj.put("proveedor", p.getProveedor());
-            obj.put("fechaAgregado", DATE_FORMAT.format(p.getFechaAgregado()));
-            obj.put("fechaCaducidad", DATE_FORMAT.format(p.getFechaCaducidad()));
+            obj.put("precioCompra",p.getPrecioCompra());
+            obj.put("precioVenta",p.getPrecioVenta() );
             arrayProductos.add(obj);
         }
 
@@ -59,26 +59,31 @@ public class ProductoPersistencia {
             return productos;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-            JSONParser parser = new JSONParser();
-            JSONArray arrayProductos = (JSONArray) parser.parse(reader);
+      try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        JSONParser parser = new JSONParser();
+        JSONArray arrayProductos = (JSONArray) parser.parse(reader);
 
-            for (Object o : arrayProductos) {
-                JSONObject obj = (JSONObject) o;
-                String nombre = (String) obj.get("nombre");
-                String codigo = (String) obj.get("codigo");
-                String proveedor = (String) obj.get("proveedor");
-                Date fechaAgregado = DATE_FORMAT.parse((String) obj.get("fechaAgregado"));
-                Date fechaCaducidad = DATE_FORMAT.parse((String) obj.get("fechaCaducidad"));
+        for (Object o : arrayProductos) {
+            JSONObject obj = (JSONObject) o;
+            String nombre = (String) obj.get("nombre");
+            String codigo = (String) obj.get("codigo");
+            String proveedor = (String) obj.get("proveedor");
 
-                productos.add(new Producto(nombre, codigo, proveedor, fechaAgregado, fechaCaducidad));
-            }
-        } catch (IOException | ParseException | java.text.ParseException e) {
-            e.printStackTrace();
+            // Validar que los precios existan, si no, asignar 0.0
+            Object precioCompraObj = obj.get("precioCompra");
+            double precioCompra = precioCompraObj != null ? ((Number) precioCompraObj).doubleValue() : 0.0;
+            Object precioVentaObj = obj.get("precioVenta");
+            double precioVenta = precioVentaObj != null ? ((Number) precioVentaObj).doubleValue() : 0.0;
+
+            productos.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta));
         }
-
-        return productos;
+    } catch (IOException | ParseException e) {
+        e.printStackTrace();
     }
+
+    return productos;
+}
+
 
 
     public static void agregarProducto(Producto producto) {
