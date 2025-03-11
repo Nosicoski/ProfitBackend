@@ -49,9 +49,11 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
             }
         });
 
-        lblColocarContraseña.setText("jPasswordField1");
-
-        lblRepetirContraseña.setText("jPasswordField2");
+        lblColocarContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lblColocarContraseñaActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Crear Usuario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,9 +71,8 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreDeUsuario)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblColocarContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                     .addComponent(lblRepetirContraseña)
                     .addGroup(layout.createSequentialGroup()
@@ -132,6 +133,10 @@ String usuario = txtNombreDeUsuario.getText().trim();
     private void txtNombreDeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDeUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDeUsuarioActionPerformed
+
+    private void lblColocarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblColocarContraseñaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblColocarContraseñaActionPerformed
 
     /**
      * @param args the command line arguments
