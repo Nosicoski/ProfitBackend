@@ -32,7 +32,7 @@ public class FrmProductos extends javax.swing.JFrame {
 
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+ setLocationRelativeTo(null);
         cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
@@ -113,7 +113,7 @@ public class FrmProductos extends javax.swing.JFrame {
         jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Productos");
         jLabel1.setToolTipText("");
@@ -217,9 +217,9 @@ public class FrmProductos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnEditar)
-                                        .addComponent(jButton3))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(BtnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(38, 38, 38))

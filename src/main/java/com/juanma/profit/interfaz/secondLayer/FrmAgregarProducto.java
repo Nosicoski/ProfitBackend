@@ -83,6 +83,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
         txtFechaDeAgregadoDelProductoAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        btnAgregarProducto.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btnAgregarProducto.setText("Agregar");
         btnAgregarProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
