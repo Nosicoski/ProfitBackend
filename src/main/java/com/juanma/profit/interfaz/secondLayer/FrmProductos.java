@@ -7,6 +7,7 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -27,13 +28,14 @@ public class FrmProductos extends javax.swing.JFrame {
      * Creates new form Productos
      */
     public FrmProductos() {
+        
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cargarProductosEnTabla();
         // Configurar el filtrado dinámico
         configurarFiltrado();
-
+ 
     }
 
     public void configurarFiltrado() {
@@ -185,7 +187,7 @@ public class FrmProductos extends javax.swing.JFrame {
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addContainerGap(799, Short.MAX_VALUE))
+                        .addContainerGap(853, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,7 +207,7 @@ public class FrmProductos extends javax.swing.JFrame {
                     .addComponent(btnEditar)
                     .addComponent(jButton3)
                     .addComponent(btnActualizar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
