@@ -22,8 +22,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     public FrmAgregarProducto() {
         initComponents();
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    
-     
+    setLocationRelativeTo(null);
+ pack();
     }
 
     /**
