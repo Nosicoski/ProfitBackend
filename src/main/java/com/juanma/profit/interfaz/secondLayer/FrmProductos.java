@@ -7,11 +7,8 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 

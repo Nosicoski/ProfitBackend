@@ -4,11 +4,7 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
-import com.juanma.profit.entidad.Producto;
-import com.juanma.profit.persistencia.ProductoPersistencia;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.swing.JOptionPane;
+
 
 /**
  *
