@@ -4,7 +4,7 @@
  */
 package com.juanma.profit.interfaz;
 
-import com.juanma.profit.interfaz.secondLayer.FrmFacturacion;
+import com.juanma.profit.interfaz.secondLayer.FrmVentas;
 import com.juanma.profit.interfaz.secondLayer.FrmProductos;
 import com.juanma.profit.interfaz.secondLayer.FrmProveedores;
 
@@ -41,7 +41,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar3 = new java.awt.MenuBar();
         menu5 = new java.awt.Menu();
         menu6 = new java.awt.Menu();
-        btnFacturacion = new javax.swing.JButton();
+        btnVentas = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         btnExtras = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -72,12 +72,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(30, 30));
 
-        btnFacturacion.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Facturacion.png")); // NOI18N
-        btnFacturacion.setText("Facturación");
-        btnFacturacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
+        btnVentas.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Facturacion.png")); // NOI18N
+        btnVentas.setText("Ventas");
+        btnVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFacturacionActionPerformed(evt);
+                btnVentasActionPerformed(evt);
             }
         });
 
@@ -140,7 +140,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,7 +159,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,12 +178,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-      
+
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
-    private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
-        
-    }//GEN-LAST:event_btnFacturacionActionPerformed
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        FrmVentas ventas = new FrmVentas();
+        ventas.setVisible(true);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     private void BtnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAjustesActionPerformed
 
@@ -235,9 +236,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnClientes1;
     private javax.swing.JButton btnExtras;
-    private javax.swing.JButton btnFacturacion;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnProveedores;
+    private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
