@@ -172,6 +172,11 @@ public class FrmProductos extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categorias", "Cigarrillos", "Bebidas", "Otros" }));
         jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Actualizar.png")); // NOI18N
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -306,6 +311,15 @@ public class FrmProductos extends javax.swing.JFrame {
     private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased
         filtrarTabla();
     }//GEN-LAST:event_txtBuscarProductoKeyReleased
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        String categoriaSeleccionada = (String) jComboBox1.getSelectedItem();
+    if (categoriaSeleccionada.equals("Categorias")) {
+        rowSorter.setRowFilter(null); // Mostrar todos los productos si no se selecciona una categoría
+    } else {
+        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + categoriaSeleccionada, 5)); // Filtrar por la columna de categoría (índice 5)
+    }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
     public void cargarProductosEnTabla() {
         // Obtener todos los productos desde la persistencia
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
@@ -317,6 +331,7 @@ public class FrmProductos extends javax.swing.JFrame {
         tableModel.addColumn("Proveedor");
         tableModel.addColumn("Precio de Compra");
         tableModel.addColumn("Precio de Venta");
+         tableModel.addColumn("Categoría"); 
 
         // Llenar el modelo con los datos de los productos
         for (Producto producto : productos) {
@@ -325,7 +340,8 @@ public class FrmProductos extends javax.swing.JFrame {
                 producto.getCodigo(),
                 producto.getProveedor(),
                 "$ " + String.format("%.2f", producto.getPrecioCompra()),
-    "$ " + String.format("%.2f", producto.getPrecioVenta())
+    "$ " + String.format("%.2f", producto.getPrecioVenta()),
+                    producto.getCategoria()
             };
             tableModel.addRow(row);
         }

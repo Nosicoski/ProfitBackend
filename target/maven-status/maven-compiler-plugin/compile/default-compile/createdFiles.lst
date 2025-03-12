@@ -49,7 +49,9 @@ com\juanma\profit\interfaz\FrmLogin$3.class
 com\juanma\profit\interfaz\FrmLogin$6.class
 com\juanma\profit\interfaz\secondLayer\FrmEditarProducto$4.class
 com\juanma\profit\interfaz\FrmPrincipal.class
+com\juanma\profit\interfaz\secondLayer\FrmProductos$10.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$4.class
+com\juanma\profit\interfaz\secondLayer\FrmProductos$9.class
 com\juanma\profit\interfaz\FrmRegistro$1.class
 com\juanma\profit\interfaz\FrmLogin$4.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$6.class
@@ -61,3 +63,4 @@ com\juanma\profit\interfaz\secondLayer\FrmProductos.class
 com\juanma\profit\entidad\Usuario.class
 com\juanma\profit\interfaz\FrmLogin$7.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$3.class
+com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$11.class

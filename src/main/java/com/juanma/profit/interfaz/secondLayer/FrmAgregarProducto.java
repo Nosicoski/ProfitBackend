@@ -46,9 +46,9 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         txtPrecioCompraAgregar = new javax.swing.JTextField();
         txtPrecioVentaAgregar = new javax.swing.JTextField();
         txtCodigoDelProductoAgregar = new javax.swing.JTextField();
-        btnCancelar = new javax.swing.JButton();
-        btnAgregarProducto1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        btnAgregarProducto = new javax.swing.JButton();
+        btnCancelarProducto = new javax.swing.JButton();
+        cbxCategoriaProductoAgregar = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -79,6 +79,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         jLabel6.setText("Precio compra del producto");
 
         txtNombreDelProductoAgregar.setToolTipText("");
+        txtNombreDelProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNombreDelProductoAgregar.setName(""); // NOI18N
         txtNombreDelProductoAgregar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -94,6 +95,7 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             }
         });
 
+        txtProveedorDelProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtProveedorDelProductoAgregar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtProveedorDelProductoAgregarFocusGained(evt);
@@ -102,9 +104,18 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 txtProveedorDelProductoAgregarFocusLost(evt);
             }
         });
+        txtProveedorDelProductoAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProveedorDelProductoAgregarActionPerformed(evt);
+            }
+        });
 
+        txtPrecioCompraAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtPrecioVentaAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPrecioVentaAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        txtCodigoDelProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCodigoDelProductoAgregar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCodigoDelProductoAgregarFocusGained(evt);
@@ -114,41 +125,41 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarProducto.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        btnAgregarProducto.setText("Agregar");
+        btnAgregarProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseClicked(evt);
+                btnAgregarProductoMouseClicked(evt);
             }
         });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnAgregarProductoActionPerformed(evt);
             }
         });
 
-        btnAgregarProducto1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        btnAgregarProducto1.setText("Agregar");
-        btnAgregarProducto1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnAgregarProducto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregarProducto1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnCancelarProducto.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        btnCancelarProducto.setText("Cancelar");
+        btnCancelarProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnCancelarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarProducto1MouseClicked(evt);
+                btnCancelarProductoMouseClicked(evt);
             }
         });
-        btnAgregarProducto1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarProducto1ActionPerformed(evt);
+                btnCancelarProductoActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Cigarrillos", "Bebidas", "Otros" }));
-        jComboBox1.setBorder(null);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbxCategoriaProductoAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Cigarrillos", "Bebidas", "Otros" }));
+        cbxCategoriaProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cbxCategoriaProductoAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbxCategoriaProductoAgregarActionPerformed(evt);
             }
         });
 
@@ -162,39 +173,41 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombreDelProductoAgregar)
+                    .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreDelProductoAgregar)
-                            .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                            .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCodigoDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(btnAgregarProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(cbxCategoriaProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodigoDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,10 +225,10 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecioCompraAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -223,12 +236,12 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                    .addComponent(cbxCategoriaProductoAgregar))
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66))
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         txtNombreDelProductoAgregar.getAccessibleContext().setAccessibleName("");
@@ -236,45 +249,21 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    String nombre = txtNombreDelProductoAgregar.getText();
-String codigo = txtCodigoDelProductoAgregar.getText();
-String proveedor = txtProveedorDelProductoAgregar.getText();
-String precioCompraStr = txtPrecioCompraAgregar.getText();
-String precioVentaStr = txtPrecioVentaAgregar.getText();
-// Parsear como dobles
-try {
-    double precioCompra = Double.parseDouble(precioCompraStr);
-    double precioVenta = Double.parseDouble(precioVentaStr);
-Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precioVenta);
-    ProductoPersistencia.agregarProducto(producto);
-    this.dispose();
-} catch (NumberFormatException ex) {
-    JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precios.", "Error", JOptionPane.ERROR_MESSAGE);
-}
-
-    
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void txtNombreDelProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDelProductoAgregarActionPerformed
 
-    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-       
-    }//GEN-LAST:event_btnCancelarMouseClicked
-
-    private void btnAgregarProducto1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProducto1MouseClicked
+    private void btnCancelarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarProductoMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarProducto1MouseClicked
+    }//GEN-LAST:event_btnCancelarProductoMouseClicked
 
-    private void btnAgregarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProducto1ActionPerformed
+    private void btnCancelarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarProducto1ActionPerformed
+    }//GEN-LAST:event_btnCancelarProductoActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbxCategoriaProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaProductoAgregarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbxCategoriaProductoAgregarActionPerformed
 
     private void txtNombreDelProductoAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarFocusGained
   if(txtNombreDelProductoAgregar.getText().equals("Ingresa el nombre")){
@@ -312,6 +301,34 @@ Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precio
     }
     }//GEN-LAST:event_txtProveedorDelProductoAgregarFocusLost
 
+    private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
+        String nombre = txtNombreDelProductoAgregar.getText();
+        String codigo = txtCodigoDelProductoAgregar.getText();
+        String proveedor = txtProveedorDelProductoAgregar.getText();
+        String precioCompraStr = txtPrecioCompraAgregar.getText();
+        String precioVentaStr = txtPrecioVentaAgregar.getText();
+        String categoria = (String) cbxCategoriaProductoAgregar.getSelectedItem();
+        // Parsear como dobles
+        try {
+            double precioCompra = Double.parseDouble(precioCompraStr);
+            double precioVenta = Double.parseDouble(precioVentaStr);
+            Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precioVenta,categoria);
+            ProductoPersistencia.agregarProducto(producto);
+            this.dispose();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precios.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnAgregarProductoActionPerformed
+
+    private void btnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProductoMouseClicked
+
+    }//GEN-LAST:event_btnAgregarProductoMouseClicked
+
+    private void txtProveedorDelProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProveedorDelProductoAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProveedorDelProductoAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -348,9 +365,9 @@ Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precio
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarProducto1;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAgregarProducto;
+    private javax.swing.JButton btnCancelarProducto;
+    private javax.swing.JComboBox<String> cbxCategoriaProductoAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

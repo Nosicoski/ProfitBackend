@@ -15,15 +15,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  *
  * @author juanm
  */
 public class ProductoPersistencia {
+
     private static final String ARCHIVO_PRODUCTOS = "DB/productos.json";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    
     private static void guardarProductos(List<Producto> productos) {
         File archivo = new File(ARCHIVO_PRODUCTOS);
         File directorio = archivo.getParentFile();
@@ -38,8 +39,9 @@ public class ProductoPersistencia {
             obj.put("nombre", p.getNombre());
             obj.put("codigo", p.getCodigo());
             obj.put("proveedor", p.getProveedor());
-            obj.put("precioCompra",p.getPrecioCompra());
-            obj.put("precioVenta",p.getPrecioVenta() );
+            obj.put("precioCompra", p.getPrecioCompra());
+            obj.put("precioVenta", p.getPrecioVenta());
+            obj.put("categoria", p.getCategoria());
             arrayProductos.add(obj);
         }
 
@@ -50,7 +52,6 @@ public class ProductoPersistencia {
         }
     }
 
-    
     private static List<Producto> cargarProductos() {
         List<Producto> productos = new ArrayList<>();
         File archivo = new File(ARCHIVO_PRODUCTOS);
@@ -59,32 +60,30 @@ public class ProductoPersistencia {
             return productos;
         }
 
-      try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-        JSONParser parser = new JSONParser();
-        JSONArray arrayProductos = (JSONArray) parser.parse(reader);
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            JSONParser parser = new JSONParser();
+            JSONArray arrayProductos = (JSONArray) parser.parse(reader);
 
-        for (Object o : arrayProductos) {
-            JSONObject obj = (JSONObject) o;
-            String nombre = (String) obj.get("nombre");
-            String codigo = (String) obj.get("codigo");
-            String proveedor = (String) obj.get("proveedor");
+            for (Object o : arrayProductos) {
+                JSONObject obj = (JSONObject) o;
+                String nombre = (String) obj.get("nombre");
+                String codigo = (String) obj.get("codigo");
+                String proveedor = (String) obj.get("proveedor");
 
-            // Validar que los precios existan, si no, asignar 0.0
-            Object precioCompraObj = obj.get("precioCompra");
-            double precioCompra = precioCompraObj != null ? ((Number) precioCompraObj).doubleValue() : 0.0;
-            Object precioVentaObj = obj.get("precioVenta");
-            double precioVenta = precioVentaObj != null ? ((Number) precioVentaObj).doubleValue() : 0.0;
+                Object precioCompraObj = obj.get("precioCompra");
+                double precioCompra = precioCompraObj != null ? ((Number) precioCompraObj).doubleValue() : 0.0;
+                Object precioVentaObj = obj.get("precioVenta");
+                double precioVenta = precioVentaObj != null ? ((Number) precioVentaObj).doubleValue() : 0.0;
+                String categoria = (String) obj.get("categoria");
 
-            productos.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta));
+                productos.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-    } catch (IOException | ParseException e) {
-        e.printStackTrace();
+
+        return productos;
     }
-
-    return productos;
-}
-
-
 
     public static void agregarProducto(Producto producto) {
         List<Producto> productos = cargarProductos();
@@ -92,7 +91,6 @@ public class ProductoPersistencia {
         guardarProductos(productos);
     }
 
- 
     public static List<Producto> obtenerTodos() {
         return cargarProductos();
     }
