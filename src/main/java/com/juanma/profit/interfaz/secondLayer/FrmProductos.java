@@ -19,43 +19,93 @@ import javax.swing.table.TableRowSorter;
  *
  * @author juanm
  */
+/**
+ * Clase que representa la interfaz gráfica para gestionar productos. Permite
+ * visualizar, agregar, editar y eliminar productos, así como filtrarlos por
+ * nombre o categoría. Los productos se muestran en una tabla y se pueden
+ * manipular mediante botones.
+ */
 public class FrmProductos extends javax.swing.JFrame {
 
-    private DefaultTableModel tableModel; 
+    private DefaultTableModel tableModel;
     private TableRowSorter<DefaultTableModel> rowSorter; // Filtrador de filas
 
     public FrmProductos() {
-
+        /**
+         * Constructor de la clase FrmProductos. Inicializa la interfaz gráfica,
+         * carga los productos en la tabla y configura el filtrado.
+         */
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         cargarProductosEnTabla();
         configurarFiltrado();
         setLocationRelativeTo(null);
-        pack(); 
+        pack();
     }
 
+    /**
+     * Configura el filtrado de la tabla para permitir la búsqueda de productos.
+     */
     public void configurarFiltrado() {
-       
+
         tableModel = (DefaultTableModel) jTable2.getModel();
         rowSorter = new TableRowSorter<>(tableModel);
         jTable2.setRowSorter(rowSorter);
 
     }
 
+    /**
+     * Filtra la tabla de productos según el texto de búsqueda ingresado.
+     */
     private void filtrarTabla() {
-       
+
         String textoBusqueda = txtBuscarProducto.getText().trim();
 
-        
         if (textoBusqueda.length() == 0) {
             rowSorter.setRowFilter(null);
         } else {
-           
+
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda));
         }
     }
+/**
+     * Carga los productos desde la persistencia y los muestra en la tabla.
+     */
+    public void cargarProductosEnTabla() {
 
-  
+        List<Producto> productos = ProductoPersistencia.obtenerTodos();
+
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Nombre");
+        tableModel.addColumn("Código");
+        tableModel.addColumn("Proveedor");
+        tableModel.addColumn("Precio de Compra");
+        tableModel.addColumn("Precio de Venta");
+        tableModel.addColumn("Categoría");
+
+        for (Producto producto : productos) {
+            Object[] row = new Object[]{
+                producto.getNombre(),
+                producto.getCodigo(),
+                producto.getProveedor(),
+                "$ " + String.format("%.2f", producto.getPrecioCompra()),
+                "$ " + String.format("%.2f", producto.getPrecioVenta()),
+                producto.getCategoria()
+            };
+            tableModel.addRow(row);
+        }
+
+        jTable2.setModel(tableModel);
+    }
+
+    public static void main(String args[]) {
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FrmProductos().setVisible(true);
+            }
+        });
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,7 +209,7 @@ public class FrmProductos extends javax.swing.JFrame {
         });
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categorias", "Cigarrillos", "Bebidas", "Otros" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtrar", "Cigarrillos", "Bebidas", "Otros" }));
         jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,14 +286,14 @@ public class FrmProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarProductoActionPerformed
-       
+
     }//GEN-LAST:event_BtnAgregarProductoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int filaSeleccionadaModificar = jTable2.getSelectedRow();
         if (filaSeleccionadaModificar == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return; 
+            return;
         }
 
         FrmEditarProducto editarProducto = new FrmEditarProducto();
@@ -279,8 +329,9 @@ public class FrmProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    
     private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
-       
+
     }//GEN-LAST:event_txtBuscarProductoActionPerformed
 
     private void BtnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProductoMouseClicked
@@ -301,51 +352,14 @@ public class FrmProductos extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String categoriaSeleccionada = (String) jComboBox1.getSelectedItem();
-    if (categoriaSeleccionada.equals("Categorias")) {
-        rowSorter.setRowFilter(null); 
-    } else {
-        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + categoriaSeleccionada, 5));
-    }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-    public void cargarProductosEnTabla() {
-
-        List<Producto> productos = ProductoPersistencia.obtenerTodos();
-
-       
-        tableModel = new DefaultTableModel();
-        tableModel.addColumn("Nombre");
-        tableModel.addColumn("Código");
-        tableModel.addColumn("Proveedor");
-        tableModel.addColumn("Precio de Compra");
-        tableModel.addColumn("Precio de Venta");
-         tableModel.addColumn("Categoría"); 
-
-        for (Producto producto : productos) {
-            Object[] row = new Object[]{
-                producto.getNombre(),
-                producto.getCodigo(),
-                producto.getProveedor(),
-                "$ " + String.format("%.2f", producto.getPrecioCompra()),
-    "$ " + String.format("%.2f", producto.getPrecioVenta()),
-                    producto.getCategoria()
-            };
-            tableModel.addRow(row);
+        if (categoriaSeleccionada.equals("Categorias")) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + categoriaSeleccionada, 5));
         }
-
-        
-        jTable2.setModel(tableModel);
-    }
-
-  
-    public static void main(String args[]) {
-       
-       
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmProductos().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+    
+     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

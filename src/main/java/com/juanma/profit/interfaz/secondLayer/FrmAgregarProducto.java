@@ -14,6 +14,11 @@ import javax.swing.JOptionPane;
  *
  * @author juanm
  */
+/**
+ * Clase que representa la interfaz gráfica para agregar un nuevo producto.
+ * Permite ingresar los detalles del producto, como nombre, código, proveedor, precios y categoría.
+ * Los datos ingresados se validan antes de agregar el producto a la persistencia.
+ */
 public class FrmAgregarProducto extends javax.swing.JFrame {
 
    
