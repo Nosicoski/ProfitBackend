@@ -16,6 +16,7 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
     public FrmCrearCuenta() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+         setLocationRelativeTo(null);
     }
 
     /**
