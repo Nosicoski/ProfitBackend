@@ -45,7 +45,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bienvenido a Profit");
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\IconLogo.png")); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -61,6 +61,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Usuario:");
 
         CbxMostrar.setText("Mostrar");
+        CbxMostrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         CbxMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CbxMostrarActionPerformed(evt);
@@ -152,7 +153,7 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(LblOlvidoContraseña))
                 .addGap(100, 100, 100)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();

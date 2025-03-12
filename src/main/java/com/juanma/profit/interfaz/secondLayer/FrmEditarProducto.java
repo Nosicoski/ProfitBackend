@@ -43,8 +43,8 @@ public class FrmEditarProducto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtNombreDelProductoEditar = new javax.swing.JTextField();
         txtProveedorDelProductoEditar = new javax.swing.JTextField();
-        txtFechaCaducidadProductoEditar = new javax.swing.JTextField();
-        txtFechaDeAgregadoDelProductoEditar = new javax.swing.JTextField();
+        txtPrecioCompraProductoEditar = new javax.swing.JTextField();
+        txtPrecioVentaProductoEditar = new javax.swing.JTextField();
         txtCodigoDelProductoEditar = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
 
@@ -65,10 +65,10 @@ public class FrmEditarProducto extends javax.swing.JFrame {
         jLabel4.setText("Proveedor del producto");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel5.setText("Fecha de agregado del producto");
+        jLabel5.setText("Precio venta del producto");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel6.setText("Fecha de caducidad del producto");
+        jLabel6.setText("Precio compra del producto");
 
         txtNombreDelProductoEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +76,7 @@ public class FrmEditarProducto extends javax.swing.JFrame {
             }
         });
 
-        txtFechaDeAgregadoDelProductoEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtPrecioVentaProductoEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btnAgregarProducto.setText("Editar");
         btnAgregarProducto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -107,11 +107,11 @@ public class FrmEditarProducto extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtNombreDelProductoEditar)
                     .addComponent(txtProveedorDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaCaducidadProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                    .addComponent(txtFechaDeAgregadoDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtPrecioCompraProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(txtPrecioVentaProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addComponent(txtCodigoDelProductoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,11 +132,11 @@ public class FrmEditarProducto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaCaducidadProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrecioCompraProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtFechaDeAgregadoDelProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrecioVentaProductoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(258, Short.MAX_VALUE))
@@ -203,9 +203,9 @@ public class FrmEditarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtCodigoDelProductoEditar;
-    private javax.swing.JTextField txtFechaCaducidadProductoEditar;
-    private javax.swing.JTextField txtFechaDeAgregadoDelProductoEditar;
     private javax.swing.JTextField txtNombreDelProductoEditar;
+    private javax.swing.JTextField txtPrecioCompraProductoEditar;
+    private javax.swing.JTextField txtPrecioVentaProductoEditar;
     private javax.swing.JTextField txtProveedorDelProductoEditar;
     // End of variables declaration//GEN-END:variables
 

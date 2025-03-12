@@ -12,24 +12,24 @@ import java.util.Date;
  */
 public class Producto {
     
-    private int id;
     private String nombre;
     private String codigo;
     private String proveedor;
     private double precioCompra;
     private double precioVenta;
+    private String categoria; 
 
-    public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta) {
-        this.id = id;
+    public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta, String categoria) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.proveedor = proveedor;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
+        this.categoria = categoria;
     }
 
     
-
+  
     public Producto() {
     }
 
@@ -65,6 +65,13 @@ public class Producto {
         return precioVenta;
     }
 
-  
+   public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     
 }

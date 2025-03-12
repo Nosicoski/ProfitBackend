@@ -75,7 +75,7 @@
               </Group>
               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
               <Component id="btnIniciarSesion" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace pref="159" max="32767" attributes="0"/>
+              <EmptySpace pref="129" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,7 +87,9 @@
           <Font name="Segoe UI" size="14" style="3"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Bienvenido a Profit"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\juanm\Documents\NetBeansProjects\Profit\src\main\java\com\juanma\profit\src\imagenes\IconLogo.png"/>
+        </Property>
         <Property name="verticalAlignment" type="int" value="1"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -127,6 +129,9 @@
     <Component class="javax.swing.JCheckBox" name="CbxMostrar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Mostrar"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CbxMostrarActionPerformed"/>
