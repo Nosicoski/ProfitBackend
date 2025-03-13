@@ -11,13 +11,13 @@ import java.util.Date;
  * @author juanm
  */
 public class Producto {
-    
+
     private String nombre;
     private String codigo;
     private String proveedor;
     private double precioCompra;
     private double precioVenta;
-    private String categoria; 
+    private String categoria;
 
     public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta, String categoria) {
         this.nombre = nombre;
@@ -28,8 +28,6 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    
-  
     public Producto() {
     }
 
@@ -65,7 +63,7 @@ public class Producto {
         return precioVenta;
     }
 
-   public String getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
@@ -73,5 +71,4 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    
 }

@@ -20,11 +20,23 @@ import java.util.List;
  *
  * @author juanm
  */
+/**
+ * Clase encargada de gestionar la persistencia de los PRODUCTOS en un archivo
+ * JSON. Proporciona métodos para guardar, cargar, agregar, eliminar y obtener
+ * todos los PRODUCTOS. Los productos se almacenan en un archivo JSON ubicado en
+ * la ruta especificada por ARCHIVO_PRODUCTOS.
+ */
 public class ProductoPersistencia {
 
     private static final String ARCHIVO_PRODUCTOS = "DB/productos.json";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  
 
+    /**
+     * Guarda la lista de productos en un archivo JSON. Si el directorio no
+     * existe, lo crea antes de guardar los datos.
+     *
+     * @param productos Lista de productos a guardar.
+     */
     private static void guardarProductos(List<Producto> productos) {
         File archivo = new File(ARCHIVO_PRODUCTOS);
         File directorio = archivo.getParentFile();
@@ -52,6 +64,12 @@ public class ProductoPersistencia {
         }
     }
 
+    /**
+     * Carga la lista de productos desde un archivo JSON. Si el archivo no
+     * existe, retorna una lista vacía.
+     *
+     * @return Lista de productos cargados desde el archivo JSON.
+     */
     private static List<Producto> cargarProductos() {
         List<Producto> productos = new ArrayList<>();
         File archivo = new File(ARCHIVO_PRODUCTOS);
@@ -85,6 +103,12 @@ public class ProductoPersistencia {
         return productos;
     }
 
+    /**
+     * Agrega un nuevo producto a la lista y guarda los cambios en el archivo
+     * JSON.
+     *
+     * @param producto Producto a agregar.
+     */
     public static void agregarProducto(Producto producto) {
         List<Producto> productos = cargarProductos();
         productos.add(producto);
@@ -95,6 +119,12 @@ public class ProductoPersistencia {
         return cargarProductos();
     }
 
+    /**
+     * Elimina un producto de la lista basado en su código y guarda los cambios
+     * en el archivo JSON.
+     *
+     * @param codigo Código del producto a eliminar.
+     */
     public static void eliminarProducto(String codigo) {
         List<Producto> productos = cargarProductos();
         productos.removeIf(p -> p.getCodigo().equals(codigo));

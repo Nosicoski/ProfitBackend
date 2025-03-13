@@ -16,6 +16,7 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
     public FrmCrearCuenta() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -118,30 +119,28 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-String usuario = txtNombreDeUsuario.getText().trim();
-    String contraseña = new String(lblColocarContraseña.getPassword());
-    String repetirContraseña = new String(lblRepetirContraseña.getPassword());
-      // Verificar que se hayan ingresado datos
-    if(usuario.isEmpty() || contraseña.isEmpty() || repetirContraseña.isEmpty()){
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
-        return;
-    }
-    
-   
-    if (!contraseña.equals(repetirContraseña)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden, por favor intente nuevamente.");
-        return;
-    }
-    
-   
-    boolean registroExitoso = com.juanma.profit.persistencia.UsuarioPersistencia.registrarUsuario(usuario, contraseña);
-    
-    if (registroExitoso) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
-        this.dispose(); 
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "El usuario ya existe, elija otro nombre de usuario.");
-    }
+        String usuario = txtNombreDeUsuario.getText().trim();
+        String contraseña = new String(lblColocarContraseña.getPassword());
+        String repetirContraseña = new String(lblRepetirContraseña.getPassword());
+        // Verificar que se hayan ingresado datos
+        if (usuario.isEmpty() || contraseña.isEmpty() || repetirContraseña.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+            return;
+        }
+
+        if (!contraseña.equals(repetirContraseña)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden, por favor intente nuevamente.");
+            return;
+        }
+
+        boolean registroExitoso = com.juanma.profit.persistencia.UsuarioPersistencia.registrarUsuario(usuario, contraseña);
+
+        if (registroExitoso) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "El usuario ya existe, elija otro nombre de usuario.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtNombreDeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDeUsuarioActionPerformed

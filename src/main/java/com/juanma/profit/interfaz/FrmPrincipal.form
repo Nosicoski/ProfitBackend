@@ -78,7 +78,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnProductos" min="-2" pref="172" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnFacturacion" min="-2" pref="177" max="-2" attributes="0"/>
+              <Component id="btnVentas" min="-2" pref="177" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnProveedores" min="-2" pref="167" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnProductos" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                  <Component id="btnFacturacion" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="btnVentas" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnProveedores" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnExtras" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnClientes1" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
@@ -114,18 +114,18 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnFacturacion">
+    <Component class="javax.swing.JButton" name="btnVentas">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="2" name="C:\Users\juanm\Documents\NetBeansProjects\Profit\src\main\java\com\juanma\profit\src\imagenes\Facturacion.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Ventas"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Mano"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFacturacionActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentasActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnProductos">
