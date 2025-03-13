@@ -4,21 +4,59 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
+import com.juanma.profit.entidad.Producto;
+import com.juanma.profit.entidad.Venta;
+import com.juanma.profit.persistencia.VentaPersistencia;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author juanm
  */
 public class FrmVentas extends javax.swing.JFrame {
 
-   
+    private DefaultTableModel tableModelVentas;
+
     public FrmVentas() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        cargarVentasEnTabla();
         pack();
+
+    }
+private void cargarVentasEnTabla() {
+       List<Venta> ventas = VentaPersistencia.obtenerTodas();
+        tableModelVentas = new DefaultTableModel();
+        tableModelVentas.addColumn("ID");
+        tableModelVentas.addColumn("Productos");
+        tableModelVentas.addColumn("Importe");
+        tableModelVentas.addColumn("Categoría");
+
+        for (Venta venta : ventas) {
+            String productos = venta.getProductos().stream()
+                    .map(Producto::getNombre)
+                    .reduce((p1, p2) -> p1 + ", " + p2)
+                    .orElse("");
+            Object[] row = new Object[]{
+                venta.getId(),
+                productos,
+                venta.getImporte(),
+                venta.getCategoria()
+            };
+            tableModelVentas.addRow(row);
+        }
+
+        jTable1.setModel(tableModelVentas); // Asignar el modelo a la tabla
     }
 
-  
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Actualizar".
+     * Recarga las ventas desde la persistencia y actualiza la tabla.
+     */
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -30,6 +68,9 @@ public class FrmVentas extends javax.swing.JFrame {
         btnEliminarVenta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        txtBuscarVentaP = new javax.swing.JTextField();
+        mostrarCaja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,25 +129,57 @@ public class FrmVentas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel4.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Buscar");
+        jLabel4.setToolTipText("");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtBuscarVentaP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtBuscarVentaP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarVentaPActionPerformed(evt);
+            }
+        });
+        txtBuscarVentaP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarVentaPKeyReleased(evt);
+            }
+        });
+
+        mostrarCaja.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Caja.png")); // NOI18N
+        mostrarCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarCajaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnActualizarVentas)
-                .addGap(39, 39, 39)
-                .addComponent(btnAgregarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditarVenta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminarVenta))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mostrarCaja)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizarVentas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarVenta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEditarVenta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarVenta))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,11 +187,17 @@ public class FrmVentas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEliminarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnActualizarVentas, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(38, 38, 38)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnEditarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnEliminarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnAgregarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnActualizarVentas, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(mostrarCaja, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -127,12 +206,14 @@ public class FrmVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentasActionPerformed
-      
+ cargarVentasEnTabla(); // Recargar las ventas
+        JOptionPane.showMessageDialog(this, "Ventas actualizadas.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnActualizarVentasActionPerformed
 
     private void btnAgregarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVentaMouseClicked
-        FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
-        agregarProducto.setVisible(true);
+        FrmAgregarVenta ventaAgregar = new FrmAgregarVenta();
+        ventaAgregar.setVisible(true);
+
 
     }//GEN-LAST:event_btnAgregarVentaMouseClicked
 
@@ -141,13 +222,25 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     private void btnEditarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarVentaActionPerformed
-     
+
     }//GEN-LAST:event_btnEditarVentaActionPerformed
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
 
-      
+
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
+
+    private void txtBuscarVentaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarVentaPActionPerformed
+
+    }//GEN-LAST:event_txtBuscarVentaPActionPerformed
+
+    private void txtBuscarVentaPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarVentaPKeyReleased
+
+    }//GEN-LAST:event_txtBuscarVentaPKeyReleased
+
+    private void mostrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mostrarCajaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,7 +284,10 @@ public class FrmVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarVenta;
     private javax.swing.JButton btnEliminarVenta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton mostrarCaja;
+    private javax.swing.JTextField txtBuscarVentaP;
     // End of variables declaration//GEN-END:variables
 }

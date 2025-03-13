@@ -29,7 +29,7 @@ import java.util.List;
 public class ProductoPersistencia {
 
     private static final String ARCHIVO_PRODUCTOS = "DB/productos.json";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  
 
     /**
      * Guarda la lista de productos en un archivo JSON. Si el directorio no
