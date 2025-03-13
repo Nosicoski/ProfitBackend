@@ -40,7 +40,7 @@ public class VentaPersistencia {
         JSONObject obj = new JSONObject();
         obj.put("id", venta.getId());
         obj.put("importe", venta.getImporte());
-        obj.put("codigoProducto", venta.getCodigoProducto());
+        obj.put("Producto", venta.getCodigoProducto());
         obj.put("categoria", venta.getCategoria());
         obj.put("fecha", DATE_FORMAT.format(new Date())); // Guarda la fecha actual
 
@@ -50,8 +50,6 @@ public class VentaPersistencia {
             JSONObject prodObj = new JSONObject();
             prodObj.put("nombre", p.getNombre());
             prodObj.put("codigo", p.getCodigo());
-            prodObj.put("proveedor", p.getProveedor());
-            prodObj.put("precioCompra", p.getPrecioCompra());
             prodObj.put("precioVenta", p.getPrecioVenta());
             prodObj.put("categoria", p.getCategoria());
             productosArray.add(prodObj);
@@ -90,7 +88,6 @@ public class VentaPersistencia {
             JSONObject obj = (JSONObject) o;
             int id = ((Long) obj.get("id")).intValue();
             String importe = (String) obj.get("importe");
-            double codigoProducto = (double) obj.get("codigoProducto");
             String categoria = (String) obj.get("categoria");
 
             //  Cargar productos de la venta
@@ -111,7 +108,7 @@ public class VentaPersistencia {
             }
 
             // 🔹 Ahora creamos la venta con los productos cargados
-            ventas.add(new Venta(id, productosVenta, importe, codigoProducto, categoria));
+            ventas.add(new Venta(id, productosVenta, importe, categoria));
         }
     } catch (IOException | ParseException e) {
         e.printStackTrace();

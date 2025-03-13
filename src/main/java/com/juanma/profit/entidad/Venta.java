@@ -17,7 +17,7 @@ public class Venta {
     private double codigoProducto;
     private String categoria;
 
-    public Venta(int id, List<Producto> productos, String importe, double codigoProducto, String categoria) {
+    public Venta(int id, List<Producto> productos, String importe, String categoria) {
         this.id = id;
         this.productos = productos;
         this.importe = importe;

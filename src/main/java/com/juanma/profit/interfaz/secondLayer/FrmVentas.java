@@ -31,34 +31,35 @@ public class FrmVentas extends javax.swing.JFrame {
     }
 
    private void cargarVentasEnTabla() {
-        List<Venta> ventas = VentaPersistencia.obtenerTodas();
-        tableModelVentas = new DefaultTableModel();
+    List<Venta> ventas = VentaPersistencia.obtenerTodas();
+    tableModelVentas = new DefaultTableModel();
 
-       
-        tableModelVentas.addColumn("Productos");
-       
-        tableModelVentas.addColumn("Categoría");
-        tableModelVentas.addColumn("Total Elementos Vendidos");
+    // Añade todas las columnas necesarias
+    tableModelVentas.addColumn("ID");
+    tableModelVentas.addColumn("Productos");
+    tableModelVentas.addColumn("Importe");
+    tableModelVentas.addColumn("Categoría");
+    tableModelVentas.addColumn("Total Elementos Vendidos");
 
-        for (Venta venta : ventas) {
-            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
-            String productos = productosVenta.stream()
-                    .map(Producto::getNombre)
-                    .reduce((p1, p2) -> p1 + ", " + p2)
-                    .orElse("Sin productos");
-            int totalElementos = productosVenta.size();
+    for (Venta venta : ventas) {
+        List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+        String productos = productosVenta.stream()
+                .map(Producto::getNombre)
+                .reduce((p1, p2) -> p1 + ", " + p2)
+                .orElse("Sin productos");
+        int totalElementos = productosVenta.size();
 
-            Object[] row = {
-                venta.getId(),
-                productos,
-                venta.getImporte(),
-                venta.getCategoria(),
-                totalElementos
-            };
-            tableModelVentas.addRow(row);
-        }
-        jTable1.setModel(tableModelVentas);
+        Object[] row = {
+            venta.getId(),
+            productos,
+            venta.getImporte(),
+            venta.getCategoria(),
+            totalElementos
+        };
+        tableModelVentas.addRow(row);
     }
+    jTable1.setModel(tableModelVentas);
+}
 
     /**
      * Método que se ejecuta al hacer clic en el botón "Actualizar". Recarga las

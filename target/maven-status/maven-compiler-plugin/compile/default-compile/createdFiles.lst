@@ -51,6 +51,7 @@ com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$7.class
 com\juanma\profit\interfaz\FrmPrincipal$6.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$1.class
 com\juanma\profit\interfaz\secondLayer\FrmMostrarCajaVentas$1.class
+com\juanma\profit\interfaz\FrmPrincipal$7.class
 com\juanma\profit\persistencia\VentaPersistencia.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$12.class
 com\juanma\profit\interfaz\secondLayer\FrmProveedores.class

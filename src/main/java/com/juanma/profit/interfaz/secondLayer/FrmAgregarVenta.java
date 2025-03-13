@@ -197,7 +197,9 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-       int[] selectedRows = jTable1.getSelectedRows();
+     
+        
+        int[] selectedRows = jTable1.getSelectedRows();
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
