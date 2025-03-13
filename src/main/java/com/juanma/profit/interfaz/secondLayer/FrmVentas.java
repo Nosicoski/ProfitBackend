@@ -7,9 +7,11 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.entidad.Venta;
 import com.juanma.profit.persistencia.VentaPersistencia;
+import java.util.Collections;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -27,36 +29,41 @@ public class FrmVentas extends javax.swing.JFrame {
         pack();
 
     }
-private void cargarVentasEnTabla() {
-       List<Venta> ventas = VentaPersistencia.obtenerTodas();
+
+   private void cargarVentasEnTabla() {
+        List<Venta> ventas = VentaPersistencia.obtenerTodas();
         tableModelVentas = new DefaultTableModel();
-        tableModelVentas.addColumn("ID");
+
+       
         tableModelVentas.addColumn("Productos");
-        tableModelVentas.addColumn("Importe");
+       
         tableModelVentas.addColumn("Categoría");
+        tableModelVentas.addColumn("Total Elementos Vendidos");
 
         for (Venta venta : ventas) {
-            String productos = venta.getProductos().stream()
+            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+            String productos = productosVenta.stream()
                     .map(Producto::getNombre)
                     .reduce((p1, p2) -> p1 + ", " + p2)
-                    .orElse("");
-            Object[] row = new Object[]{
+                    .orElse("Sin productos");
+            int totalElementos = productosVenta.size();
+
+            Object[] row = {
                 venta.getId(),
                 productos,
                 venta.getImporte(),
-                venta.getCategoria()
+                venta.getCategoria(),
+                totalElementos
             };
             tableModelVentas.addRow(row);
         }
-
-        jTable1.setModel(tableModelVentas); // Asignar el modelo a la tabla
+        jTable1.setModel(tableModelVentas);
     }
 
     /**
-     * Método que se ejecuta al hacer clic en el botón "Actualizar".
-     * Recarga las ventas desde la persistencia y actualiza la tabla.
+     * Método que se ejecuta al hacer clic en el botón "Actualizar". Recarga las
+     * ventas desde la persistencia y actualiza la tabla.
      */
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -206,7 +213,7 @@ private void cargarVentasEnTabla() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentasActionPerformed
- cargarVentasEnTabla(); // Recargar las ventas
+        cargarVentasEnTabla(); // Recargar las ventas
         JOptionPane.showMessageDialog(this, "Ventas actualizadas.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnActualizarVentasActionPerformed
 

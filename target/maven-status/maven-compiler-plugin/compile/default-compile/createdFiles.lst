@@ -5,6 +5,7 @@ com\juanma\profit\entidad\Proveedor.class
 com\juanma\profit\interfaz\FrmPrincipal$1.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarVenta$3.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$7.class
+com\juanma\profit\interfaz\secondLayer\FrmVentas$8.class
 com\juanma\profit\interfaz\FrmCrearCuenta$3.class
 com\juanma\profit\interfaz\FrmLogin$1.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$2.class
@@ -35,6 +36,7 @@ com\juanma\profit\interfaz\FrmCrearCuenta.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$1.class
 com\juanma\profit\interfaz\secondLayer\FrmEditarProducto$3.class
 com\juanma\profit\entidad\Venta.class
+com\juanma\profit\interfaz\secondLayer\FrmMostrarCajaVentas.class
 com\juanma\profit\interfaz\FrmPrincipal$5.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$6.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$9.class
@@ -44,9 +46,11 @@ com\juanma\profit\interfaz\FrmPrincipal$3.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$3.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$3.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$5.class
+com\juanma\profit\interfaz\secondLayer\FrmVentas$7.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$7.class
 com\juanma\profit\interfaz\FrmPrincipal$6.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$1.class
+com\juanma\profit\interfaz\secondLayer\FrmMostrarCajaVentas$1.class
 com\juanma\profit\persistencia\VentaPersistencia.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$12.class
 com\juanma\profit\interfaz\secondLayer\FrmProveedores.class
@@ -71,6 +75,7 @@ com\juanma\profit\interfaz\FrmCrearCuenta$2.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$6.class
 com\juanma\profit\entidad\Usuario.class
+com\juanma\profit\interfaz\secondLayer\FrmVentas$9.class
 com\juanma\profit\interfaz\FrmLogin$7.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$3.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$11.class
