@@ -27,44 +27,38 @@ public class VentaPersistencia {
      *
      * @param ventas Lista de ventas a guardar.
      */
-    private static void guardarVentas(List<Venta> ventas) {
-    File archivo = new File(ARCHIVO_VENTAS);
-    File directorio = archivo.getParentFile();
-
-    if (directorio != null && !directorio.exists()) {
-        directorio.mkdirs();
-    }
-
+  private static void guardarVentas(List<Venta> ventas) {
     JSONArray arrayVentas = new JSONArray();
     for (Venta venta : ventas) {
         JSONObject obj = new JSONObject();
         obj.put("id", venta.getId());
         obj.put("importe", venta.getImporte());
-        obj.put("Producto", venta.getCodigoProducto());
-        obj.put("categoria", venta.getCategoria());
-        obj.put("fecha", DATE_FORMAT.format(new Date())); // Guarda la fecha actual
 
-        // 🔹 Guardar la lista de productos dentro de la venta
+        // Guardar productos
         JSONArray productosArray = new JSONArray();
         for (Producto p : venta.getProductos()) {
             JSONObject prodObj = new JSONObject();
             prodObj.put("nombre", p.getNombre());
             prodObj.put("codigo", p.getCodigo());
+            prodObj.put("proveedor", p.getProveedor());
+            prodObj.put("precioCompra", p.getPrecioCompra());
             prodObj.put("precioVenta", p.getPrecioVenta());
             prodObj.put("categoria", p.getCategoria());
             productosArray.add(prodObj);
         }
-        obj.put("productos", productosArray); // Agregar productos al JSON
+        obj.put("productos", productosArray);
 
         arrayVentas.add(obj);
     }
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
+    // Guardar en el archivo JSON
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_VENTAS))) {
         writer.write(arrayVentas.toJSONString());
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
 
     /**
      * Carga las ventas desde el archivo JSON.
@@ -72,7 +66,7 @@ public class VentaPersistencia {
      *
      * @return Lista de ventas cargadas desde el archivo JSON.
      */
-   private static List<Venta> cargarVentas() {
+ private static List<Venta> cargarVentas() {
     List<Venta> ventas = new ArrayList<>();
     File archivo = new File(ARCHIVO_VENTAS);
 
@@ -88,27 +82,29 @@ public class VentaPersistencia {
             JSONObject obj = (JSONObject) o;
             int id = ((Long) obj.get("id")).intValue();
             String importe = (String) obj.get("importe");
-            String categoria = (String) obj.get("categoria");
 
-            //  Cargar productos de la venta
+            // Cargar la lista de productos
             List<Producto> productosVenta = new ArrayList<>();
             JSONArray productosArray = (JSONArray) obj.get("productos");
-            if (productosArray != null) { // Evitar NullPointerException
+            if (productosArray != null) {
                 for (Object prodObj : productosArray) {
                     JSONObject prodJson = (JSONObject) prodObj;
                     String nombre = (String) prodJson.get("nombre");
                     String codigo = (String) prodJson.get("codigo");
                     String proveedor = (String) prodJson.get("proveedor");
-                    double precioCompra = ((Number) prodJson.get("precioCompra")).doubleValue();
-                    double precioVenta = ((Number) prodJson.get("precioVenta")).doubleValue();
-                    String categoriaProd = (String) prodJson.get("categoria");
+                    double precioCompra = prodJson.get("precioCompra") != null ?
+                            ((Number) prodJson.get("precioCompra")).doubleValue() : 0.0;
+                    double precioVenta = prodJson.get("precioVenta") != null ?
+                            ((Number) prodJson.get("precioVenta")).doubleValue() : 0.0;
+                    String categoria = (String) prodJson.get("categoria");
 
-                    productosVenta.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoriaProd));
+                    // Crear el producto con todos los campos necesarios
+                    productosVenta.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
                 }
             }
 
-            // 🔹 Ahora creamos la venta con los productos cargados
-            ventas.add(new Venta(id, productosVenta, importe, categoria));
+            // Crear la venta con los datos cargados
+            ventas.add(new Venta(id, productosVenta, importe));
         }
     } catch (IOException | ParseException e) {
         e.printStackTrace();
@@ -117,23 +113,47 @@ public class VentaPersistencia {
     return ventas;
 }
 
-    /**
-     * Agrega una nueva venta a la lista y guarda los cambios en el archivo JSON.
-     *
-     * @param venta Venta a agregar.
-     */
+  
     public static void agregarVenta(Venta venta) {
-        List<Venta> ventas = cargarVentas();
-        ventas.add(venta);
-        guardarVentas(ventas);
+       {
+ 
+    List<Venta> ventas = cargarVentas();
+
+   
+    int nuevoId = 0; 
+    if (!ventas.isEmpty()) {
+       
+        int ultimoId = ventas.stream()
+                            .mapToInt(Venta::getId)
+                            .max()
+                            .orElse(0);
+        nuevoId = ultimoId + 1;
     }
 
-    /**
-     * Obtiene todas las ventas almacenadas en el archivo JSON.
-     *
-     * @return Lista de todas las ventas.
-     */
+   
+    venta.setId(nuevoId);
+
+    ventas.add(venta);
+
+    
+    guardarVentas(ventas);
+}
+    }
+
+    
     public static List<Venta> obtenerTodas() {
         return cargarVentas();
     }
+   
+    public static void eliminarVenta(int id) {
+    List<Venta> ventas = cargarVentas();
+    boolean ventaEliminada = ventas.removeIf(venta -> venta.getId() == id);
+    guardarVentas(ventas);
+
+    if (ventaEliminada) {
+        System.out.println("Venta con ID " + id + " eliminada correctamente.");
+    } else {
+        System.out.println("No se encontró ninguna venta con el ID: " + id);
+    }
+}
 }

@@ -15,14 +15,14 @@ public class Venta {
     List<Producto> productos;
     private String importe;
     private double codigoProducto;
-    private String categoria;
 
-    public Venta(int id, List<Producto> productos, String importe, String categoria) {
+
+    public Venta(int id, List<Producto> productos, String importe ) {
         this.id = id;
         this.productos = productos;
         this.importe = importe;
         this.codigoProducto = codigoProducto;
-        this.categoria = categoria;
+       
     }
 
     public Venta() {
@@ -52,13 +52,7 @@ public class Venta {
         this.codigoProducto = codigoProducto;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
+   
 
     public int getId() {
         return id;

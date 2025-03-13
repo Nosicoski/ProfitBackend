@@ -11,6 +11,7 @@ import java.util.Collections;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,30 +35,43 @@ public class FrmVentas extends javax.swing.JFrame {
     List<Venta> ventas = VentaPersistencia.obtenerTodas();
     tableModelVentas = new DefaultTableModel();
 
-    // Añade todas las columnas necesarias
+    // Columnas actualizadas
     tableModelVentas.addColumn("ID");
     tableModelVentas.addColumn("Productos");
-    tableModelVentas.addColumn("Importe");
-    tableModelVentas.addColumn("Categoría");
-    tableModelVentas.addColumn("Total Elementos Vendidos");
+    tableModelVentas.addColumn("Categoría (Productos)");
+    tableModelVentas.addColumn("Total Elementos");
 
     for (Venta venta : ventas) {
         List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
-        String productos = productosVenta.stream()
-                .map(Producto::getNombre)
-                .reduce((p1, p2) -> p1 + ", " + p2)
-                .orElse("Sin productos");
-        int totalElementos = productosVenta.size();
 
+        // Obtener nombres de productos
+        String nombres = productosVenta.stream()
+                .map(Producto::getNombre) // Mapear nombres
+                .filter(Objects::nonNull) // Filtrar valores nulos
+                .reduce((p1, p2) -> p1 + ", " + p2) // Concatenar nombres
+                .orElse("Sin productos"); // Valor por defecto si no hay nombres
+
+        // Obtener categorías de productos
+        String categorias = productosVenta.stream()
+                .map(Producto::getCategoria) // Mapear categorías
+                .filter(Objects::nonNull) // Filtrar valores nulos
+                .distinct() // Eliminar duplicados
+                .reduce((c1, c2) -> c1 + ", " + c2) // Concatenar categorías
+                .orElse("Sin categoría"); // Valor por defecto si no hay categorías
+
+        int total = productosVenta.size();
+
+        // Agregar fila
         Object[] row = {
             venta.getId(),
-            productos,
-            venta.getImporte(),
-            venta.getCategoria(),
-            totalElementos
+            nombres,
+            categorias,
+            total
         };
+
         tableModelVentas.addRow(row);
     }
+
     jTable1.setModel(tableModelVentas);
 }
 
@@ -234,7 +248,37 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarVentaActionPerformed
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
+// Obtener la fila seleccionada en la tabla
+    int filaSeleccionada = jTable1.getSelectedRow(); // Cambia jTable2 por jTable1 si es necesario
 
+    // Verificar si se seleccionó una fila
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Obtener el ID de la venta seleccionada
+    int idVenta = (int) jTable1.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
+
+    // Confirmar la eliminación
+    int confirmacion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de que desea eliminar esta venta?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    // Si el usuario confirma la eliminación
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        // Eliminar la venta usando el ID
+        VentaPersistencia.eliminarVenta(idVenta);
+
+        // Recargar la tabla de ventas
+        cargarVentasEnTabla();
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Venta eliminada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
 
