@@ -175,9 +175,9 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(btnAgregarVenta))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarVenta)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -197,45 +197,39 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-       int[] selectedRows = jTable1.getSelectedRows();
-        if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+     
+   int[] selectedRows = jTable1.getSelectedRows();
+    if (selectedRows.length == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    List<Producto> productosVenta = new ArrayList<>();
+    double importeTotal = 0.0;
+
+    // Obtener productos y categoría
+    for (int row : selectedRows) {
+        String codigo = (String) jTable1.getValueAt(row, 1);
+        Producto producto = ProductoPersistencia.obtenerTodos().stream()
+                .filter(p -> p.getCodigo().equals(codigo))
+                .findFirst()
+                .orElse(null);
+
+        if (producto != null) {
+            productosVenta.add(producto);
+            importeTotal += producto.getPrecioVenta();
         }
+    }
 
-        // Mostrar un cuadro de diálogo de confirmación
-        int respuesta = JOptionPane.showConfirmDialog(
-                this,
-                "¿Seguro que desea agregar los productos seleccionados?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION
-        );
+    // Crear venta con productos
+    Venta venta = new Venta();
+    venta.setProductos(productosVenta);
+    venta.setImporte("$ " + String.format("%.2f", importeTotal));
 
-        if (respuesta == JOptionPane.YES_OPTION) {
-            List<Producto> productosVenta = new ArrayList<>();
-            double importeTotal = 0.0;
-
-            for (int row : selectedRows) {
-                String codigo = (String) jTable1.getValueAt(row, 1);
-                Producto producto = ProductoPersistencia.obtenerTodos().stream()
-                        .filter(p -> p.getCodigo().equals(codigo))
-                        .findFirst()
-                        .orElse(null);
-                if (producto != null) {
-                    productosVenta.add(producto);
-                    importeTotal += producto.getPrecioVenta();
-                }
-            }
-
-            Venta venta = new Venta();
-            venta.setProductos(productosVenta);
-            venta.setImporte("$ " + String.format("%.2f", importeTotal));
-            venta.setCategoria("General"); // Puedes cambiar esto para que el usuario seleccione una categoría
-
-            VentaPersistencia.agregarVenta(venta);
-            JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); // Cierra la ventana después de agregar la venta
-        }
+    // Agregar venta
+    VentaPersistencia.agregarVenta(venta);
+    JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    this.dispose();
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     /**
