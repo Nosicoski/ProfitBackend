@@ -106,9 +106,9 @@
                   <Component id="btnClientes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="BtnAjustes" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="528" max="32767" attributes="0"/>
+              <EmptySpace pref="622" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="62" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
