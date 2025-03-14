@@ -32,7 +32,7 @@
                           <Component id="jLabel4" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="mostrarCaja" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnmostrarCaja" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnActualizarVentas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -64,7 +64,7 @@
                       <Component id="btnEliminarVenta" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="btnAgregarVenta" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="btnActualizarVentas" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="mostrarCaja" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnmostrarCaja" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -86,7 +86,7 @@
           <Font name="sansserif" size="24" style="3"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Ventas"/>
+        <Property name="text" type="java.lang.String" value="Registro de ventas"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -192,14 +192,14 @@
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarVentaPKeyReleased"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="mostrarCaja">
+    <Component class="javax.swing.JButton" name="btnmostrarCaja">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="2" name="C:\Users\juanm\Documents\NetBeansProjects\Profit\src\main\java\com\juanma\profit\src\imagenes\Caja.png"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarCajaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnmostrarCajaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
