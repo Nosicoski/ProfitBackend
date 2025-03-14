@@ -40,6 +40,7 @@ com\juanma\profit\interfaz\secondLayer\FrmMostrarCajaVentas.class
 com\juanma\profit\interfaz\FrmPrincipal$5.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$6.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$9.class
+com\juanma\profit\interfaz\FrmPrincipal$8.class
 com\juanma\profit\entidad\Cliente.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$8.class
 com\juanma\profit\interfaz\FrmPrincipal$3.class

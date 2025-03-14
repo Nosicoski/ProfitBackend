@@ -92,13 +92,13 @@ public class FrmVentas extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         txtBuscarVentaP = new javax.swing.JTextField();
-        mostrarCaja = new javax.swing.JButton();
+        btnmostrarCaja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ventas");
+        jLabel1.setText("Registro de ventas");
         jLabel1.setToolTipText("");
 
         btnActualizarVentas.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Actualizar.png")); // NOI18N
@@ -169,10 +169,10 @@ public class FrmVentas extends javax.swing.JFrame {
             }
         });
 
-        mostrarCaja.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Caja.png")); // NOI18N
-        mostrarCaja.addActionListener(new java.awt.event.ActionListener() {
+        btnmostrarCaja.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Caja.png")); // NOI18N
+        btnmostrarCaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarCajaActionPerformed(evt);
+                btnmostrarCajaActionPerformed(evt);
             }
         });
 
@@ -188,7 +188,7 @@ public class FrmVentas extends javax.swing.JFrame {
                             .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mostrarCaja)
+                        .addComponent(btnmostrarCaja)
                         .addGap(18, 18, 18)
                         .addComponent(btnActualizarVentas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,7 +214,7 @@ public class FrmVentas extends javax.swing.JFrame {
                         .addComponent(btnEliminarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnAgregarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnActualizarVentas, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(mostrarCaja, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(btnmostrarCaja, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -290,9 +290,9 @@ public class FrmVentas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtBuscarVentaPKeyReleased
 
-    private void mostrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCajaActionPerformed
+    private void btnmostrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarCajaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mostrarCajaActionPerformed
+    }//GEN-LAST:event_btnmostrarCajaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,11 +335,11 @@ public class FrmVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarVenta;
     private javax.swing.JButton btnEditarVenta;
     private javax.swing.JButton btnEliminarVenta;
+    private javax.swing.JButton btnmostrarCaja;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton mostrarCaja;
     private javax.swing.JTextField txtBuscarVentaP;
     // End of variables declaration//GEN-END:variables
 }
