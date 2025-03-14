@@ -291,7 +291,8 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaPKeyReleased
 
     private void btnmostrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarCajaActionPerformed
-        // TODO add your handling code here:
+       FrmMostrarCajaVentas mostrarCaja= new FrmMostrarCajaVentas();
+       mostrarCaja.setVisible(true);
     }//GEN-LAST:event_btnmostrarCajaActionPerformed
 
     /**
