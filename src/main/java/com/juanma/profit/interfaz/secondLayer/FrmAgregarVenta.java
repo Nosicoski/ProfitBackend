@@ -10,8 +10,6 @@ import com.juanma.profit.persistencia.ProductoPersistencia;
 import com.juanma.profit.persistencia.VentaPersistencia;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -229,6 +227,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     // Agregar venta
     VentaPersistencia.agregarVenta(venta);
     JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    
     this.dispose();
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
