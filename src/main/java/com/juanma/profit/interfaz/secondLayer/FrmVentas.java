@@ -35,7 +35,7 @@ public class FrmVentas extends javax.swing.JFrame {
     List<Venta> ventas = VentaPersistencia.obtenerTodas();
     tableModelVentas = new DefaultTableModel();
 
-    // Columnas actualizadas
+
     tableModelVentas.addColumn("ID");
     tableModelVentas.addColumn("Productos");
     tableModelVentas.addColumn("Categoría (Productos)");
@@ -44,24 +44,23 @@ public class FrmVentas extends javax.swing.JFrame {
     for (Venta venta : ventas) {
         List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
 
-        // Obtener nombres de productos
         String nombres = productosVenta.stream()
-                .map(Producto::getNombre) // Mapear nombres
-                .filter(Objects::nonNull) // Filtrar valores nulos
-                .reduce((p1, p2) -> p1 + ", " + p2) // Concatenar nombres
-                .orElse("Sin productos"); // Valor por defecto si no hay nombres
+                .map(Producto::getNombre) 
+                .filter(Objects::nonNull) 
+                .reduce((p1, p2) -> p1 + ", " + p2)
+                .orElse("Sin productos"); 
 
         // Obtener categorías de productos
         String categorias = productosVenta.stream()
-                .map(Producto::getCategoria) // Mapear categorías
-                .filter(Objects::nonNull) // Filtrar valores nulos
-                .distinct() // Eliminar duplicados
-                .reduce((c1, c2) -> c1 + ", " + c2) // Concatenar categorías
-                .orElse("Sin categoría"); // Valor por defecto si no hay categorías
+                .map(Producto::getCategoria) 
+                .filter(Objects::nonNull)
+                .distinct() 
+                .reduce((c1, c2) -> c1 + ", " + c2) 
+                .orElse("Sin categoría"); 
 
         int total = productosVenta.size();
 
-        // Agregar fila
+       
         Object[] row = {
             venta.getId(),
             nombres,
@@ -75,10 +74,7 @@ public class FrmVentas extends javax.swing.JFrame {
     jTable1.setModel(tableModelVentas);
 }
 
-    /**
-     * Método que se ejecuta al hacer clic en el botón "Actualizar". Recarga las
-     * ventas desde la persistencia y actualiza la tabla.
-     */
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -235,7 +231,7 @@ public class FrmVentas extends javax.swing.JFrame {
     private void btnAgregarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVentaMouseClicked
         FrmAgregarVenta ventaAgregar = new FrmAgregarVenta();
         ventaAgregar.setVisible(true);
-
+   
 
     }//GEN-LAST:event_btnAgregarVentaMouseClicked
 
