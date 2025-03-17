@@ -15,6 +15,9 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
      */
     public FrmAgregarProveedor() {
         initComponents();
+         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setLocationRelativeTo(null);
+ pack();
     }
 
     /**

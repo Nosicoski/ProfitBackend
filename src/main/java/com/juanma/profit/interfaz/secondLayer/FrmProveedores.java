@@ -15,6 +15,9 @@ public class FrmProveedores extends javax.swing.JFrame {
      */
     public FrmProveedores() {
         initComponents();
+         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setLocationRelativeTo(null);
+ pack();
     }
 
     /**
@@ -181,8 +184,8 @@ public class FrmProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarProveedoresActionPerformed
 
     private void BtnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProveedorMouseClicked
-        FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
-        agregarProducto.setVisible(true);
+        FrmAgregarProveedor agregarProveedor = new FrmAgregarProveedor();
+        agregarProveedor.setVisible(true);
 
     }//GEN-LAST:event_BtnAgregarProveedorMouseClicked
 
