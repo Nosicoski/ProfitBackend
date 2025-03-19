@@ -22,9 +22,6 @@ public class ProveedorPersistencia {
 
     /**
      * Guarda la lista de proveedores en un archivo JSON.
-     * Si el directorio no existe, lo crea antes de guardar los datos.
-     *
-     * @param proveedores Lista de proveedores a guardar.
      */
     private static void guardarProveedores(List<Proveedor> proveedores) {
         File archivo = new File(ARCHIVO_PROVEEDORES);
@@ -37,7 +34,7 @@ public class ProveedorPersistencia {
         JSONArray arrayProveedores = new JSONArray();
         for (Proveedor p : proveedores) {
             JSONObject obj = new JSONObject();
-            obj.put("id", p.getId());
+            obj.put("id", p.getId()); // Guardar el ID
             obj.put("nombre", p.getNombre());
             obj.put("apellido", p.getApellido());
             obj.put("email", p.getEmail());
@@ -67,9 +64,6 @@ public class ProveedorPersistencia {
 
     /**
      * Carga la lista de proveedores desde un archivo JSON.
-     * Si el archivo no existe, retorna una lista vacía.
-     *
-     * @return Lista de proveedores cargados desde el archivo JSON.
      */
     private static List<Proveedor> cargarProveedores() {
         List<Proveedor> proveedores = new ArrayList<>();
@@ -85,7 +79,7 @@ public class ProveedorPersistencia {
 
             for (Object o : arrayProveedores) {
                 JSONObject obj = (JSONObject) o;
-                int id = ((Long) obj.get("id")).intValue();
+                int id = ((Long) obj.get("id")).intValue(); // Cargar el ID
                 String nombre = (String) obj.get("nombre");
                 String apellido = (String) obj.get("apellido");
                 String email = (String) obj.get("email");
@@ -115,19 +109,20 @@ public class ProveedorPersistencia {
 
     /**
      * Agrega un nuevo proveedor a la lista y guarda los cambios en el archivo JSON.
-     *
-     * @param proveedor Proveedor a agregar.
      */
     public static void agregarProveedor(Proveedor proveedor) {
         List<Proveedor> proveedores = cargarProveedores();
+
+        // Generar un ID único e incremental
+        int nuevoId = proveedores.isEmpty() ? 1 : proveedores.get(proveedores.size() - 1).getId() + 1;
+        proveedor.setId(nuevoId);
+
         proveedores.add(proveedor);
         guardarProveedores(proveedores);
     }
 
     /**
      * Obtiene todos los proveedores almacenados en el archivo JSON.
-     *
-     * @return Lista de todos los proveedores.
      */
     public static List<Proveedor> obtenerTodos() {
         return cargarProveedores();
@@ -135,8 +130,6 @@ public class ProveedorPersistencia {
 
     /**
      * Elimina un proveedor de la lista basado en su ID y guarda los cambios en el archivo JSON.
-     *
-     * @param id ID del proveedor a eliminar.
      */
     public static void eliminarProveedor(int id) {
         List<Proveedor> proveedores = cargarProveedores();

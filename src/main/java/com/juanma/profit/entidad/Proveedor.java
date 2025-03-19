@@ -11,12 +11,11 @@ import java.util.List;
  * @author juanm
  */
 public class Proveedor {
+
     private String apellido;
     private String email;
     private String nombre;
-    private List <Producto> productos ;
-    
-    
+    private List<Producto> productos;
     private int id;
 
     public Proveedor() {
@@ -27,7 +26,7 @@ public class Proveedor {
         this.email = email;
         this.nombre = nombre;
         this.productos = productos;
-        
+
         this.id = id;
     }
 
@@ -38,12 +37,6 @@ public class Proveedor {
     public void setEmail(String email) {
         this.email = email;
     }
-
-   
-
-  
-
-   
 
     public String getApellido() {
         return apellido;
@@ -76,6 +69,5 @@ public class Proveedor {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
+
 }

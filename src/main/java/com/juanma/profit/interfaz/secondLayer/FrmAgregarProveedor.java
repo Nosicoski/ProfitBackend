@@ -4,9 +4,12 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
+import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.entidad.Proveedor;
 import com.juanma.profit.persistencia.ProveedorPersistencia;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,8 +49,8 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
         txtNombreDelProductoAgregar = new javax.swing.JTextField();
         txtNombreDelProductoAgregar1 = new javax.swing.JTextField();
         txtNombreDelProductoAgregar2 = new javax.swing.JTextField();
-        txtNombreDelProductoAgregar3 = new javax.swing.JTextField();
         txtNombreDelProductoAgregar4 = new javax.swing.JTextField();
+        cmbCategoriaSeleccionar = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -182,24 +185,6 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
             }
         });
 
-        txtNombreDelProductoAgregar3.setToolTipText("");
-        txtNombreDelProductoAgregar3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtNombreDelProductoAgregar3.setName(""); // NOI18N
-        txtNombreDelProductoAgregar3.setPreferredSize(new java.awt.Dimension(64, 24));
-        txtNombreDelProductoAgregar3.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombreDelProductoAgregar3FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreDelProductoAgregar3FocusLost(evt);
-            }
-        });
-        txtNombreDelProductoAgregar3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreDelProductoAgregar3ActionPerformed(evt);
-            }
-        });
-
         txtNombreDelProductoAgregar4.setToolTipText("");
         txtNombreDelProductoAgregar4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNombreDelProductoAgregar4.setName(""); // NOI18N
@@ -218,6 +203,9 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
             }
         });
 
+        cmbCategoriaSeleccionar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Bebidas", "Cigarrillos", "Otros" }));
+        cmbCategoriaSeleccionar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -228,6 +216,8 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,9 +227,7 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAgregarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombreDelProductoAgregar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNombreDelProductoAgregar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbCategoriaSeleccionar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -265,8 +253,8 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(txtNombreDelProductoAgregar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(cmbCategoriaSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(btnCancelarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,17 +265,33 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProveedorMouseClicked
- String nombre = txtNombreDelProductoAgregar.getText();
-        String apellido = txtNombreDelProductoAgregar2.getText();
-        String telefono = txtNombreDelProductoAgregar4.getText();
-        String categoria = txtNombreDelProductoAgregar3.getText();
+  String nombre = txtNombreDelProductoAgregar.getText();
+    String apellido = txtNombreDelProductoAgregar2.getText();
+    String telefono = txtNombreDelProductoAgregar4.getText();
+    String nombreProducto = txtNombreDelProductoAgregar1.getText();
+    String categoria = (String) cmbCategoriaSeleccionar.getSelectedItem(); // Obtener la categoría seleccionada
 
-        // Crear un nuevo proveedor (aquí asumimos que el ID se genera automáticamente)
-        Proveedor proveedor = new Proveedor(apellido, telefono, nombre, new ArrayList<>(), 0);
-        ProveedorPersistencia.agregarProveedor(proveedor);
+    // Validar que todos los campos estén llenos
+    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || nombreProducto.isEmpty() || categoria == null) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Cerrar la ventana después de agregar el proveedor
-        this.dispose();
+    // Crear un nuevo producto con los datos ingresados
+    Producto producto = new Producto(nombreProducto, "Código", nombre, 0.0, 0.0, categoria);
+
+    // Crear una lista de productos y agregar el producto creado
+    List<Producto> productos = new ArrayList<>();
+    productos.add(producto);
+
+    // Crear un nuevo proveedor con los datos ingresados
+    Proveedor proveedor = new Proveedor(apellido, telefono, nombre, productos, 0);
+
+    // Guardar el proveedor en la persistencia
+    ProveedorPersistencia.agregarProveedor(proveedor);
+
+    // Cerrar el formulario después de agregar el proveedor
+    this.dispose();
     }//GEN-LAST:event_btnAgregarProveedorMouseClicked
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
@@ -343,18 +347,6 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDelProductoAgregar2ActionPerformed
 
-    private void txtNombreDelProductoAgregar3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregar3FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreDelProductoAgregar3FocusGained
-
-    private void txtNombreDelProductoAgregar3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregar3FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreDelProductoAgregar3FocusLost
-
-    private void txtNombreDelProductoAgregar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregar3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreDelProductoAgregar3ActionPerformed
-
     private void txtNombreDelProductoAgregar4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregar4FocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreDelProductoAgregar4FocusGained
@@ -405,6 +397,7 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProveedor;
     private javax.swing.JButton btnCancelarProveedor;
+    private javax.swing.JComboBox<String> cmbCategoriaSeleccionar;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
@@ -416,7 +409,6 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreDelProductoAgregar;
     private javax.swing.JTextField txtNombreDelProductoAgregar1;
     private javax.swing.JTextField txtNombreDelProductoAgregar2;
-    private javax.swing.JTextField txtNombreDelProductoAgregar3;
     private javax.swing.JTextField txtNombreDelProductoAgregar4;
     // End of variables declaration//GEN-END:variables
 }

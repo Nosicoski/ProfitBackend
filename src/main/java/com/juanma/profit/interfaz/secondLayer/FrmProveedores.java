@@ -9,6 +9,7 @@ import com.juanma.profit.persistencia.ProveedorPersistencia;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -16,32 +17,51 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmProveedores extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmProveedores
-     */
+    private DefaultTableModel tableModel; // Declarar tableModel como atributo
+    private TableRowSorter<DefaultTableModel> rowSorter; // Filtrador de filas
+
     public FrmProveedores() {
         initComponents();
-         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    setLocationRelativeTo(null);
- pack();
-  cargarProveedoresEnTabla();
+        tableModel = new DefaultTableModel();
+        tblProveedores.setModel(tableModel);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        pack();
+        cargarProveedoresEnTabla();
     }
-private void cargarProveedoresEnTabla() {
-        List<Proveedor> proveedores = ProveedorPersistencia.obtenerTodos();
-        DefaultTableModel model = (DefaultTableModel) tblProveedores.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
 
-        for (Proveedor proveedor : proveedores) {
-            Object[] row = new Object[]{
-                proveedor.getId(),
-                proveedor.getNombre(),
-                proveedor.getApellido(),
-                proveedor.getEmail(),
-                proveedor.getProductos().size() // Mostrar la cantidad de productos
-            };
-            model.addRow(row);
-        }
+    public void configurarFiltrado() {
+    rowSorter = new TableRowSorter<>(tableModel);
+    tblProveedores.setRowSorter(rowSorter);
+}
+    
+    
+   public void cargarProveedoresEnTabla() {
+    List<Proveedor> proveedores = ProveedorPersistencia.obtenerTodos();
+
+    // Limpiar el modelo de la tabla
+    tableModel.setRowCount(0);
+    tableModel.setColumnCount(0);
+
+    // Definir las columnas de la tabla
+    tableModel.addColumn("ID");
+    tableModel.addColumn("Nombre");
+    tableModel.addColumn("Apellido");
+    tableModel.addColumn("Teléfono");
+    tableModel.addColumn("Categoría");
+
+    for (Proveedor proveedor : proveedores) {
+        Object[] row = new Object[]{
+            proveedor.getId(),         // ID
+            proveedor.getNombre(),     // Nombre
+            proveedor.getApellido(),   // Apellido
+            proveedor.getEmail(),      // Teléfono
+            proveedor.getProductos().isEmpty() ? "Sin categoría" : proveedor.getProductos().get(0).getCategoria() // Categoría
+        };
+        tableModel.addRow(row);
     }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -209,7 +229,7 @@ private void cargarProveedoresEnTabla() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProveedoresActionPerformed
- cargarProveedoresEnTabla();
+        cargarProveedoresEnTabla();
     }//GEN-LAST:event_btnActualizarProveedoresActionPerformed
 
     private void BtnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProveedorMouseClicked
@@ -223,24 +243,24 @@ private void cargarProveedoresEnTabla() {
     }//GEN-LAST:event_BtnAgregarProveedorActionPerformed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
-       
+
     }//GEN-LAST:event_btnEditarProveedorActionPerformed
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
- int selectedRow = tblProveedores.getSelectedRow();
-    if (selectedRow >= 0) {
-        int id = (int) tblProveedores.getValueAt(selectedRow, 0);
-        ProveedorPersistencia.eliminarProveedor(id);
-        cargarProveedoresEnTabla(); // Actualizar la tabla después de eliminar
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.");
-    }
-      
-        
+        int selectedRow = tblProveedores.getSelectedRow();
+        if (selectedRow >= 0) {
+            int id = (int) tblProveedores.getValueAt(selectedRow, 0);
+            ProveedorPersistencia.eliminarProveedor(id);
+            cargarProveedoresEnTabla(); // Actualizar la tabla después de eliminar
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.");
+        }
+
+
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void cmbBoxFiltrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxFiltrarProveedorActionPerformed
-      
+
     }//GEN-LAST:event_cmbBoxFiltrarProveedorActionPerformed
 
     private void txtBuscarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProveedorActionPerformed
@@ -248,7 +268,7 @@ private void cargarProveedoresEnTabla() {
     }//GEN-LAST:event_txtBuscarProveedorActionPerformed
 
     private void txtBuscarProveedorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProveedorKeyReleased
-       
+
     }//GEN-LAST:event_txtBuscarProveedorKeyReleased
 
     /**
