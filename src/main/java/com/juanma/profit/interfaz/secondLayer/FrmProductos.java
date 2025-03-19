@@ -116,7 +116,7 @@ public class FrmProductos extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtBuscarProducto = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbxFiltrarProductos = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -206,12 +206,12 @@ public class FrmProductos extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtrar", "Cigarrillos", "Bebidas", "Otros" }));
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cmbxFiltrarProductos.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        cmbxFiltrarProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtrar", "Cigarrillos", "Bebidas", "Otros" }));
+        cmbxFiltrarProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbxFiltrarProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cmbxFiltrarProductosActionPerformed(evt);
             }
         });
 
@@ -248,7 +248,7 @@ public class FrmProductos extends javax.swing.JFrame {
                                     .addComponent(txtBuscarProducto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 788, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbxFiltrarProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(btnActualizar)
                                         .addGap(18, 18, 18)
@@ -281,7 +281,7 @@ public class FrmProductos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbxFiltrarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -355,14 +355,14 @@ public class FrmProductos extends javax.swing.JFrame {
         filtrarTabla();
     }//GEN-LAST:event_txtBuscarProductoKeyReleased
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        String categoriaSeleccionada = (String) jComboBox1.getSelectedItem();
+    private void cmbxFiltrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxFiltrarProductosActionPerformed
+        String categoriaSeleccionada = (String) cmbxFiltrarProductos.getSelectedItem();
         if (categoriaSeleccionada.equals("Categorias")) {
             rowSorter.setRowFilter(null);
         } else {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + categoriaSeleccionada, 5));
         }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbxFiltrarProductosActionPerformed
     
      
 
@@ -371,9 +371,9 @@ public class FrmProductos extends javax.swing.JFrame {
     private javax.swing.JButton BtnAgregarProducto;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JComboBox<String> cmbxFiltrarProductos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
