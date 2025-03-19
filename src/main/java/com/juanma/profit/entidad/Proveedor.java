@@ -15,19 +15,19 @@ public class Proveedor {
     private String email;
     private String nombre;
     private List <Producto> productos ;
-    private int precioProducto;
+    
     
     private int id;
 
     public Proveedor() {
     }
 
-    public Proveedor(String apellido, String email, String nombre, List<Producto> productos, int precioProducto, int id) {
+    public Proveedor(String apellido, String email, String nombre, List<Producto> productos, int id) {
         this.apellido = apellido;
         this.email = email;
         this.nombre = nombre;
         this.productos = productos;
-        this.precioProducto = precioProducto;
+        
         this.id = id;
     }
 
@@ -41,13 +41,7 @@ public class Proveedor {
 
    
 
-    public int getPrecioProducto() {
-        return precioProducto;
-    }
-
-    public void setPrecioProducto(int precioProducto) {
-        this.precioProducto = precioProducto;
-    }
+  
 
    
 
