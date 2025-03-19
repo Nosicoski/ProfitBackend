@@ -4,6 +4,12 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
+import com.juanma.profit.entidad.Proveedor;
+import com.juanma.profit.persistencia.ProveedorPersistencia;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author juanm
@@ -18,8 +24,24 @@ public class FrmProveedores extends javax.swing.JFrame {
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
  pack();
+  cargarProveedoresEnTabla();
     }
+private void cargarProveedoresEnTabla() {
+        List<Proveedor> proveedores = ProveedorPersistencia.obtenerTodos();
+        DefaultTableModel model = (DefaultTableModel) tblProveedores.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
 
+        for (Proveedor proveedor : proveedores) {
+            Object[] row = new Object[]{
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getApellido(),
+                proveedor.getEmail(),
+                proveedor.getProductos().size() // Mostrar la cantidad de productos
+            };
+            model.addRow(row);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +52,7 @@ public class FrmProveedores extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProveedores = new javax.swing.JTable();
         btnActualizarProveedores = new javax.swing.JButton();
         BtnAgregarProveedor = new javax.swing.JButton();
         btnEditarProveedor = new javax.swing.JButton();
@@ -43,7 +65,7 @@ public class FrmProveedores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -54,7 +76,7 @@ public class FrmProveedores extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProveedores);
 
         btnActualizarProveedores.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Actualizar.png")); // NOI18N
         btnActualizarProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -187,7 +209,7 @@ public class FrmProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProveedoresActionPerformed
-
+ cargarProveedoresEnTabla();
     }//GEN-LAST:event_btnActualizarProveedoresActionPerformed
 
     private void BtnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProveedorMouseClicked
@@ -205,7 +227,14 @@ public class FrmProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarProveedorActionPerformed
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
-
+ int selectedRow = tblProveedores.getSelectedRow();
+    if (selectedRow >= 0) {
+        int id = (int) tblProveedores.getValueAt(selectedRow, 0);
+        ProveedorPersistencia.eliminarProveedor(id);
+        cargarProveedoresEnTabla(); // Actualizar la tabla después de eliminar
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.");
+    }
       
         
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
@@ -267,7 +296,7 @@ public class FrmProveedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProveedores;
     private javax.swing.JTextField txtBuscarProveedor;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,10 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
+import com.juanma.profit.entidad.Proveedor;
+import com.juanma.profit.persistencia.ProveedorPersistencia;
+import java.util.ArrayList;
+
 /**
  *
  * @author juanm
@@ -273,7 +277,17 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProveedorMouseClicked
+ String nombre = txtNombreDelProductoAgregar.getText();
+        String apellido = txtNombreDelProductoAgregar2.getText();
+        String telefono = txtNombreDelProductoAgregar4.getText();
+        String categoria = txtNombreDelProductoAgregar3.getText();
 
+        // Crear un nuevo proveedor (aquí asumimos que el ID se genera automáticamente)
+        Proveedor proveedor = new Proveedor(apellido, telefono, nombre, new ArrayList<>(), 0);
+        ProveedorPersistencia.agregarProveedor(proveedor);
+
+        // Cerrar la ventana después de agregar el proveedor
+        this.dispose();
     }//GEN-LAST:event_btnAgregarProveedorMouseClicked
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
