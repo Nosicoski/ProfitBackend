@@ -32,43 +32,53 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
         pack();
     }
 
-    private void cargarCajaEnTabla() {
-       List<Venta> ventas = VentaPersistencia.obtenerTodas();
-        tableModelCaja = new DefaultTableModel();
+   private void cargarCajaEnTabla() {
+    List<Venta> ventas = VentaPersistencia.obtenerTodas();
+    tableModelCaja = new DefaultTableModel();
 
-        // Definir las columnas de la tabla
-        tableModelCaja.addColumn("Total Vendido");
-        tableModelCaja.addColumn("Nombre de los Productos");
-        tableModelCaja.addColumn("Cantidades");
+    // Definir las columnas de la tabla
+    tableModelCaja.addColumn("Precio Producto"); // Cambiar nombre de la columna
+    tableModelCaja.addColumn("Nombre del Producto");
+    tableModelCaja.addColumn("Cantidad Vendida");
 
-        // Calcular el total vendido y las cantidades por producto
-        double totalVendido = 0;
-        Map<String, Integer> cantidadPorProducto = new HashMap<>();
+    // Calcular el total vendido y las cantidades por producto
+    double totalVendido = 0;
+    Map<String, Integer> cantidadPorProducto = new HashMap<>();
+    Map<String, Double> precioPorProducto = new HashMap<>(); // Nuevo mapa para precios
 
-        for (Venta venta : ventas) {
-            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+    for (Venta venta : ventas) {
+        List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
 
-            for (Producto producto : productosVenta) {
-                totalVendido += producto.getPrecioVenta();
-                cantidadPorProducto.put(producto.getNombre(), cantidadPorProducto.getOrDefault(producto.getNombre(), 0) + 1);
-            }
+        for (Producto producto : productosVenta) {
+            String nombreProducto = producto.getNombre();
+            double precioVenta = producto.getPrecioVenta();
+
+            // Acumular cantidad y precio por producto
+            cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + 1);
+            precioPorProducto.put(nombreProducto, precioVenta); // Guardar el precio del producto
+
+            totalVendido += precioVenta; // Calcular el total general
         }
-
-        // Agregar los datos a la tabla
-        for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
-            Object[] row = new Object[]{
-                "$ " + String.format("%.2f", totalVendido), // Total vendido
-                entry.getKey(), // Nombre del producto
-                entry.getValue() // Cantidad vendida
-            };
-            tableModelCaja.addRow(row);
-        }
-
-        tblMostrarCajaVentas.setModel(tableModelCaja);
-
-        // Mostrar el total vendido en el campo txtTotalVendidoMostrarCajaVentas
-        txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
     }
+
+    // Agregar los datos a la tabla
+    for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
+        String nombreProducto = entry.getKey();
+        double precio = precioPorProducto.get(nombreProducto); // Obtener el precio del producto
+
+        Object[] row = new Object[]{
+            "$ " + String.format("%.2f", precio), // Precio individual del producto
+            nombreProducto,
+            entry.getValue() // Cantidad vendida
+        };
+        tableModelCaja.addRow(row);
+    }
+
+    tblMostrarCajaVentas.setModel(tableModelCaja);
+
+    // Mostrar el total vendido en el campo txtTotalVendidoMostrarCajaVentas
+    txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
+}
 
 
     
@@ -85,10 +95,9 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMostrarCajaVentas = new javax.swing.JTable();
-        btnHistorialVenta = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtTotalVendidoMostrarCajaVentas = new javax.swing.JTextPane();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,48 +119,36 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblMostrarCajaVentas);
 
-        btnHistorialVenta.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\RegistroVenta.png")); // NOI18N
-        btnHistorialVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialVentaActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Caja");
-        jLabel2.setToolTipText("");
-
         jScrollPane2.setViewportView(txtTotalVendidoMostrarCajaVentas);
+
+        jLabel3.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("INGRESOS");
+        jLabel3.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnHistorialVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHistorialVenta)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addContainerGap())
@@ -159,10 +156,6 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnHistorialVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialVentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistorialVentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,9 +193,8 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnHistorialVenta;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblMostrarCajaVentas;
