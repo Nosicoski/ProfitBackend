@@ -11,11 +11,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class FrmProveedores extends javax.swing.JFrame {
 
-    private DefaultTableModel tableModel; 
-    private TableRowSorter<DefaultTableModel> rowSorter; 
+    private DefaultTableModel tableModel;
+    private TableRowSorter<DefaultTableModel> rowSorter;
 
     public FrmProveedores() {
         initComponents();
@@ -28,37 +27,34 @@ public class FrmProveedores extends javax.swing.JFrame {
     }
 
     public void configurarFiltrado() {
-    rowSorter = new TableRowSorter<>(tableModel);
-    tblProveedores.setRowSorter(rowSorter);
-}
-    
-    
-   public void cargarProveedoresEnTabla() {
-    List<Proveedor> proveedores = ProveedorPersistencia.obtenerTodos();
-
-  
-    tableModel.setRowCount(0);
-    tableModel.setColumnCount(0);
-
-    tableModel.addColumn("ID");
-    tableModel.addColumn("Nombre");
-    tableModel.addColumn("Apellido");
-    tableModel.addColumn("Teléfono");
-    tableModel.addColumn("Categoría");
-
-    for (Proveedor proveedor : proveedores) {
-        Object[] row = new Object[]{
-            proveedor.getId(),         
-            proveedor.getNombre(),     
-            proveedor.getApellido(),  
-            proveedor.getEmail(),      
-            proveedor.getProductos().isEmpty() ? "Sin categoría" : proveedor.getProductos().get(0).getCategoria() // Categoría
-        };
-        tableModel.addRow(row);
+        rowSorter = new TableRowSorter<>(tableModel);
+        tblProveedores.setRowSorter(rowSorter);
     }
-}
 
-    
+    public void cargarProveedoresEnTabla() {
+        List<Proveedor> proveedores = ProveedorPersistencia.obtenerTodos();
+
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Nombre");
+        tableModel.addColumn("Apellido");
+        tableModel.addColumn("Teléfono");
+        tableModel.addColumn("Categoría");
+
+        for (Proveedor proveedor : proveedores) {
+            Object[] row = new Object[]{
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getApellido(),
+                proveedor.getEmail(),
+                proveedor.getProductos().isEmpty() ? "Sin categoría" : proveedor.getProductos().get(0).getCategoria() // Categoría
+            };
+            tableModel.addRow(row);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -243,7 +239,7 @@ public class FrmProveedores extends javax.swing.JFrame {
         if (selectedRow >= 0) {
             int id = (int) tblProveedores.getValueAt(selectedRow, 0);
             ProveedorPersistencia.eliminarProveedor(id);
-            cargarProveedoresEnTabla(); 
+            cargarProveedoresEnTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.");
         }
@@ -264,7 +260,7 @@ public class FrmProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarProveedorKeyReleased
 
     public static void main(String args[]) {
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FrmProveedores().setVisible(true);

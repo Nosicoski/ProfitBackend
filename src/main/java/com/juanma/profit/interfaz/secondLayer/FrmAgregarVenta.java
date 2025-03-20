@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class FrmAgregarVenta extends javax.swing.JFrame {
 
- 
     private DefaultTableModel tableModelProductos;
     private List<Producto> productosSeleccionados;
 
@@ -35,9 +34,6 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         pack();
     }
 
-    /**
-     * Carga los productos en la tabla para que el usuario pueda seleccionarlos.
-     */
     private void cargarProductosEnTabla() {
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
         tableModelProductos = new DefaultTableModel();
@@ -56,12 +52,6 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
         jTable1.setModel(tableModelProductos);
     }
-
-    /**
-     * Método que se ejecuta al hacer clic en el botón "Agregar Venta".
-     */
-  
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,40 +185,37 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-     
-   int[] selectedRows = jTable1.getSelectedRows();
-    if (selectedRows.length == 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
 
-    List<Producto> productosVenta = new ArrayList<>();
-    double importeTotal = 0.0;
-
-    // Obtener productos y categoría
-    for (int row : selectedRows) {
-        String codigo = (String) jTable1.getValueAt(row, 1);
-        Producto producto = ProductoPersistencia.obtenerTodos().stream()
-                .filter(p -> p.getCodigo().equals(codigo))
-                .findFirst()
-                .orElse(null);
-
-        if (producto != null) {
-            productosVenta.add(producto);
-            importeTotal += producto.getPrecioVenta();
+        int[] selectedRows = jTable1.getSelectedRows();
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }
 
-    // Crear venta con productos
-    Venta venta = new Venta();
-    venta.setProductos(productosVenta);
-    venta.setImporte("$ " + String.format("%.2f", importeTotal));
+        List<Producto> productosVenta = new ArrayList<>();
+        double importeTotal = 0.0;
 
-    // Agregar venta
-    VentaPersistencia.agregarVenta(venta);
-    JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    
-    this.dispose();
+        for (int row : selectedRows) {
+            String codigo = (String) jTable1.getValueAt(row, 1);
+            Producto producto = ProductoPersistencia.obtenerTodos().stream()
+                    .filter(p -> p.getCodigo().equals(codigo))
+                    .findFirst()
+                    .orElse(null);
+
+            if (producto != null) {
+                productosVenta.add(producto);
+                importeTotal += producto.getPrecioVenta();
+            }
+        }
+
+        Venta venta = new Venta();
+        venta.setProductos(productosVenta);
+        venta.setImporte("$ " + String.format("%.2f", importeTotal));
+
+        VentaPersistencia.agregarVenta(venta);
+        JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        this.dispose();
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     /**

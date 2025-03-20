@@ -31,50 +31,46 @@ public class FrmVentas extends javax.swing.JFrame {
 
     }
 
-   private void cargarVentasEnTabla() {
-    List<Venta> ventas = VentaPersistencia.obtenerTodas();
-    tableModelVentas = new DefaultTableModel();
+    private void cargarVentasEnTabla() {
+        List<Venta> ventas = VentaPersistencia.obtenerTodas();
+        tableModelVentas = new DefaultTableModel();
 
+        tableModelVentas.addColumn("ID");
+        tableModelVentas.addColumn("Productos");
+        tableModelVentas.addColumn("Categoría (Productos)");
+        tableModelVentas.addColumn("Total Elementos");
 
-    tableModelVentas.addColumn("ID");
-    tableModelVentas.addColumn("Productos");
-    tableModelVentas.addColumn("Categoría (Productos)");
-    tableModelVentas.addColumn("Total Elementos");
+        for (Venta venta : ventas) {
+            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
 
-    for (Venta venta : ventas) {
-        List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+            String nombres = productosVenta.stream()
+                    .map(Producto::getNombre)
+                    .filter(Objects::nonNull)
+                    .reduce((p1, p2) -> p1 + ", " + p2)
+                    .orElse("Sin productos");
 
-        String nombres = productosVenta.stream()
-                .map(Producto::getNombre) 
-                .filter(Objects::nonNull) 
-                .reduce((p1, p2) -> p1 + ", " + p2)
-                .orElse("Sin productos"); 
+            String categorias = productosVenta.stream()
+                    .map(Producto::getCategoria)
+                    .filter(Objects::nonNull)
+                    .distinct()
+                    .reduce((c1, c2) -> c1 + ", " + c2)
+                    .orElse("Sin categoría");
 
-        // Obtener categorías de productos
-        String categorias = productosVenta.stream()
-                .map(Producto::getCategoria) 
-                .filter(Objects::nonNull)
-                .distinct() 
-                .reduce((c1, c2) -> c1 + ", " + c2) 
-                .orElse("Sin categoría"); 
+            int total = productosVenta.size();
 
-        int total = productosVenta.size();
+            Object[] row = {
+                venta.getId(),
+                nombres,
+                categorias,
+                total
+            };
 
-       
-        Object[] row = {
-            venta.getId(),
-            nombres,
-            categorias,
-            total
-        };
+            tableModelVentas.addRow(row);
+        }
 
-        tableModelVentas.addRow(row);
+        jTable1.setModel(tableModelVentas);
     }
 
-    jTable1.setModel(tableModelVentas);
-}
-
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -248,14 +244,14 @@ public class FrmVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentasActionPerformed
-        cargarVentasEnTabla(); // Recargar las ventas
+        cargarVentasEnTabla();
         JOptionPane.showMessageDialog(this, "Ventas actualizadas.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnActualizarVentasActionPerformed
 
     private void btnAgregarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVentaMouseClicked
         FrmAgregarVenta ventaAgregar = new FrmAgregarVenta();
         ventaAgregar.setVisible(true);
-   
+
 
     }//GEN-LAST:event_btnAgregarVentaMouseClicked
 
@@ -268,37 +264,31 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarVentaActionPerformed
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
-// Obtener la fila seleccionada en la tabla
-    int filaSeleccionada = jTable1.getSelectedRow(); // Cambia jTable2 por jTable1 si es necesario
 
-    // Verificar si se seleccionó una fila
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        int filaSeleccionada = jTable1.getSelectedRow();
 
-    // Obtener el ID de la venta seleccionada
-    int idVenta = (int) jTable1.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    // Confirmar la eliminación
-    int confirmacion = JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea eliminar esta venta?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-    );
+        int idVenta = (int) jTable1.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
 
-    // Si el usuario confirma la eliminación
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        // Eliminar la venta usando el ID
-        VentaPersistencia.eliminarVenta(idVenta);
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que desea eliminar esta venta?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
 
-        // Recargar la tabla de ventas
-        cargarVentasEnTabla();
+        if (confirmacion == JOptionPane.YES_OPTION) {
 
-        // Mostrar mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Venta eliminada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    }
+            VentaPersistencia.eliminarVenta(idVenta);
+
+            cargarVentasEnTabla();
+
+            JOptionPane.showMessageDialog(this, "Venta eliminada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
 
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
 
@@ -311,8 +301,8 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaPKeyReleased
 
     private void btnmostrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarCajaActionPerformed
-       FrmMostrarCajaVentas mostrarCaja= new FrmMostrarCajaVentas();
-       mostrarCaja.setVisible(true);
+        FrmMostrarCajaVentas mostrarCaja = new FrmMostrarCajaVentas();
+        mostrarCaja.setVisible(true);
     }//GEN-LAST:event_btnmostrarCajaActionPerformed
 
     private void cmbBoxFiltrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxFiltrarProveedorActionPerformed
