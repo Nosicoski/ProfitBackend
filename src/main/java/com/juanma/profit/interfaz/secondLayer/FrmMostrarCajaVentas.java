@@ -4,22 +4,74 @@
  */
 package com.juanma.profit.interfaz.secondLayer;
 
+import com.juanma.profit.entidad.Producto;
+import com.juanma.profit.entidad.Venta;
+import com.juanma.profit.persistencia.VentaPersistencia;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author juanm
  */
 public class FrmMostrarCajaVentas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmMostrarCajaVentas
-     */
+    private DefaultTableModel tableModelCaja;
+    
+
     public FrmMostrarCajaVentas() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
-       
+        setLocationRelativeTo(null);
+        cargarCajaEnTabla();
         pack();
     }
+
+    private void cargarCajaEnTabla() {
+       List<Venta> ventas = VentaPersistencia.obtenerTodas();
+        tableModelCaja = new DefaultTableModel();
+
+        // Definir las columnas de la tabla
+        tableModelCaja.addColumn("Total Vendido");
+        tableModelCaja.addColumn("Nombre de los Productos");
+        tableModelCaja.addColumn("Cantidades");
+
+        // Calcular el total vendido y las cantidades por producto
+        double totalVendido = 0;
+        Map<String, Integer> cantidadPorProducto = new HashMap<>();
+
+        for (Venta venta : ventas) {
+            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+
+            for (Producto producto : productosVenta) {
+                totalVendido += producto.getPrecioVenta();
+                cantidadPorProducto.put(producto.getNombre(), cantidadPorProducto.getOrDefault(producto.getNombre(), 0) + 1);
+            }
+        }
+
+        // Agregar los datos a la tabla
+        for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
+            Object[] row = new Object[]{
+                "$ " + String.format("%.2f", totalVendido), // Total vendido
+                entry.getKey(), // Nombre del producto
+                entry.getValue() // Cantidad vendida
+            };
+            tableModelCaja.addRow(row);
+        }
+
+        tblMostrarCajaVentas.setModel(tableModelCaja);
+
+        // Mostrar el total vendido en el campo txtTotalVendidoMostrarCajaVentas
+        txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
+    }
+
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,17 +84,20 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMostrarCajaVentas = new javax.swing.JTable();
         btnHistorialVenta = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtTotalVendidoMostrarCajaVentas = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Caja");
+        jLabel1.setText("TOTAL VENDIDO");
         jLabel1.setToolTipText("");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMostrarCajaVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -53,7 +108,7 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
                 "Title 1", "Title 2"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblMostrarCajaVentas);
 
         btnHistorialVenta.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\RegistroVenta.png")); // NOI18N
         btnHistorialVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -62,30 +117,43 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("sansserif", 3, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Caja");
+        jLabel2.setToolTipText("");
+
+        jScrollPane2.setViewportView(txtTotalVendidoMostrarCajaVentas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-                .addGap(62, 62, 62))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnHistorialVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistorialVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHistorialVenta)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnHistorialVenta)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -134,7 +202,10 @@ public class FrmMostrarCajaVentas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHistorialVenta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblMostrarCajaVentas;
+    private javax.swing.JTextPane txtTotalVendidoMostrarCajaVentas;
     // End of variables declaration//GEN-END:variables
 }

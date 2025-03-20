@@ -31,45 +31,36 @@ public class FrmVentas extends javax.swing.JFrame {
 
     }
 
+   
+
+
     private void cargarVentasEnTabla() {
         List<Venta> ventas = VentaPersistencia.obtenerTodas();
         tableModelVentas = new DefaultTableModel();
 
+        // Definir las columnas de la tabla
         tableModelVentas.addColumn("ID");
-        tableModelVentas.addColumn("Productos");
-        tableModelVentas.addColumn("Categoría (Productos)");
-        tableModelVentas.addColumn("Total Elementos");
+        tableModelVentas.addColumn("Producto");
+        tableModelVentas.addColumn("Categoría");
+        tableModelVentas.addColumn("Precio");
 
         for (Venta venta : ventas) {
             List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
 
-            String nombres = productosVenta.stream()
-                    .map(Producto::getNombre)
-                    .filter(Objects::nonNull)
-                    .reduce((p1, p2) -> p1 + ", " + p2)
-                    .orElse("Sin productos");
-
-            String categorias = productosVenta.stream()
-                    .map(Producto::getCategoria)
-                    .filter(Objects::nonNull)
-                    .distinct()
-                    .reduce((c1, c2) -> c1 + ", " + c2)
-                    .orElse("Sin categoría");
-
-            int total = productosVenta.size();
-
-            Object[] row = {
-                venta.getId(),
-                nombres,
-                categorias,
-                total
-            };
-
-            tableModelVentas.addRow(row);
+            for (Producto producto : productosVenta) {
+                Object[] row = new Object[]{
+                    venta.getId(),         // ID de la venta
+                    producto.getNombre(),  // Nombre del producto
+                    producto.getCategoria(), // Categoría del producto
+                    "$ " + String.format("%.2f", producto.getPrecioVenta()) // Precio del producto
+                };
+                tableModelVentas.addRow(row);
+            }
         }
 
-        jTable1.setModel(tableModelVentas);
+        tblRegistroDeVentas.setModel(tableModelVentas);
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -81,7 +72,7 @@ public class FrmVentas extends javax.swing.JFrame {
         btnEditarVenta = new javax.swing.JButton();
         btnEliminarVenta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRegistroDeVentas = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         txtBuscarVentaP = new javax.swing.JTextField();
         btnmostrarCaja = new javax.swing.JButton();
@@ -132,7 +123,7 @@ public class FrmVentas extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblRegistroDeVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -143,7 +134,7 @@ public class FrmVentas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblRegistroDeVentas);
 
         jLabel4.setFont(new java.awt.Font("sansserif", 3, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -189,7 +180,9 @@ public class FrmVentas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnmostrarCaja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -204,11 +197,13 @@ public class FrmVentas extends javax.swing.JFrame {
                         .addComponent(btnEliminarVenta))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(205, 205, 205)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                                .addGap(228, 228, 228))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(cmbBoxFiltrarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(8, 8, 8)))
                         .addContainerGap())))
@@ -216,15 +211,9 @@ public class FrmVentas extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEditarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -232,10 +221,14 @@ public class FrmVentas extends javax.swing.JFrame {
                             .addComponent(btnAgregarVenta, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnmostrarCaja, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnActualizarVentas, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addComponent(cmbBoxFiltrarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(btnActualizarVentas, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscarVentaP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(cmbBoxFiltrarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -265,14 +258,14 @@ public class FrmVentas extends javax.swing.JFrame {
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
 
-        int filaSeleccionada = jTable1.getSelectedRow();
+        int filaSeleccionada = tblRegistroDeVentas.getSelectedRow();
 
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int idVenta = (int) jTable1.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
+        int idVenta = (int) tblRegistroDeVentas.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
 
         int confirmacion = JOptionPane.showConfirmDialog(
                 this,
@@ -356,7 +349,7 @@ public class FrmVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblRegistroDeVentas;
     private javax.swing.JTextField txtBuscarVentaP;
     // End of variables declaration//GEN-END:variables
 }

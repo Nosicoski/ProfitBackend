@@ -185,10 +185,27 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-
-        int[] selectedRows = jTable1.getSelectedRows();
+  int[] selectedRows = jTable1.getSelectedRows();
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Preguntar al usuario cuántas unidades desea agregar de cada producto
+        String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad de productos a agregar:", "Cantidad", JOptionPane.QUESTION_MESSAGE);
+        if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(cantidadStr);
+            if (cantidad <= 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -203,8 +220,10 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
                     .orElse(null);
 
             if (producto != null) {
-                productosVenta.add(producto);
-                importeTotal += producto.getPrecioVenta();
+                for (int i = 0; i < cantidad; i++) {
+                    productosVenta.add(producto);
+                    importeTotal += producto.getPrecioVenta();
+                }
             }
         }
 
@@ -216,6 +235,8 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         this.dispose();
+    
+
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     /**
