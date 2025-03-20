@@ -265,7 +265,7 @@ public class FrmVentas extends javax.swing.JFrame {
             return;
         }
 
-        int idVenta = (int) tblRegistroDeVentas.getValueAt(filaSeleccionada, 0); // Suponiendo que el ID está en la columna 0
+        int idVenta = (int) tblRegistroDeVentas.getValueAt(filaSeleccionada, 0); 
 
         int confirmacion = JOptionPane.showConfirmDialog(
                 this,
