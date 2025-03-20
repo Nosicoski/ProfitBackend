@@ -70,6 +70,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar3.add(menu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Profit");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(30, 30));
 
