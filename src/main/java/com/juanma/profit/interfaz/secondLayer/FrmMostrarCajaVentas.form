@@ -49,7 +49,9 @@
                   <Component id="jLabel5" pref="210" max="32767" attributes="0"/>
                   <Component id="jScrollPane3" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="398" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
+              <Component id="jCalendarComboBox1" min="-2" pref="98" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jScrollPane2" max="32767" attributes="0"/>
                   <Component id="jLabel3" pref="210" max="32767" attributes="0"/>
@@ -70,12 +72,15 @@
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jScrollPane3" max="32767" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jCalendarComboBox1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="437" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="435" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -199,5 +204,7 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="de.wannawork.jcalendar.JCalendarComboBox" name="jCalendarComboBox1">
+    </Component>
   </SubComponents>
 </Form>
