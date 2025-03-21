@@ -68,8 +68,6 @@
                   <Group type="102" attributes="0">
                       <Component id="txtBuscarProducto" min="-2" pref="199" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jCalendarComboBox1" min="-2" pref="98" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="349" max="-2" attributes="0"/>
                       <Component id="cmbxFiltrarProductos" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -97,10 +95,7 @@
                           <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cmbxFiltrarProductos" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCalendarComboBox1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="cmbxFiltrarProductos" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -275,7 +270,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="de.wannawork.jcalendar.JCalendarComboBox" name="jCalendarComboBox1">
-    </Component>
   </SubComponents>
 </Form>
