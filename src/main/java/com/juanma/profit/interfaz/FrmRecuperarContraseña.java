@@ -16,6 +16,9 @@ public class FrmRecuperarContraseña extends javax.swing.JFrame {
      */
     public FrmRecuperarContraseña() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null); 
+        pack();
         
     }
 

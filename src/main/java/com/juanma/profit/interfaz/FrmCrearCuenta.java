@@ -14,9 +14,10 @@ public class FrmCrearCuenta extends javax.swing.JFrame {
      * Creates new form FrmCrearCuenta
      */
     public FrmCrearCuenta() {
-        initComponents();
+         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); 
+        pack();
     }
 
     /**
