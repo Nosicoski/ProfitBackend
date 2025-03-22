@@ -7,7 +7,11 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.entidad.Venta;
 import com.juanma.profit.persistencia.VentaPersistencia;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,25 +34,25 @@ public class FrmVentas extends javax.swing.JFrame {
     public FrmVentas() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setLocationRelativeTo(null);
         cargarVentasEnTabla();
+
         pack();
         cargarCajaEnTabla();
+
     }
 
     private void cargarCajaEnTabla() {
         List<Venta> ventas = VentaPersistencia.obtenerTodas();
         tableModelCaja = new DefaultTableModel();
 
-        // Definir las columnas de la tabla
-        tableModelCaja.addColumn("Precio Producto"); // Cambiar nombre de la columna
+        tableModelCaja.addColumn("Precio Producto");
         tableModelCaja.addColumn("Nombre del Producto");
         tableModelCaja.addColumn("Cantidad Vendida");
 
-        // Calcular el total vendido y las cantidades por producto
         double totalVendido = 0;
         Map<String, Integer> cantidadPorProducto = new HashMap<>();
-        Map<String, Double> precioPorProducto = new HashMap<>(); // Nuevo mapa para precios
+        Map<String, Double> precioPorProducto = new HashMap<>();
 
         for (Venta venta : ventas) {
             List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
@@ -57,52 +61,54 @@ public class FrmVentas extends javax.swing.JFrame {
                 String nombreProducto = producto.getNombre();
                 double precioVenta = producto.getPrecioVenta();
 
-                // Acumular cantidad y precio por producto
                 cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + 1);
-                precioPorProducto.put(nombreProducto, precioVenta); // Guardar el precio del producto
+                precioPorProducto.put(nombreProducto, precioVenta);
 
-                totalVendido += precioVenta; // Calcular el total general
+                totalVendido += precioVenta;
             }
         }
 
-        // Agregar los datos a la tabla
         for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
             String nombreProducto = entry.getKey();
-            double precio = precioPorProducto.get(nombreProducto); // Obtener el precio del producto
+            double precio = precioPorProducto.get(nombreProducto);
 
             Object[] row = new Object[]{
-                "$ " + String.format("%.2f", precio), // Precio individual del producto
+                "$ " + String.format("%.2f", precio),
                 nombreProducto,
-                entry.getValue() // Cantidad vendida
+                entry.getValue()
             };
             tableModelCaja.addRow(row);
         }
 
         tblMostrarCajaVentas.setModel(tableModelCaja);
 
-        // Mostrar el total vendido en el campo txtTotalVendidoMostrarCajaVentas
         txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
     }
 
-    private void cargarVentasEnTabla() {
+    public void cargarVentasEnTabla() {
         List<Venta> ventas = VentaPersistencia.obtenerTodas();
         tableModelVentas = new DefaultTableModel();
 
-        // Definir las columnas de la tabla
         tableModelVentas.addColumn("ID");
         tableModelVentas.addColumn("Producto");
         tableModelVentas.addColumn("Categoría");
         tableModelVentas.addColumn("Precio");
+        tableModelVentas.addColumn("Fecha");
 
         for (Venta venta : ventas) {
             List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
 
             for (Producto producto : productosVenta) {
+
+                Date fecha = venta.getFecha();
+                String fechaStr = (fecha != null) ? new SimpleDateFormat("dd/MM/yyyy").format(fecha) : "Sin fecha";
+
                 Object[] row = new Object[]{
-                    venta.getId(), // ID de la venta
-                    producto.getNombre(), // Nombre del producto
-                    producto.getCategoria(), // Categoría del producto
-                    "$ " + String.format("%.2f", producto.getPrecioVenta()) // Precio del producto
+                    venta.getId(),
+                    producto.getNombre(),
+                    producto.getCategoria(),
+                    "$ " + String.format("%.2f", producto.getPrecioVenta()),
+                    fechaStr
                 };
                 tableModelVentas.addRow(row);
             }
@@ -110,8 +116,9 @@ public class FrmVentas extends javax.swing.JFrame {
 
         tblRegistroDeVentas.setModel(tableModelVentas);
     }
+
     
-     
+
     private void filtrarTabla() {
 
         String textoBusqueda = txtBuscarVenta.getText().trim();
@@ -149,7 +156,7 @@ public class FrmVentas extends javax.swing.JFrame {
         tblMostrarCajaVentas = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
         btnAgregarVenta1 = new javax.swing.JButton();
-        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
+        JCalendarFilterFechasCmbx = new de.wannawork.jcalendar.JCalendarComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventas");
@@ -327,7 +334,7 @@ public class FrmVentas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 869, Short.MAX_VALUE)
                         .addComponent(cmbBoxFiltrarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jCalendarComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JCalendarFilterFechasCmbx, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
@@ -339,7 +346,7 @@ public class FrmVentas extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addComponent(txtBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cmbBoxFiltrarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCalendarComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JCalendarFilterFechasCmbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
@@ -415,7 +422,7 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaActionPerformed
 
     private void txtBuscarVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarVentaKeyReleased
-   filtrarTabla();
+        filtrarTabla();
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void cmbBoxFiltrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxFiltrarProveedorActionPerformed
@@ -427,7 +434,7 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarVenta1MouseClicked
 
     private void btnAgregarVenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVenta1ActionPerformed
-      FrmAgregarVenta ventaAgregar = new FrmAgregarVenta();
+        FrmAgregarVenta ventaAgregar = new FrmAgregarVenta();
         ventaAgregar.setVisible(true);
     }//GEN-LAST:event_btnAgregarVenta1ActionPerformed
 
@@ -436,7 +443,7 @@ public class FrmVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarEgresoActionPerformed
 
     private void btnAgregarEgresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarEgresoMouseClicked
-        
+
     }//GEN-LAST:event_btnAgregarEgresoMouseClicked
 
     /**
@@ -476,6 +483,7 @@ public class FrmVentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.wannawork.jcalendar.JCalendarComboBox JCalendarFilterFechasCmbx;
     private javax.swing.JButton btnActualizarVentas;
     private javax.swing.JButton btnAgregarEgreso;
     private javax.swing.JButton btnAgregarVenta1;
@@ -483,7 +491,6 @@ public class FrmVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarVenta;
     private javax.swing.JComboBox<String> cmbBoxFiltrarProveedor;
     private javax.swing.JButton jButton2;
-    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

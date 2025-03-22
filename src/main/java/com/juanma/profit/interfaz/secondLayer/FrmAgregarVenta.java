@@ -278,6 +278,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
     this.dispose();
     
+    
 
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 private static class FechaPanel extends JPanel {
