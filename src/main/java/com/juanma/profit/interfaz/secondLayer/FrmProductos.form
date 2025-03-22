@@ -23,6 +23,14 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="de.wannawork.jcalendar.JCalendarComboBox" name="jCalendarComboBox1">
+    </Component>
+    <Component class="de.wannawork.jcalendar.JCalendarPanel" name="jCalendarPanel1">
+    </Component>
+    <Component class="de.wannawork.jcalendar.JMonthPanel" name="jMonthPanel1">
+    </Component>
+    <Component class="de.wannawork.jcalendar.TestFrame" name="testFrame1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
