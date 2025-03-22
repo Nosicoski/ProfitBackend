@@ -13,18 +13,18 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.wannawork.jcalendar.JCalendarComboBox;
+import java.awt.FlowLayout;
+import java.util.Date;
 /**
  *
  * @author juanm
  */
 public class FrmAgregarVenta extends javax.swing.JFrame {
-
-    private DefaultTableModel tableModelProductos;
+    
+   private DefaultTableModel tableModelProductos;
     private List<Producto> productosSeleccionados;
 
-    /**
-     * Creates new form FrmAgregarVenta
-     */
     public FrmAgregarVenta() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -33,7 +33,8 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         cargarProductosEnTabla();
         pack();
     }
-
+    
+    
     private void cargarProductosEnTabla() {
         List<Producto> productos = ProductoPersistencia.obtenerTodos();
         tableModelProductos = new DefaultTableModel();
@@ -43,15 +44,16 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
         for (Producto producto : productos) {
             Object[] row = new Object[]{
-                producto.getNombre(),
-                producto.getCodigo(),
-                "$ " + String.format("%.2f", producto.getPrecioVenta())
+                    producto.getNombre(),
+                    producto.getCodigo(),
+                    "$ " + String.format("%.2f", producto.getPrecioVenta())
             };
             tableModelProductos.addRow(row);
         }
 
         jTable1.setModel(tableModelProductos);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +64,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCalendarComboBox2 = new de.wannawork.jcalendar.JCalendarComboBox();
         AgregarVentaJlabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,6 +72,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         txtBuscarVenta = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnAgregarVenta = new javax.swing.JButton();
+        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,6 +157,8 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCalendarComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAgregarVenta)))
                 .addContainerGap())
         );
@@ -164,8 +170,10 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarVenta)
-                    .addComponent(jLabel4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAgregarVenta)
+                        .addComponent(jLabel4))
+                    .addComponent(jCalendarComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -185,60 +193,113 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-  int[] selectedRows = jTable1.getSelectedRows();
-        if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+     int[] selectedRows = jTable1.getSelectedRows();
+    if (selectedRows.length == 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Pedir la cantidad de productos
+    String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad de productos a agregar:", "Cantidad", JOptionPane.QUESTION_MESSAGE);
+    if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Debe ingresar una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int cantidad;
+    try {
+        cantidad = Integer.parseInt(cantidadStr);
+        if (cantidad <= 0) {
+            throw new NumberFormatException();
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Preguntar al usuario cuántas unidades desea agregar de cada producto
-        String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad de productos a agregar:", "Cantidad", JOptionPane.QUESTION_MESSAGE);
-        if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // Pedir la fecha usando un JOptionPane personalizado
+    FechaPanel fechaPanel = new FechaPanel();
+    int result = JOptionPane.showConfirmDialog(
+            this,
+            fechaPanel,
+            "Seleccione la fecha de la venta",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+    );
 
-        int cantidad;
-        try {
-            cantidad = Integer.parseInt(cantidadStr);
-            if (cantidad <= 0) {
-                throw new NumberFormatException();
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (result != JOptionPane.OK_OPTION) {
+        return; // El usuario canceló la operación
+    }
 
-        List<Producto> productosVenta = new ArrayList<>();
-        double importeTotal = 0.0;
+    Date fecha = fechaPanel.getFecha();
+    if (fecha == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fecha válida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        for (int row : selectedRows) {
-            String codigo = (String) jTable1.getValueAt(row, 1);
-            Producto producto = ProductoPersistencia.obtenerTodos().stream()
-                    .filter(p -> p.getCodigo().equals(codigo))
-                    .findFirst()
-                    .orElse(null);
+    // Crear la lista de productos y calcular el importe total
+    List<Producto> productosVenta = new ArrayList<>();
+    double importeTotal = 0.0;
+    double codigoProducto = 0.0; // Cambiar a double
 
-            if (producto != null) {
-                for (int i = 0; i < cantidad; i++) {
-                    productosVenta.add(producto);
-                    importeTotal += producto.getPrecioVenta();
+    for (int row : selectedRows) {
+        String codigo = (String) jTable1.getValueAt(row, 1);
+        Producto producto = ProductoPersistencia.obtenerTodos().stream()
+                .filter(p -> p.getCodigo().equals(codigo))
+                .findFirst()
+                .orElse(null);
+
+        if (producto != null) {
+            for (int i = 0; i < cantidad; i++) {
+                productosVenta.add(producto);
+                importeTotal += producto.getPrecioVenta();
+
+                // Convertir el código del producto a double
+                try {
+                    codigoProducto = Double.parseDouble(producto.getCodigo()); // Convertir a double
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "El código del producto no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
         }
+    }
 
-        Venta venta = new Venta();
-        venta.setProductos(productosVenta);
-        venta.setImporte("$ " + String.format("%.2f", importeTotal));
+    // Crear la venta con la fecha seleccionada
+    Venta venta = new Venta();
+    venta.setProductos(productosVenta);
+    venta.setImporte("$ " + String.format("%.2f", importeTotal));
+    venta.setCodigoProducto(codigoProducto); // Asignar el código del producto (String)
+    venta.setFecha(fecha); // Asignar la fecha seleccionada
 
-        VentaPersistencia.agregarVenta(venta);
-        JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    // Guardar la venta en la persistencia
+    VentaPersistencia.agregarVenta(venta);
+    JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-        this.dispose();
+    this.dispose();
     
 
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
+private static class FechaPanel extends JPanel {
+        private JSpinner dateSpinner;
 
+        public FechaPanel() {
+            setLayout(new FlowLayout());
+
+            // Crear un JSpinner con un modelo de fecha
+            SpinnerDateModel dateModel = new SpinnerDateModel();
+            dateSpinner = new JSpinner(dateModel);
+            JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");
+            dateSpinner.setEditor(dateEditor);
+
+            add(new JLabel("Seleccione la fecha:"));
+            add(dateSpinner);
+        }
+
+        public Date getFecha() {
+            return (Date) dateSpinner.getValue();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -277,6 +338,8 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AgregarVentaJlabel;
     private javax.swing.JButton btnAgregarVenta;
+    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
+    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

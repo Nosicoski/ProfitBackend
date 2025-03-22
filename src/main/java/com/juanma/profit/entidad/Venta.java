@@ -4,6 +4,7 @@
  */
 package com.juanma.profit.entidad;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,15 +16,18 @@ public class Venta {
     List<Producto> productos;
     private String importe;
     private double codigoProducto;
+    private Date fecha;
 
-
-    public Venta(int id, List<Producto> productos, String importe ) {
+    public Venta(int id, List<Producto> productos, String importe, double codigoProducto, Date fecha) {
         this.id = id;
         this.productos = productos;
         this.importe = importe;
         this.codigoProducto = codigoProducto;
-       
+        this.fecha = fecha;
     }
+
+  
+    
 
     public Venta() {
     }
@@ -48,10 +52,10 @@ public class Venta {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(double codigoProducto) {
+    
+ public void setCodigoProducto(Double codigoProducto) { // Acepta un String
         this.codigoProducto = codigoProducto;
     }
-
    
 
     public int getId() {
@@ -60,6 +64,14 @@ public class Venta {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
     
 }

@@ -67,51 +67,66 @@ public class VentaPersistencia {
      * @return Lista de ventas cargadas desde el archivo JSON.
      */
     private static List<Venta> cargarVentas() {
-        List<Venta> ventas = new ArrayList<>();
-        File archivo = new File(ARCHIVO_VENTAS);
+    List<Venta> ventas = new ArrayList<>();
+    File archivo = new File(ARCHIVO_VENTAS);
 
-        if (!archivo.exists()) {
-            return ventas;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-            JSONParser parser = new JSONParser();
-            JSONArray arrayVentas = (JSONArray) parser.parse(reader);
-
-            for (Object o : arrayVentas) {
-                JSONObject obj = (JSONObject) o;
-                int id = ((Long) obj.get("id")).intValue();
-                String importe = (String) obj.get("importe");
-
-                // Cargar la lista de productos
-                List<Producto> productosVenta = new ArrayList<>();
-                JSONArray productosArray = (JSONArray) obj.get("productos");
-                if (productosArray != null) {
-                    for (Object prodObj : productosArray) {
-                        JSONObject prodJson = (JSONObject) prodObj;
-                        String nombre = (String) prodJson.get("nombre");
-                        String codigo = (String) prodJson.get("codigo");
-                        String proveedor = (String) prodJson.get("proveedor");
-                        double precioCompra = prodJson.get("precioCompra") != null
-                                ? ((Number) prodJson.get("precioCompra")).doubleValue() : 0.0;
-                        double precioVenta = prodJson.get("precioVenta") != null
-                                ? ((Number) prodJson.get("precioVenta")).doubleValue() : 0.0;
-                        String categoria = (String) prodJson.get("categoria");
-
-                        // Crear el producto con todos los campos necesarios
-                        productosVenta.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
-                    }
-                }
-
-                // Crear la venta con los datos cargados
-                ventas.add(new Venta(id, productosVenta, importe));
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-
+    if (!archivo.exists()) {
         return ventas;
     }
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+        JSONParser parser = new JSONParser();
+        JSONArray arrayVentas = (JSONArray) parser.parse(reader);
+
+        for (Object o : arrayVentas) {
+            JSONObject obj = (JSONObject) o;
+            int id = ((Long) obj.get("id")).intValue();
+            String importe = (String) obj.get("importe");
+            double codigoProducto = obj.get("codigoProducto") != null
+                    ? ((Number) obj.get("codigoProducto")).doubleValue() : 0.0;
+
+           
+            Date fecha = null;
+            if (obj.get("fecha") != null) {
+                try {
+                    fecha = DATE_FORMAT.parse((String) obj.get("fecha"));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                    
+                    fecha = new Date(); 
+                }
+            } else {
+                fecha = new Date(); 
+            }
+
+            // Cargar la lista de productos
+            List<Producto> productosVenta = new ArrayList<>();
+            JSONArray productosArray = (JSONArray) obj.get("productos");
+            if (productosArray != null) {
+                for (Object prodObj : productosArray) {
+                    JSONObject prodJson = (JSONObject) prodObj;
+                    String nombre = (String) prodJson.get("nombre");
+                    String codigo = (String) prodJson.get("codigo");
+                    String proveedor = (String) prodJson.get("proveedor");
+                    double precioCompra = prodJson.get("precioCompra") != null
+                            ? ((Number) prodJson.get("precioCompra")).doubleValue() : 0.0;
+                    double precioVenta = prodJson.get("precioVenta") != null
+                            ? ((Number) prodJson.get("precioVenta")).doubleValue() : 0.0;
+                    String categoria = (String) prodJson.get("categoria");
+
+                    productosVenta.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
+                }
+            }
+
+            // Crear la venta con los datos cargados
+            ventas.add(new Venta(id, productosVenta, importe, codigoProducto, fecha));
+        }
+    } catch (IOException | ParseException e) {
+        e.printStackTrace();
+    }
+
+    return ventas;
+}
 
     public static void agregarVenta(Venta venta) {
         {
