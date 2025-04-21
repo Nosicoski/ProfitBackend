@@ -3,6 +3,7 @@ com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto.class
 com\juanma\profit\interfaz\secondLayer\FrmProveedores$2.class
 com\juanma\profit\interfaz\FrmLogin$5.class
 com\juanma\profit\entidad\Proveedor.class
+com\juanma\profit\interfaz\FrmCrearCuenta$7.class
 com\juanma\profit\interfaz\secondLayer\FrmProveedores$5.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$8.class
 com\juanma\profit\interfaz\secondLayer\FrmAgenda$2.class
