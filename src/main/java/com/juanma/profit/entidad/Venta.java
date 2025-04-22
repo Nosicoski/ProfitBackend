@@ -15,10 +15,10 @@ public class Venta {
     private int id;
     List<Producto> productos;
     private String importe;
-    private double codigoProducto;
+    private String codigoProducto;
     private Date fecha;
 
-    public Venta(int id, List<Producto> productos, String importe, double codigoProducto, Date fecha) {
+    public Venta(int id, List<Producto> productos, String importe, String codigoProducto, Date fecha) {
         this.id = id;
         this.productos = productos;
         this.importe = importe;
@@ -48,12 +48,12 @@ public class Venta {
         this.importe = importe;
     }
 
-    public double getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
     
- public void setCodigoProducto(Double codigoProducto) { // Acepta un String
+ public void setCodigoProducto(String codigoProducto) { // Acepta un String
         this.codigoProducto = codigoProducto;
     }
    

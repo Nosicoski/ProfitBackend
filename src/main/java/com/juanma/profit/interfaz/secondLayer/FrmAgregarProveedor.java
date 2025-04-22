@@ -265,32 +265,40 @@ public class FrmAgregarProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProveedorMouseClicked
-  String nombre = txtNombreDelProductoAgregar.getText();
-    String apellido = txtNombreDelProductoAgregar2.getText();
-    String telefono = txtNombreDelProductoAgregar4.getText();
-    String nombreProducto = txtNombreDelProductoAgregar1.getText();
-    String categoria = (String) cmbCategoriaSeleccionar.getSelectedItem(); // Obtener la categoría seleccionada
+    String nombre = txtNombreDelProductoAgregar.getText().trim();
+    String apellido = txtNombreDelProductoAgregar2.getText().trim();
+    String telefono = txtNombreDelProductoAgregar4.getText().trim();
+    String nombreProducto = txtNombreDelProductoAgregar1.getText().trim();
+    String categoria = (String) cmbCategoriaSeleccionar.getSelectedItem();
 
-    // Validar que todos los campos estén llenos
-    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || nombreProducto.isEmpty() || categoria == null) {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+    // Validar campos
+    if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || nombreProducto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Crear un nuevo producto con los datos ingresados
-    Producto producto = new Producto(nombreProducto, "Código", nombre, 0.0, 0.0, categoria);
+    // Crear producto (código temporal, ajustar según necesidad)
+    Producto producto = new Producto(
+        nombreProducto, 
+        "COD-" + System.currentTimeMillis(), // Generar código único
+        nombre, // Proveedor
+        0.0,    // Precio compra (ajustar)
+        0.0,    // Precio venta (ajustar)
+        categoria,
+        0       // Cantidad
+    );
 
-    // Crear una lista de productos y agregar el producto creado
-    List<Producto> productos = new ArrayList<>();
-    productos.add(producto);
+    // Crear proveedor
+    Proveedor proveedor = new Proveedor();
+    proveedor.setNombre(nombre);
+    proveedor.setApellido(apellido);
+    proveedor.setEmail(telefono);
+    proveedor.setProductos(new ArrayList<>());
+    proveedor.getProductos().add(producto);
 
-    // Crear un nuevo proveedor con los datos ingresados
-    Proveedor proveedor = new Proveedor(apellido, telefono, nombre, productos, 0);
-
-    // Guardar el proveedor en la persistencia
+    // Guardar en base de datos
     ProveedorPersistencia.agregarProveedor(proveedor);
-
-    // Cerrar el formulario después de agregar el proveedor
+    JOptionPane.showMessageDialog(this, "Proveedor agregado exitosamente");
     this.dispose();
     }//GEN-LAST:event_btnAgregarProveedorMouseClicked
 

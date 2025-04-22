@@ -2,138 +2,89 @@ package com.juanma.profit.persistencia;
 
 import com.juanma.profit.entidad.Proveedor;
 import com.juanma.profit.entidad.Producto;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Clase encargada de gestionar la persistencia de los PROVEEDORES en un archivo JSON.
- * Proporciona métodos para guardar, cargar, agregar, eliminar y obtener todos los PROVEEDORES.
- * Los proveedores se almacenan en un archivo JSON ubicado en la ruta especificada por ARCHIVO_PROVEEDORES.
- */
 public class ProveedorPersistencia {
 
-    private static final String ARCHIVO_PROVEEDORES = "DB/proveedores.json";
+    private static final String URL = "jdbc:postgresql://localhost:5432/Profit_DB";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "lolateamo123";
 
-    /**
-     * Guarda la lista de proveedores en un archivo JSON.
-     */
-    private static void guardarProveedores(List<Proveedor> proveedores) {
-        File archivo = new File(ARCHIVO_PROVEEDORES);
-        File directorio = archivo.getParentFile();
+    public static void agregarProveedor(Proveedor proveedor) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            conn.setAutoCommit(false);
 
-        if (directorio != null && !directorio.exists()) {
-            directorio.mkdirs();
-        }
+            // Insertar proveedor (sin RETURNING, usamos getGeneratedKeys)
+            String sqlProveedor = "INSERT INTO proveedores (nombre, apellido, email) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlProveedor, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, proveedor.getNombre());
+                pstmt.setString(2, proveedor.getApellido());
+                pstmt.setString(3, proveedor.getEmail());
 
-        JSONArray arrayProveedores = new JSONArray();
-        for (Proveedor p : proveedores) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", p.getId()); // Guardar el ID
-            obj.put("nombre", p.getNombre());
-            obj.put("apellido", p.getApellido());
-            obj.put("email", p.getEmail());
+                int filasAfectadas = pstmt.executeUpdate();
 
-            // Guardar la lista de productos del proveedor
-            JSONArray arrayProductos = new JSONArray();
-            for (Producto producto : p.getProductos()) {
-                JSONObject productoObj = new JSONObject();
-                productoObj.put("nombre", producto.getNombre());
-                productoObj.put("codigo", producto.getCodigo());
-                productoObj.put("precioCompra", producto.getPrecioCompra());
-                productoObj.put("precioVenta", producto.getPrecioVenta());
-                productoObj.put("categoria", producto.getCategoria());
-                arrayProductos.add(productoObj);
+                if (filasAfectadas == 0) {
+                    throw new SQLException("Error al insertar proveedor, no se creó ninguna fila.");
+                }
+
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        proveedor.setId(rs.getInt(1));
+                    } else {
+                        throw new SQLException("Error al obtener el ID generado del proveedor.");
+                    }
+                }
             }
-            obj.put("productos", arrayProductos);
 
-            arrayProveedores.add(obj);
-        }
+            // Insertar productos asociados
+            for (Producto producto : proveedor.getProductos()) {
+                producto.setProveedor(proveedor.getNombre());
+                ProductoPersistencia.agregarProducto(producto);
+            }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
-            writer.write(arrayProveedores.toJSONString());
-        } catch (IOException e) {
+            conn.commit();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Carga la lista de proveedores desde un archivo JSON.
-     */
-    private static List<Proveedor> cargarProveedores() {
+    public static List<Proveedor> obtenerTodos() {
         List<Proveedor> proveedores = new ArrayList<>();
-        File archivo = new File(ARCHIVO_PROVEEDORES);
 
-        if (!archivo.exists()) {
-            return proveedores;
-        }
+        String sql = "SELECT * FROM proveedores";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-            JSONParser parser = new JSONParser();
-            JSONArray arrayProveedores = (JSONArray) parser.parse(reader);
+            while (rs.next()) {
+                Proveedor p = new Proveedor();
+                p.setId(rs.getInt("id"));
+                p.setNombre(rs.getString("nombre"));
+                p.setApellido(rs.getString("apellido"));
+                p.setEmail(rs.getString("email"));
 
-            for (Object o : arrayProveedores) {
-                JSONObject obj = (JSONObject) o;
-                int id = ((Long) obj.get("id")).intValue(); // Cargar el ID
-                String nombre = (String) obj.get("nombre");
-                String apellido = (String) obj.get("apellido");
-                String email = (String) obj.get("email");
+                // Obtener productos del proveedor
+                List<Producto> productos = ProductoPersistencia.obtenerPorProveedor(p.getNombre());
+                p.setProductos(productos);
 
-                // Cargar la lista de productos del proveedor
-                JSONArray arrayProductos = (JSONArray) obj.get("productos");
-                List<Producto> productos = new ArrayList<>();
-                for (Object productoObj : arrayProductos) {
-                    JSONObject productoJson = (JSONObject) productoObj;
-                    String nombreProducto = (String) productoJson.get("nombre");
-                    String codigo = (String) productoJson.get("codigo");
-                    double precioCompra = ((Number) productoJson.get("precioCompra")).doubleValue();
-                    double precioVenta = ((Number) productoJson.get("precioVenta")).doubleValue();
-                    String categoria = (String) productoJson.get("categoria");
-
-                    productos.add(new Producto(nombreProducto, codigo, nombre, precioCompra, precioVenta, categoria));
-                }
-
-                proveedores.add(new Proveedor(apellido, email, nombre, productos, id));
+                proveedores.add(p);
             }
-        } catch (IOException | ParseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return proveedores;
     }
 
-    /**
-     * Agrega un nuevo proveedor a la lista y guarda los cambios en el archivo JSON.
-     */
-    public static void agregarProveedor(Proveedor proveedor) {
-        List<Proveedor> proveedores = cargarProveedores();
-
-        // Generar un ID único e incremental
-        int nuevoId = proveedores.isEmpty() ? 1 : proveedores.get(proveedores.size() - 1).getId() + 1;
-        proveedor.setId(nuevoId);
-
-        proveedores.add(proveedor);
-        guardarProveedores(proveedores);
-    }
-
-    /**
-     * Obtiene todos los proveedores almacenados en el archivo JSON.
-     */
-    public static List<Proveedor> obtenerTodos() {
-        return cargarProveedores();
-    }
-
-    /**
-     * Elimina un proveedor de la lista basado en su ID y guarda los cambios en el archivo JSON.
-     */
     public static void eliminarProveedor(int id) {
-        List<Proveedor> proveedores = cargarProveedores();
-        proveedores.removeIf(p -> p.getId() == id);
-        guardarProveedores(proveedores);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM proveedores WHERE id = ?")) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

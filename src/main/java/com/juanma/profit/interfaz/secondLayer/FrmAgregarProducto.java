@@ -7,6 +7,10 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -22,6 +26,25 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
    
     public FrmAgregarProducto() {
         initComponents();
+        ((AbstractDocument) txtCantidadDelProcuto.getDocument()).setDocumentFilter(
+        new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if (string.matches("\\d*")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                    throws BadLocationException {
+                if (text.matches("\\d*")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        }
+    );
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
  pack();
@@ -47,6 +70,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         btnCancelarProducto = new javax.swing.JButton();
         cbxCategoriaProductoAgregar = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtCantidadDelProcuto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -174,6 +199,26 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Categoría del producto");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Cantidad");
+
+        txtCantidadDelProcuto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtCantidadDelProcuto.setPreferredSize(new java.awt.Dimension(64, 24));
+        txtCantidadDelProcuto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCantidadDelProcutoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCantidadDelProcutoFocusLost(evt);
+            }
+        });
+        txtCantidadDelProcuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadDelProcutoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,7 +231,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                             .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                             .addComponent(txtProveedorDelProductoAgregar)
                             .addComponent(txtNombreDelProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCantidadDelProcuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(109, 109, 109)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -217,7 +263,13 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(122, 122, 122))))))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,12 +288,11 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxCategoriaProductoAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                        .addGap(135, 135, 135))
+                        .addGap(12, 12, 12)
+                        .addComponent(cbxCategoriaProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtProveedorDelProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,12 +300,16 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45))))
+                        .addComponent(txtPrecioVentaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addGap(12, 12, 12)
+                .addComponent(txtCantidadDelProcuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         txtNombreDelProductoAgregar.getAccessibleContext().setAccessibleName("");
@@ -304,21 +359,42 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
         String nombre = txtNombreDelProductoAgregar.getText();
-        String codigo = txtCodigoDelProductoAgregar.getText();
-        String proveedor = txtProveedorDelProductoAgregar.getText();
-        String precioCompraStr = txtPrecioCompraAgregar.getText();
-        String precioVentaStr = txtPrecioVentaAgregar.getText();
-        String categoria = (String) cbxCategoriaProductoAgregar.getSelectedItem();
- 
-        try {
-            double precioCompra = Double.parseDouble(precioCompraStr);
-            double precioVenta = Double.parseDouble(precioVentaStr);
-            Producto producto = new Producto(nombre, codigo, proveedor, precioCompra, precioVenta,categoria);
-            ProductoPersistencia.agregarProducto(producto);
-            this.dispose();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precios.", "Error", JOptionPane.ERROR_MESSAGE);
+    String codigo = txtCodigoDelProductoAgregar.getText();
+    String proveedor = txtProveedorDelProductoAgregar.getText();
+    String precioCompraStr = txtPrecioCompraAgregar.getText();
+    String precioVentaStr = txtPrecioVentaAgregar.getText();
+    String categoria = (String) cbxCategoriaProductoAgregar.getSelectedItem();
+    String cantidadStr = txtCantidadDelProcuto.getText(); // Nuevo campo
+
+    try {
+        // Validar campos numéricos
+        double precioCompra = Double.parseDouble(precioCompraStr);
+        double precioVenta = Double.parseDouble(precioVentaStr);
+        int cantidad = Integer.parseInt(cantidadStr);
+        
+        if (cantidad < 0) {
+            throw new NumberFormatException();
         }
+
+        // Crear producto con cantidad
+        Producto producto = new Producto(
+            nombre, codigo, proveedor, 
+            precioCompra, precioVenta, 
+            categoria, cantidad
+        );
+        
+        ProductoPersistencia.agregarProducto(producto);
+        JOptionPane.showMessageDialog(this, "Producto agregado exitosamente");
+        this.dispose();
+        
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(
+            this, 
+            "Ingrese valores numéricos válidos para precios y cantidad", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
 
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
@@ -346,6 +422,18 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoDelProductoAgregarActionPerformed
 
+    private void txtCantidadDelProcutoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadDelProcutoFocusGained
+
+    private void txtCantidadDelProcutoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadDelProcutoFocusLost
+
+    private void txtCantidadDelProcutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadDelProcutoActionPerformed
+
    
     public static void main(String args[]) {
        
@@ -367,6 +455,8 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField txtCantidadDelProcuto;
     private javax.swing.JTextField txtCodigoDelProductoAgregar;
     private javax.swing.JTextField txtNombreDelProductoAgregar;
     private javax.swing.JTextField txtPrecioCompraAgregar;

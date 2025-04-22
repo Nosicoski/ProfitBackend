@@ -115,7 +115,8 @@ public class ProductoPersistencia {
             rs.getString("proveedor"),
             rs.getDouble("precio_compra"),
             rs.getDouble("precio_venta"),
-            rs.getString("categoria")
+            rs.getString("categoria"),
+            rs.getInt("Cantidad")
         );
     }
     
@@ -170,7 +171,8 @@ public class ProductoPersistencia {
                     (String) jsonProducto.get("proveedor"),
                     ((Number) jsonProducto.get("precioCompra")).doubleValue(),
                     ((Number) jsonProducto.get("precioVenta")).doubleValue(),
-                    (String) jsonProducto.get("categoria")
+                    (String) jsonProducto.get("categoria"),
+                    (int)    jsonProducto.get("Cantidad")
                 );
                 productos.add(producto);
             }
@@ -181,4 +183,47 @@ public class ProductoPersistencia {
         
         return productos;
     }
+    public static Producto obtenerPorCodigo(String codigo) {
+    String sql = "SELECT * FROM productos WHERE codigo = ?";
+    
+    try (Connection conn = getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        pstmt.setString(1, codigo);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return new Producto(
+                rs.getString("nombre"),
+                rs.getString("codigo"),
+                rs.getString("proveedor"),
+                rs.getDouble("precio_compra"),
+                rs.getDouble("precio_venta"),
+                rs.getString("categoria"),
+                rs.getInt("Cantidad")
+            );
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+    public static List<Producto> obtenerPorProveedor(String nombreProveedor) {
+    List<Producto> productos = new ArrayList<>();
+    String sql = "SELECT * FROM productos WHERE proveedor = ?";
+    
+    try (Connection conn = getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        pstmt.setString(1, nombreProveedor);
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            productos.add(mapearResultSetAProducto(rs));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return productos;
+}
 }

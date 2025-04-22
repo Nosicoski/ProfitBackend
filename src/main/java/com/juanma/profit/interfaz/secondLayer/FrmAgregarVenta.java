@@ -16,6 +16,8 @@ import java.util.List;
 
 import java.awt.FlowLayout;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author juanm
@@ -27,6 +29,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
     public FrmAgregarVenta() {
         initComponents();
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null); // Centra la ventana en la pantalla
         productosSeleccionados = new ArrayList<>();
@@ -188,27 +191,10 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarVentaKeyReleased
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-     int[] selectedRows = jTable1.getSelectedRows();
+     
+        int[] selectedRows = jTable1.getSelectedRows();
     if (selectedRows.length == 0) {
         JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Pedir la cantidad de productos
-    String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad de productos a agregar:", "Cantidad", JOptionPane.QUESTION_MESSAGE);
-    if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Debe ingresar una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    int cantidad;
-    try {
-        cantidad = Integer.parseInt(cantidadStr);
-        if (cantidad <= 0) {
-            throw new NumberFormatException();
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -232,47 +218,57 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         return;
     }
 
-    // Crear la lista de productos y calcular el importe total
+    // Crear la lista de productos con cantidades
     List<Producto> productosVenta = new ArrayList<>();
     double importeTotal = 0.0;
-    double codigoProducto = 0.0; // Cambiar a double
+    Map<String, Integer> cantidades = new HashMap<>(); // Almacenar códigos y cantidades
 
     for (int row : selectedRows) {
         String codigo = (String) jTable1.getValueAt(row, 1);
-        Producto producto = ProductoPersistencia.obtenerTodos().stream()
-                .filter(p -> p.getCodigo().equals(codigo))
-                .findFirst()
-                .orElse(null);
-
-        if (producto != null) {
-            for (int i = 0; i < cantidad; i++) {
-                productosVenta.add(producto);
-                importeTotal += producto.getPrecioVenta();
-
-                // Convertir el código del producto a double
-                try {
-                    codigoProducto = Double.parseDouble(producto.getCodigo()); // Convertir a double
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "El código del producto no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
+        
+        // Pedir cantidad para cada producto seleccionado
+        String cantidadStr = JOptionPane.showInputDialog(
+            this, 
+            "Ingrese la cantidad para el producto: " + codigo,
+            "Cantidad",
+            JOptionPane.QUESTION_MESSAGE
+        );
+        
+        if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida para: " + codigo, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            int cantidad = Integer.parseInt(cantidadStr);
+            if (cantidad <= 0) throw new NumberFormatException();
+            
+            // Buscar producto por código
+            Producto producto = ProductoPersistencia.obtenerPorCodigo(codigo);
+            if (producto != null) {
+                cantidades.put(codigo, cantidad);
+                for (int i = 0; i < cantidad; i++) {
+                    productosVenta.add(producto);
+                    importeTotal += producto.getPrecioVenta();
                 }
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida para: " + codigo, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }
 
-    // Crear la venta con la fecha seleccionada
+    // Crear y guardar la venta
     Venta venta = new Venta();
     venta.setProductos(productosVenta);
-    venta.setImporte("$ " + String.format("%.2f", importeTotal));
-    venta.setCodigoProducto(codigoProducto); // Asignar el código del producto (String)
-    venta.setFecha(fecha); // Asignar la fecha seleccionada
-
-    // Guardar la venta en la persistencia
-    VentaPersistencia.agregarVenta(venta);
-    JOptionPane.showMessageDialog(this, "Venta agregada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-    this.dispose();
+    venta.setImporte("16800000.00");
+    venta.setFecha(fecha);
     
+    // Guardar en base de datos (manejar cantidades en la persistencia)
+    VentaPersistencia.agregarVenta(venta, cantidades);
+    JOptionPane.showMessageDialog(this, "Venta registrada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    this.dispose();
+
     
 
     }//GEN-LAST:event_btnAgregarVentaActionPerformed

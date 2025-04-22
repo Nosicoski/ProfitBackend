@@ -18,15 +18,27 @@ public class Producto {
     private double precioCompra;
     private double precioVenta;
     private String categoria;
+    private int cantidad;
 
-    public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta, String categoria) {
+    public Producto(String nombre, String codigo, String proveedor, double precioCompra, double precioVenta, String categoria, int cantidad) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.proveedor = proveedor;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
         this.categoria = categoria;
+        this.cantidad = cantidad;
     }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+   
 
     public Producto() {
     }

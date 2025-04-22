@@ -2,168 +2,169 @@ package com.juanma.profit.persistencia;
 
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.entidad.Venta;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-/**
- * Clase encargada de gestionar la persistencia de las ventas. Las ventas se
- * almacenan en un archivo JSON con un formato que incluye la fecha de la venta.
- */
 public class VentaPersistencia {
+    
+    private static final String URL = "jdbc:postgresql://localhost:5432/Profit_DB";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "lolateamo123";
 
-    private static final String ARCHIVO_VENTAS = "DB/ventas.json";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static void agregarVenta(Venta venta) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            conn.setAutoCommit(false);
 
-    /**
-     * Guarda una lista de ventas en el archivo JSON. Si el archivo no existe,
-     * lo crea.
-     *
-     * @param ventas Lista de ventas a guardar.
-     */
-    private static void guardarVentas(List<Venta> ventas) {
-        JSONArray arrayVentas = new JSONArray();
-        for (Venta venta : ventas) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", venta.getId());
-            obj.put("importe", venta.getImporte());
-
-            // Guardar productos
-            JSONArray productosArray = new JSONArray();
-            for (Producto p : venta.getProductos()) {
-                JSONObject prodObj = new JSONObject();
-                prodObj.put("nombre", p.getNombre());
-                prodObj.put("codigo", p.getCodigo());
-                prodObj.put("proveedor", p.getProveedor());
-                prodObj.put("precioCompra", p.getPrecioCompra());
-                prodObj.put("precioVenta", p.getPrecioVenta());
-                prodObj.put("categoria", p.getCategoria());
-                productosArray.add(prodObj);
+            // Insertar venta principal
+            String sqlVenta = "INSERT INTO ventas (importe, fecha) VALUES (?, ?) RETURNING id";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setDouble(1, Double.parseDouble(venta.getImporte().replace("$ ", "")));
+                pstmt.setTimestamp(2, new Timestamp(venta.getFecha().getTime()));
+                
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    venta.setId(rs.getInt(1));
+                }
             }
-            obj.put("productos", productosArray);
 
-            arrayVentas.add(obj);
-        }
+            // Insertar productos relacionados
+            String sqlProductos = "INSERT INTO venta_productos (venta_id, producto_codigo, cantidad) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlProductos)) {
+                for (Producto producto : venta.getProductos()) {
+                    pstmt.setInt(1, venta.getId());
+                    pstmt.setString(2, producto.getCodigo());
+                    pstmt.setInt(3, producto.getCantidad());
+                    pstmt.addBatch();
+                }
+                pstmt.executeBatch();
+            }
 
-        // Guardar en el archivo JSON
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO_VENTAS))) {
-            writer.write(arrayVentas.toJSONString());
-        } catch (IOException e) {
+            conn.commit();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Carga las ventas desde el archivo JSON. Si el archivo no existe, retorna
-     * una lista vacía.
-     *
-     * @return Lista de ventas cargadas desde el archivo JSON.
-     */
-    private static List<Venta> cargarVentas() {
-    List<Venta> ventas = new ArrayList<>();
-    File archivo = new File(ARCHIVO_VENTAS);
+    public static List<Venta> obtenerTodas() {
+        List<Venta> ventas = new ArrayList<>();
+        
+        String sql = """
+            SELECT v.id, v.importe, v.fecha, 
+                   jsonb_agg(jsonb_build_object(
+                       'codigo', vp.producto_codigo,
+                       'cantidad', vp.cantidad
+                   )) AS productos
+            FROM ventas v
+            LEFT JOIN venta_productos vp ON v.id = vp.venta_id
+            GROUP BY v.id""";
 
-    if (!archivo.exists()) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                Venta venta = new Venta();
+                venta.setId(rs.getInt("id"));
+                venta.setImporte("$ " + rs.getDouble("importe"));
+                venta.setFecha(rs.getTimestamp("fecha"));
+                
+                // Obtener productos
+                String productosJson = rs.getString("productos");
+                List<Producto> productos = parseProductosFromJson(productosJson);
+                venta.setProductos(productos);
+                
+                ventas.add(venta);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return ventas;
     }
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-        JSONParser parser = new JSONParser();
-        JSONArray arrayVentas = (JSONArray) parser.parse(reader);
-
-        for (Object o : arrayVentas) {
-            JSONObject obj = (JSONObject) o;
-            int id = ((Long) obj.get("id")).intValue();
-            String importe = (String) obj.get("importe");
-            double codigoProducto = obj.get("codigoProducto") != null
-                    ? ((Number) obj.get("codigoProducto")).doubleValue() : 0.0;
-
-           
-            Date fecha = null;
-            if (obj.get("fecha") != null) {
-                try {
-                    fecha = DATE_FORMAT.parse((String) obj.get("fecha"));
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
-                    
-                    fecha = new Date(); 
-                }
-            } else {
-                fecha = new Date(); 
-            }
-
-            // Cargar la lista de productos
-            List<Producto> productosVenta = new ArrayList<>();
-            JSONArray productosArray = (JSONArray) obj.get("productos");
-            if (productosArray != null) {
-                for (Object prodObj : productosArray) {
-                    JSONObject prodJson = (JSONObject) prodObj;
-                    String nombre = (String) prodJson.get("nombre");
-                    String codigo = (String) prodJson.get("codigo");
-                    String proveedor = (String) prodJson.get("proveedor");
-                    double precioCompra = prodJson.get("precioCompra") != null
-                            ? ((Number) prodJson.get("precioCompra")).doubleValue() : 0.0;
-                    double precioVenta = prodJson.get("precioVenta") != null
-                            ? ((Number) prodJson.get("precioVenta")).doubleValue() : 0.0;
-                    String categoria = (String) prodJson.get("categoria");
-
-                    productosVenta.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
+    private static List<Producto> parseProductosFromJson(String json) {
+        List<Producto> productos = new ArrayList<>();
+        try {
+            JSONArray array = (JSONArray) new JSONParser().parse(json);
+            for (Object obj : array) {
+                JSONObject productoJson = (JSONObject) obj;
+                String codigo = (String) productoJson.get("codigo");
+                int cantidad = ((Long) productoJson.get("cantidad")).intValue();
+                
+                Producto producto = ProductoPersistencia.obtenerPorCodigo(codigo);
+                if (producto != null) {
+                    producto.setCantidad(cantidad);
+                    productos.add(producto);
                 }
             }
-
-            // Crear la venta con los datos cargados
-            ventas.add(new Venta(id, productosVenta, importe, codigoProducto, fecha));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-    } catch (IOException | ParseException e) {
-        e.printStackTrace();
-    }
-
-    return ventas;
-}
-
-    public static void agregarVenta(Venta venta) {
-        {
-
-            List<Venta> ventas = cargarVentas();
-
-            int nuevoId = 1;
-            if (!ventas.isEmpty()) {
-
-                int ultimoId = ventas.stream()
-                        .mapToInt(Venta::getId)
-                        .max()
-                        .orElse(0);
-                nuevoId = ultimoId + 1;
-            }
-
-            venta.setId(nuevoId);
-
-            ventas.add(venta);
-
-            guardarVentas(ventas);
-        }
-    }
-
-    public static List<Venta> obtenerTodas() {
-        return cargarVentas();
+        return productos;
     }
 
     public static void eliminarVenta(int id) {
-        List<Venta> ventas = cargarVentas();
-        boolean ventaEliminada = ventas.removeIf(venta -> venta.getId() == id);
-        guardarVentas(ventas);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            conn.setAutoCommit(false);
 
-        if (ventaEliminada) {
-            System.out.println("Venta con ID " + id + " eliminada correctamente.");
-        } else {
-            System.out.println("No se encontró ninguna venta con el ID: " + id);
+            // Eliminar relaciones primero
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                "DELETE FROM venta_productos WHERE venta_id = ?")) {
+                pstmt.setInt(1, id);
+                pstmt.executeUpdate();
+            }
+
+            // Eliminar venta
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                "DELETE FROM ventas WHERE id = ?")) {
+                pstmt.setInt(1, id);
+                pstmt.executeUpdate();
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+    public static void agregarVenta(Venta venta, Map<String, Integer> cantidades) {
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        conn.setAutoCommit(false);
+    String importeLimpio = venta.getImporte()
+                .replace("$ ", "")  
+                .replace(",", "."); 
+
+        // Insertar venta principal
+       String sqlVenta = "INSERT INTO ventas (importe, fecha) VALUES (?, ?) RETURNING id";
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setDouble(1, Double.parseDouble(importeLimpio)); // Usar el valor convertido
+            pstmt.setTimestamp(2, new Timestamp(venta.getFecha().getTime()));
+            
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                venta.setId(rs.getInt(1));
+            }
+        }
+
+        // Insertar productos con cantidades
+     String sqlProductos = "INSERT INTO venta_productos (venta_id, producto_codigo, cantidad) VALUES (?, ?, ?)";
+try (PreparedStatement pstmt = conn.prepareStatement(sqlProductos)) {
+    for (Producto producto : venta.getProductos()) {
+        pstmt.setInt(1, venta.getId());
+        pstmt.setString(2, producto.getCodigo());
+        pstmt.setInt(3, producto.getCantidad()); // ¡Este valor debe estar definido!
+        pstmt.addBatch();
+    }
+    pstmt.executeBatch();
+}
+
+        conn.commit();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 }
