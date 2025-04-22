@@ -1,131 +1,184 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.juanma.profit.persistencia;
 
 import com.juanma.profit.entidad.Producto;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import com.juanma.profit.entidad.Producto;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-/**
- *
- * @author juanm
- */
-/**
- * Clase encargada de gestionar la persistencia de los PRODUCTOS en un archivo
- * JSON. Proporciona métodos para guardar, cargar, agregar, eliminar y obtener
- * todos los PRODUCTOS. Los productos se almacenan en un archivo JSON ubicado en
- * la ruta especificada por ARCHIVO_PRODUCTOS.
- */
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+
+
 public class ProductoPersistencia {
-
-    private static final String ARCHIVO_PRODUCTOS = "DB/productos.json";
   
-
-    /**
-     * Guarda la lista de productos en un archivo JSON. Si el directorio no
-     * existe, lo crea antes de guardar los datos.
-     *
-     * @param productos Lista de productos a guardar.
-     */
-    private static void guardarProductos(List<Producto> productos) {
-        File archivo = new File(ARCHIVO_PRODUCTOS);
-        File directorio = archivo.getParentFile();
-
-        if (directorio != null && !directorio.exists()) {
-            directorio.mkdirs();
-        }
-
-        JSONArray arrayProductos = new JSONArray();
-        for (Producto p : productos) {
-            JSONObject obj = new JSONObject();
-            obj.put("nombre", p.getNombre());
-            obj.put("codigo", p.getCodigo());
-            obj.put("proveedor", p.getProveedor());
-            obj.put("precioCompra", p.getPrecioCompra());
-            obj.put("precioVenta", p.getPrecioVenta());
-            obj.put("categoria", p.getCategoria());
-            arrayProductos.add(obj);
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
-            writer.write(arrayProductos.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static final String URL = "jdbc:postgresql://localhost:5432/Profit_DB";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "lolateamo123";
+    
+   
+    private static final String CREATE_TABLE = """
+        CREATE TABLE IF NOT EXISTS productos (
+            codigo VARCHAR(50) PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            proveedor VARCHAR(100),
+            precio_compra DECIMAL(10, 2),
+            precio_venta DECIMAL(10, 2),
+            categoria VARCHAR(50)
+        )""";
+    
+    private static final String INSERT_PRODUCTO = """
+        INSERT INTO productos (nombre, codigo, proveedor, precio_compra, precio_venta, categoria)
+        VALUES (?, ?, ?, ?, ?, ?)""";
+    
+    private static final String SELECT_ALL = "SELECT * FROM productos";
+    private static final String DELETE_PRODUCTO = "DELETE FROM productos WHERE codigo = ?";
+    
+    static {
+        inicializarBaseDatos();
+    }
+    
+    private static void inicializarBaseDatos() {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(CREATE_TABLE);
+        } catch (SQLException e) {
+            manejarExcepcionSQL(e);
         }
     }
-
-    /**
-     * Carga la lista de productos desde un archivo JSON. Si el archivo no
-     * existe, retorna una lista vacía.
-     *
-     * @return Lista de productos cargados desde el archivo JSON.
-     */
-    private static List<Producto> cargarProductos() {
-        List<Producto> productos = new ArrayList<>();
-        File archivo = new File(ARCHIVO_PRODUCTOS);
-
-        if (!archivo.exists()) {
-            return productos;
+    
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+    
+    public static void agregarProducto(Producto producto) {
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(INSERT_PRODUCTO)) {
+            
+            establecerParametrosProducto(pstmt, producto);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            manejarExcepcionSQL(e);
         }
-
+    }
+    
+    public static List<Producto> obtenerTodos() {
+        List<Producto> productos = new ArrayList<>();
+        
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(SELECT_ALL)) {
+            
+            while (rs.next()) {
+                productos.add(mapearResultSetAProducto(rs));
+            }
+        } catch (SQLException e) {
+            manejarExcepcionSQL(e);
+        }
+        
+        return productos;
+    }
+    
+    public static void eliminarProducto(String codigo) {
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(DELETE_PRODUCTO)) {
+            
+            pstmt.setString(1, codigo);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            manejarExcepcionSQL(e);
+        }
+    }
+    
+    
+    private static void establecerParametrosProducto(PreparedStatement pstmt, Producto producto) 
+        throws SQLException {
+        pstmt.setString(1, producto.getNombre());
+        pstmt.setString(2, producto.getCodigo());
+        pstmt.setString(3, producto.getProveedor());
+        pstmt.setDouble(4, producto.getPrecioCompra());
+        pstmt.setDouble(5, producto.getPrecioVenta());
+        pstmt.setString(6, producto.getCategoria());
+    }
+    
+    private static Producto mapearResultSetAProducto(ResultSet rs) throws SQLException {
+        return new Producto(
+            rs.getString("nombre"),
+            rs.getString("codigo"),
+            rs.getString("proveedor"),
+            rs.getDouble("precio_compra"),
+            rs.getDouble("precio_venta"),
+            rs.getString("categoria")
+        );
+    }
+    
+    private static void manejarExcepcionSQL(SQLException e) {
+        System.err.println("Error de base de datos:");
+        System.err.println("Mensaje: " + e.getMessage());
+        System.err.println("Código error: " + e.getErrorCode());
+        System.err.println("Estado SQL: " + e.getSQLState());
+    }
+    
+   
+    public static void migrarDatosDesdeJSON() {
+        List<Producto> productos = cargarProductosDesdeJSON();
+        
+        if (productos.isEmpty()) return;
+        
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(INSERT_PRODUCTO)) {
+            
+            conn.setAutoCommit(false);
+            
+            for (Producto producto : productos) {
+                establecerParametrosProducto(pstmt, producto);
+                pstmt.addBatch();
+            }
+            
+            pstmt.executeBatch();
+            conn.commit();
+            
+            System.out.println("Migración completada: " + productos.size() + " productos migrados");
+            
+        } catch (SQLException e) {
+            manejarExcepcionSQL(e);
+        }
+    }
+    
+    private static List<Producto> cargarProductosDesdeJSON() {
+        List<Producto> productos = new ArrayList<>();
+        File archivo = new File("DB/productos.json");
+        
+        if (!archivo.exists()) return productos;
+        
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
             JSONParser parser = new JSONParser();
             JSONArray arrayProductos = (JSONArray) parser.parse(reader);
-
-            for (Object o : arrayProductos) {
-                JSONObject obj = (JSONObject) o;
-                String nombre = (String) obj.get("nombre");
-                String codigo = (String) obj.get("codigo");
-                String proveedor = (String) obj.get("proveedor");
-
-                Object precioCompraObj = obj.get("precioCompra");
-                double precioCompra = precioCompraObj != null ? ((Number) precioCompraObj).doubleValue() : 0.0;
-                Object precioVentaObj = obj.get("precioVenta");
-                double precioVenta = precioVentaObj != null ? ((Number) precioVentaObj).doubleValue() : 0.0;
-                String categoria = (String) obj.get("categoria");
-
-                productos.add(new Producto(nombre, codigo, proveedor, precioCompra, precioVenta, categoria));
+            
+            for (Object obj : arrayProductos) {
+                JSONObject jsonProducto = (JSONObject) obj;
+                Producto producto = new Producto(
+                    (String) jsonProducto.get("nombre"),
+                    (String) jsonProducto.get("codigo"),
+                    (String) jsonProducto.get("proveedor"),
+                    ((Number) jsonProducto.get("precioCompra")).doubleValue(),
+                    ((Number) jsonProducto.get("precioVenta")).doubleValue(),
+                    (String) jsonProducto.get("categoria")
+                );
+                productos.add(producto);
             }
         } catch (IOException | ParseException e) {
+            System.err.println("Error cargando datos desde JSON:");
             e.printStackTrace();
         }
-
+        
         return productos;
-    }
-
-    /**
-     * Agrega un nuevo producto a la lista y guarda los cambios en el archivo
-     * JSON.
-     *
-     * @param producto Producto a agregar.
-     */
-    public static void agregarProducto(Producto producto) {
-        List<Producto> productos = cargarProductos();
-        productos.add(producto);
-        guardarProductos(productos);
-    }
-
-    public static List<Producto> obtenerTodos() {
-        return cargarProductos();
-    }
-
-    /**
-     * Elimina un producto de la lista basado en su código y guarda los cambios
-     * en el archivo JSON.
-     *
-     * @param codigo Código del producto a eliminar.
-     */
-    public static void eliminarProducto(String codigo) {
-        List<Producto> productos = cargarProductos();
-        productos.removeIf(p -> p.getCodigo().equals(codigo));
-        guardarProductos(productos);
     }
 }

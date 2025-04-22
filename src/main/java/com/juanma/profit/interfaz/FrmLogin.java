@@ -54,6 +54,7 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login en Profit");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         TxtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);

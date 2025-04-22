@@ -28,6 +28,11 @@
             <artifactId>jcalendar-0.8.1</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+        <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.6.0</version>
+</dependency>
      <dependency>
     <groupId>com.toedter</groupId>
     <artifactId>jcalendar</artifactId>
