@@ -17,75 +17,71 @@ public class VentaPersistencia {
     private static final String USER = "postgres";
     private static final String PASSWORD = "lolateamo123";
 
-    public static void agregarVenta(Venta venta) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            conn.setAutoCommit(false);
+  public static void agregarVenta(Venta venta, Map<String, Integer> cantidades) {
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        conn.setAutoCommit(false);
 
-            // Insertar venta principal
-            String sqlVenta = "INSERT INTO ventas (importe, fecha) VALUES (?, ?) RETURNING id";
-            try (PreparedStatement pstmt = conn.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS)) {
-                pstmt.setDouble(1, Double.parseDouble(venta.getImporte().replace("$ ", "")));
-                pstmt.setTimestamp(2, new Timestamp(venta.getFecha().getTime()));
-                
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    venta.setId(rs.getInt(1));
-                }
+        String sqlVenta = "INSERT INTO ventas (codigo, nombre_producto, cantidad_vendida, importe, fecha) VALUES (?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlVenta)) {
+            for (Producto producto : venta.getProductos()) {
+                String codigo = producto.getCodigo();
+                String nombreProducto = producto.getNombre();
+                int cantidadVendida = cantidades.get(codigo); // Obtenemos la cantidad real
+                double importeTotal = producto.getPrecioVenta() * cantidadVendida;
+
+                pstmt.setString(1, codigo);
+                pstmt.setString(2, nombreProducto);
+                pstmt.setInt(3, cantidadVendida);
+                pstmt.setDouble(4, importeTotal);
+                pstmt.setTimestamp(5, new Timestamp(venta.getFecha().getTime()));
+                pstmt.addBatch();
             }
-
-            // Insertar productos relacionados
-            String sqlProductos = "INSERT INTO venta_productos (venta_id, producto_codigo, cantidad) VALUES (?, ?, ?)";
-            try (PreparedStatement pstmt = conn.prepareStatement(sqlProductos)) {
-                for (Producto producto : venta.getProductos()) {
-                    pstmt.setInt(1, venta.getId());
-                    pstmt.setString(2, producto.getCodigo());
-                    pstmt.setInt(3, producto.getCantidad());
-                    pstmt.addBatch();
-                }
-                pstmt.executeBatch();
-            }
-
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            pstmt.executeBatch();
         }
+
+        conn.commit();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
+
+
 
     public static List<Venta> obtenerTodas() {
-        List<Venta> ventas = new ArrayList<>();
-        
-        String sql = """
-            SELECT v.id, v.importe, v.fecha, 
-                   jsonb_agg(jsonb_build_object(
-                       'codigo', vp.producto_codigo,
-                       'cantidad', vp.cantidad
-                   )) AS productos
-            FROM ventas v
-            LEFT JOIN venta_productos vp ON v.id = vp.venta_id
-            GROUP BY v.id""";
+    List<Venta> ventas = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
-            while (rs.next()) {
-                Venta venta = new Venta();
-                venta.setId(rs.getInt("id"));
-                venta.setImporte("$ " + rs.getDouble("importe"));
-                venta.setFecha(rs.getTimestamp("fecha"));
-                
-                // Obtener productos
-                String productosJson = rs.getString("productos");
-                List<Producto> productos = parseProductosFromJson(productosJson);
-                venta.setProductos(productos);
-                
-                ventas.add(venta);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    String sql = "SELECT * FROM ventas";
+
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        while (rs.next()) {
+            Venta venta = new Venta();
+            venta.setId(rs.getInt("id"));
+            venta.setImporte("$ " + String.format("%.2f", rs.getDouble("importe")));
+            venta.setFecha(rs.getTimestamp("fecha"));
+
+            Producto producto = new Producto();
+            producto.setCodigo(rs.getString("codigo"));
+            producto.setNombre(rs.getString("nombre_producto"));
+            producto.setCantidad(rs.getInt("cantidad_vendida"));
+            producto.setPrecioVenta(rs.getDouble("importe") / producto.getCantidad()); // cálculo estimado
+
+            List<Producto> productos = new ArrayList<>();
+            productos.add(producto);
+            venta.setProductos(productos);
+
+            ventas.add(venta);
         }
-        return ventas;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return ventas;
+}
+
 
     private static List<Producto> parseProductosFromJson(String json) {
         List<Producto> productos = new ArrayList<>();
@@ -131,40 +127,5 @@ public class VentaPersistencia {
             e.printStackTrace();
         }
     }
-    public static void agregarVenta(Venta venta, Map<String, Integer> cantidades) {
-    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-        conn.setAutoCommit(false);
-    String importeLimpio = venta.getImporte()
-                .replace("$ ", "")  
-                .replace(",", "."); 
-
-        // Insertar venta principal
-       String sqlVenta = "INSERT INTO ventas (importe, fecha) VALUES (?, ?) RETURNING id";
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setDouble(1, Double.parseDouble(importeLimpio)); // Usar el valor convertido
-            pstmt.setTimestamp(2, new Timestamp(venta.getFecha().getTime()));
-            
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                venta.setId(rs.getInt(1));
-            }
-        }
-
-        // Insertar productos con cantidades
-     String sqlProductos = "INSERT INTO venta_productos (venta_id, producto_codigo, cantidad) VALUES (?, ?, ?)";
-try (PreparedStatement pstmt = conn.prepareStatement(sqlProductos)) {
-    for (Producto producto : venta.getProductos()) {
-        pstmt.setInt(1, venta.getId());
-        pstmt.setString(2, producto.getCodigo());
-        pstmt.setInt(3, producto.getCantidad()); // ¡Este valor debe estar definido!
-        pstmt.addBatch();
-    }
-    pstmt.executeBatch();
-}
-
-        conn.commit();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
+   
 }

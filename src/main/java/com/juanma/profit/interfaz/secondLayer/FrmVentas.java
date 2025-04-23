@@ -35,7 +35,7 @@ public class FrmVentas extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        cargarVentasEnTabla();
+        cargarVentas();
 
         pack();
         cargarCajaEnTabla();
@@ -55,18 +55,17 @@ public class FrmVentas extends javax.swing.JFrame {
         Map<String, Double> precioPorProducto = new HashMap<>();
 
         for (Venta venta : ventas) {
-            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
-
-            for (Producto producto : productosVenta) {
-                String nombreProducto = producto.getNombre();
-                double precioVenta = producto.getPrecioVenta();
-
-                cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + 1);
-                precioPorProducto.put(nombreProducto, precioVenta);
-
-                totalVendido += precioVenta;
-            }
+        List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+        for (Producto producto : productosVenta) {
+            String nombreProducto = producto.getNombre();
+            double precioVenta = producto.getPrecioVenta();
+            int cantidad = producto.getCantidad(); // Usar cantidad real
+            
+            cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + cantidad); // Sumar cantidad
+            precioPorProducto.put(nombreProducto, precioVenta);
+            totalVendido += precioVenta * cantidad;
         }
+    }
 
         for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
             String nombreProducto = entry.getKey();
@@ -85,38 +84,36 @@ public class FrmVentas extends javax.swing.JFrame {
         txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
     }
 
-    public void cargarVentasEnTabla() {
-        List<Venta> ventas = VentaPersistencia.obtenerTodas();
-        tableModelVentas = new DefaultTableModel();
+    private void cargarVentas() {
+    List<Venta> ventas = VentaPersistencia.obtenerTodas();
 
-        tableModelVentas.addColumn("ID");
-        tableModelVentas.addColumn("Producto");
-        tableModelVentas.addColumn("Categoría");
-        tableModelVentas.addColumn("Precio");
-        tableModelVentas.addColumn("Fecha");
-
-        for (Venta venta : ventas) {
-            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
-
-            for (Producto producto : productosVenta) {
-
-                Date fecha = venta.getFecha();
-                String fechaStr = (fecha != null) ? new SimpleDateFormat("dd/MM/yyyy").format(fecha) : "Sin fecha";
-
-                Object[] row = new Object[]{
-                    venta.getId(),
-                    producto.getNombre(),
-                    producto.getCategoria(),
-                    "$ " + String.format("%.2f", producto.getPrecioVenta()),
-                    fechaStr
-                };
-                tableModelVentas.addRow(row);
-            }
+    tableModelVentas = new DefaultTableModel(new Object[]{"ID Venta", "Producto", "Código", "Precio de Venta", "Cantidad Vendida", "Importe Total"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
+    };
 
-        tblRegistroDeVentas.setModel(tableModelVentas);
+    for (Venta venta : ventas) {
+        for (Producto producto : venta.getProductos()) {
+            Object[] fila = new Object[]{
+                venta.getId(), // ID de la venta
+                producto.getNombre(),
+                producto.getCodigo(),
+                "$ " + String.format("%.2f", producto.getPrecioVenta()),
+                producto.getCantidad(),
+                "$ " + String.format("%.2f", producto.getPrecioVenta() * producto.getCantidad())
+            };
+            tableModelVentas.addRow(fila);
+        }
     }
 
+    tblRegistroDeVentas.setModel(tableModelVentas);
+    // Ocultar columna ID
+    tblRegistroDeVentas.getColumnModel().getColumn(0).setMinWidth(0);
+    tblRegistroDeVentas.getColumnModel().getColumn(0).setMaxWidth(0);
+    tblRegistroDeVentas.getColumnModel().getColumn(0).setWidth(0);
+}
     
 
     private void filtrarTabla() {
@@ -379,7 +376,7 @@ public class FrmVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVentasActionPerformed
-        cargarVentasEnTabla();
+        cargarVentas();
         cargarCajaEnTabla();
         JOptionPane.showMessageDialog(this, "Ventas actualizadas.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnActualizarVentasActionPerformed
@@ -390,31 +387,21 @@ public class FrmVentas extends javax.swing.JFrame {
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
 
-        int filaSeleccionada = tblRegistroDeVentas.getSelectedRow();
-
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int idVenta = (int) tblRegistroDeVentas.getValueAt(filaSeleccionada, 0);
-
-        int confirmacion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que desea eliminar esta venta?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-
-            VentaPersistencia.eliminarVenta(idVenta);
-
-            cargarVentasEnTabla();
-
-            JOptionPane.showMessageDialog(this, "Venta eliminada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        }
-
+          int selectedRow = tblRegistroDeVentas.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    try {
+        String idStr = tblRegistroDeVentas.getValueAt(selectedRow, 0).toString(); // Columna 0 = ID
+        int id = Integer.parseInt(idStr);
+        VentaPersistencia.eliminarVenta(id);
+        JOptionPane.showMessageDialog(this, "Venta eliminada correctamente");
+        cargarVentas();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Formato de ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
 
     private void txtBuscarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarVentaActionPerformed

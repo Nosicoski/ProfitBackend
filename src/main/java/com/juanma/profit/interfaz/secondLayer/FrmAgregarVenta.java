@@ -38,24 +38,27 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     }
     
     
-    private void cargarProductosEnTabla() {
-        List<Producto> productos = ProductoPersistencia.obtenerTodos();
-        tableModelProductos = new DefaultTableModel();
-        tableModelProductos.addColumn("Nombre");
-        tableModelProductos.addColumn("Código");
-        tableModelProductos.addColumn("Precio de Venta");
-
-        for (Producto producto : productos) {
-            Object[] row = new Object[]{
-                    producto.getNombre(),
-                    producto.getCodigo(),
-                    "$ " + String.format("%.2f", producto.getPrecioVenta())
-            };
-            tableModelProductos.addRow(row);
+   private void cargarProductosEnTabla() {
+    List<Producto> productos = ProductoPersistencia.obtenerTodos();
+    tableModelProductos = new DefaultTableModel(new Object[]{"Nombre", "Código", "Precio de Venta", "Cantidad Vendida"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Hacemos que todas las celdas no se puedan editar
         }
+    };
 
-        jTable1.setModel(tableModelProductos);
+    for (Producto producto : productos) {
+        Object[] row = new Object[]{
+            producto.getNombre(),
+            producto.getCodigo(),
+            "$ " + String.format("%.2f", producto.getPrecioVenta()),
+            0 // inicialmente cantidad vendida = 0
+        };
+        tableModelProductos.addRow(row);
     }
+
+    jTable1.setModel(tableModelProductos);
+}
 
 
     /**
@@ -192,7 +195,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
      
-        int[] selectedRows = jTable1.getSelectedRows();
+    int[] selectedRows = jTable1.getSelectedRows();
     if (selectedRows.length == 0) {
         JOptionPane.showMessageDialog(this, "Seleccione al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -225,32 +228,34 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
 
     for (int row : selectedRows) {
         String codigo = (String) jTable1.getValueAt(row, 1);
-        
+
         // Pedir cantidad para cada producto seleccionado
         String cantidadStr = JOptionPane.showInputDialog(
-            this, 
+            this,
             "Ingrese la cantidad para el producto: " + codigo,
             "Cantidad",
             JOptionPane.QUESTION_MESSAGE
         );
-        
+
         if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Cantidad inválida para: " + codigo, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             int cantidad = Integer.parseInt(cantidadStr);
             if (cantidad <= 0) throw new NumberFormatException();
-            
-            // Buscar producto por código
+
             Producto producto = ProductoPersistencia.obtenerPorCodigo(codigo);
             if (producto != null) {
                 cantidades.put(codigo, cantidad);
-                for (int i = 0; i < cantidad; i++) {
-                    productosVenta.add(producto);
-                    importeTotal += producto.getPrecioVenta();
-                }
+
+                // Actualizar la columna "Cantidad Vendida" en la tabla
+                tableModelProductos.setValueAt(cantidad, row, 3);
+
+                // Agregar el producto una sola vez y multiplicar precio * cantidad
+                productosVenta.add(producto);
+                importeTotal += producto.getPrecioVenta() * cantidad;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Cantidad inválida para: " + codigo, "Error", JOptionPane.ERROR_MESSAGE);
@@ -261,16 +266,15 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     // Crear y guardar la venta
     Venta venta = new Venta();
     venta.setProductos(productosVenta);
-    venta.setImporte("16800000.00");
+    venta.setImporte("$ " + String.format("%.2f", importeTotal));
     venta.setFecha(fecha);
-    
+
     // Guardar en base de datos (manejar cantidades en la persistencia)
     VentaPersistencia.agregarVenta(venta, cantidades);
+
     JOptionPane.showMessageDialog(this, "Venta registrada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     this.dispose();
-
-    
-
+     
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 private static class FechaPanel extends JPanel {
         private JSpinner dateSpinner;

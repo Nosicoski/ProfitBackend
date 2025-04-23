@@ -75,6 +75,12 @@ public class Producto {
         return precioVenta;
     }
 
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+   
+
     public String getCategoria() {
         return categoria;
     }
