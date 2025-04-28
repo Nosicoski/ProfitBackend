@@ -249,6 +249,7 @@
       </Properties>
       <Events>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPrecioCompraAgregarFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPrecioCompraAgregarFocusLost"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioVentaAgregar">
