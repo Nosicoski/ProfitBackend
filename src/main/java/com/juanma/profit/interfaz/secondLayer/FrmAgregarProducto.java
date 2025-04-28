@@ -6,7 +6,9 @@ package com.juanma.profit.interfaz.secondLayer;
 
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
+import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -25,8 +27,16 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
    
     public FrmAgregarProducto() {
-        initComponents();
-        ((AbstractDocument) txtCantidadDelProcuto.getDocument()).setDocumentFilter(
+    initComponents();
+     // Placeholders (ajustados para que coincidan con los focusGained)
+    setPlaceholder(txtNombreDelProductoAgregar, "Ingresa el nombre del producto");
+    setPlaceholder(txtCodigoDelProductoAgregar, "Ingresa el código del producto");
+    setPlaceholder(txtProveedorDelProductoAgregar, "Ingresa el Proveedor");
+    setPlaceholder(txtPrecioCompraAgregar, "Ingresa el precio de compra");
+    setPlaceholder(txtPrecioVentaAgregar, "Ingresa el precio de venta");
+    setPlaceholder(txtCantidadDelProcuto, "Ingresa la cantidad");
+    // Filtro para solo números en cantidad (ya lo tenías)
+    ((AbstractDocument) txtCantidadDelProcuto.getDocument()).setDocumentFilter(
         new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -45,11 +55,15 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             }
         }
     );
-         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
- pack();
-    }
-
+    pack();
+}
+private void setPlaceholder(JTextField field, String placeholder) {
+    field.setText(placeholder);
+    field.setForeground(Color.GRAY);
+}
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,10 +149,26 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
 
         txtPrecioCompraAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPrecioCompraAgregar.setPreferredSize(new java.awt.Dimension(64, 24));
+        txtPrecioCompraAgregar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPrecioCompraAgregarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecioCompraAgregarFocusLost(evt);
+            }
+        });
 
         txtPrecioVentaAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPrecioVentaAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtPrecioVentaAgregar.setPreferredSize(new java.awt.Dimension(64, 24));
+        txtPrecioVentaAgregar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPrecioVentaAgregarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecioVentaAgregarFocusLost(evt);
+            }
+        });
 
         txtCodigoDelProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCodigoDelProductoAgregar.setPreferredSize(new java.awt.Dimension(64, 24));
@@ -334,20 +364,23 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxCategoriaProductoAgregarActionPerformed
 
     private void txtNombreDelProductoAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarFocusGained
-  if(txtNombreDelProductoAgregar.getText().equals("Ingresa el nombre")){
+   if (txtNombreDelProductoAgregar.getText().equals("Ingresa el nombre del producto")) {
         txtNombreDelProductoAgregar.setText("");
+        txtNombreDelProductoAgregar.setForeground(Color.BLACK);
     }
+    
     }//GEN-LAST:event_txtNombreDelProductoAgregarFocusGained
 
     private void txtNombreDelProductoAgregarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarFocusLost
-         if(txtNombreDelProductoAgregar.getText().trim().equals("")){
-        txtNombreDelProductoAgregar.setText("Ingresa el nombre");
+           if(txtNombreDelProductoAgregar.getText().trim().equals("")){
+        txtNombreDelProductoAgregar.setText("Ingresa el nombre del producto");
     }
     }//GEN-LAST:event_txtNombreDelProductoAgregarFocusLost
 
     private void txtCodigoDelProductoAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoDelProductoAgregarFocusGained
-        if(txtCodigoDelProductoAgregar.getText().equals("Ingresa el Codigo")){
+        if (txtCodigoDelProductoAgregar.getText().equals("Ingresa el codigo del producto")) {
         txtCodigoDelProductoAgregar.setText("");
+        txtCodigoDelProductoAgregar.setForeground(Color.BLACK);
     }
     }//GEN-LAST:event_txtCodigoDelProductoAgregarFocusGained
 
@@ -407,15 +440,17 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtProveedorDelProductoAgregarActionPerformed
 
     private void txtProveedorDelProductoAgregarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProveedorDelProductoAgregarFocusLost
-        if(txtProveedorDelProductoAgregar.getText().trim().equals("")){
-            txtProveedorDelProductoAgregar.setText("Ingresa el Proveedor");
-        }
+     if (txtProveedorDelProductoAgregar.getText().trim().isEmpty()) {
+        setPlaceholder(txtProveedorDelProductoAgregar, "Ingresa el Proveedor");
+    }
     }//GEN-LAST:event_txtProveedorDelProductoAgregarFocusLost
 
     private void txtProveedorDelProductoAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProveedorDelProductoAgregarFocusGained
-        if(txtProveedorDelProductoAgregar.getText().equals("Ingresa el Proveedor")){
-            txtProveedorDelProductoAgregar.setText("");
-        }
+         if (txtProveedorDelProductoAgregar.getText().equals("Ingresa el Proveedor")) {
+        txtProveedorDelProductoAgregar.setText("");
+        txtProveedorDelProductoAgregar.setForeground(Color.BLACK); // ¡Faltaba esto!
+    }
+     
     }//GEN-LAST:event_txtProveedorDelProductoAgregarFocusGained
 
     private void txtCodigoDelProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoDelProductoAgregarActionPerformed
@@ -423,16 +458,47 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoDelProductoAgregarActionPerformed
 
     private void txtCantidadDelProcutoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoFocusGained
-        // TODO add your handling code here:
+       if (txtCantidadDelProcuto.getText().equals("Ingresa la cantidad")) {
+        txtCantidadDelProcuto.setText("");
+        txtCantidadDelProcuto.setForeground(Color.BLACK);
+    }
     }//GEN-LAST:event_txtCantidadDelProcutoFocusGained
 
     private void txtCantidadDelProcutoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoFocusLost
-        // TODO add your handling code here:
+     if (txtCantidadDelProcuto.getText().trim().isEmpty()) {
+        setPlaceholder(txtCantidadDelProcuto, "Ingresa la cantidad");
+    }
     }//GEN-LAST:event_txtCantidadDelProcutoFocusLost
 
     private void txtCantidadDelProcutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadDelProcutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadDelProcutoActionPerformed
+
+    private void txtPrecioCompraAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioCompraAgregarFocusGained
+      if (txtPrecioCompraAgregar.getText().equals("Ingresa el precio de compra")) {
+        txtPrecioCompraAgregar.setText("");
+        txtPrecioCompraAgregar.setForeground(Color.BLACK);
+    }
+    }//GEN-LAST:event_txtPrecioCompraAgregarFocusGained
+
+    private void txtPrecioCompraAgregarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioCompraAgregarFocusLost
+         if (txtPrecioCompraAgregar.getText().trim().isEmpty()) {
+        setPlaceholder(txtPrecioCompraAgregar, "Ingresa el precio de compra");
+    }
+    }//GEN-LAST:event_txtPrecioCompraAgregarFocusLost
+
+    private void txtPrecioVentaAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioVentaAgregarFocusGained
+if (txtPrecioVentaAgregar.getText().equals("Ingresa el precio de venta")) {
+        txtPrecioVentaAgregar.setText("");
+        txtPrecioVentaAgregar.setForeground(Color.BLACK);
+    }
+    }//GEN-LAST:event_txtPrecioVentaAgregarFocusGained
+
+    private void txtPrecioVentaAgregarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioVentaAgregarFocusLost
+       if (txtPrecioVentaAgregar.getText().trim().isEmpty()) {
+        setPlaceholder(txtPrecioVentaAgregar, "Ingresa el precio de venta");
+    }
+    }//GEN-LAST:event_txtPrecioVentaAgregarFocusLost
 
    
     public static void main(String args[]) {

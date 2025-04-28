@@ -247,6 +247,9 @@
           <Dimension value="[64, 24]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPrecioCompraAgregarFocusGained"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioVentaAgregar">
       <Properties>
@@ -262,6 +265,10 @@
           <Dimension value="[64, 24]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPrecioVentaAgregarFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPrecioVentaAgregarFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCodigoDelProductoAgregar">
       <Properties>
