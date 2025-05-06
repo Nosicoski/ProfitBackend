@@ -140,7 +140,7 @@ public class FrmEditarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void txtNombreDelProductoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDelProductoEditarActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_txtNombreDelProductoEditarActionPerformed
 
     private void btnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProductoMouseClicked

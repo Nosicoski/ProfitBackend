@@ -43,7 +43,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     tableModelProductos = new DefaultTableModel(new Object[]{"Nombre", "Código", "Precio de Venta", "Cantidad Vendida"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return false; // Hacemos que todas las celdas no se puedan editar
+            return false; 
         }
     };
 
@@ -52,7 +52,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
             producto.getNombre(),
             producto.getCodigo(),
             "$ " + String.format("%.2f", producto.getPrecioVenta()),
-            0 // inicialmente cantidad vendida = 0
+            0 
         };
         tableModelProductos.addRow(row);
     }
@@ -201,7 +201,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         return;
     }
 
-    // Pedir la fecha usando un JOptionPane personalizado
+   
     FechaPanel fechaPanel = new FechaPanel();
     int result = JOptionPane.showConfirmDialog(
             this,
@@ -212,7 +212,7 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
     );
 
     if (result != JOptionPane.OK_OPTION) {
-        return; // El usuario canceló la operación
+        return; 
     }
 
     Date fecha = fechaPanel.getFecha();
@@ -221,15 +221,14 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         return;
     }
 
-    // Crear la lista de productos con cantidades
     List<Producto> productosVenta = new ArrayList<>();
     double importeTotal = 0.0;
-    Map<String, Integer> cantidades = new HashMap<>(); // Almacenar códigos y cantidades
+    Map<String, Integer> cantidades = new HashMap<>(); 
 
     for (int row : selectedRows) {
         String codigo = (String) jTable1.getValueAt(row, 1);
 
-        // Pedir cantidad para cada producto seleccionado
+       
         String cantidadStr = JOptionPane.showInputDialog(
             this,
             "Ingrese la cantidad para el producto: " + codigo,
@@ -250,10 +249,10 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
             if (producto != null) {
                 cantidades.put(codigo, cantidad);
 
-                // Actualizar la columna "Cantidad Vendida" en la tabla
+                
                 tableModelProductos.setValueAt(cantidad, row, 3);
 
-                // Agregar el producto una sola vez y multiplicar precio * cantidad
+               
                 productosVenta.add(producto);
                 importeTotal += producto.getPrecioVenta() * cantidad;
             }
@@ -263,13 +262,13 @@ public class FrmAgregarVenta extends javax.swing.JFrame {
         }
     }
 
-    // Crear y guardar la venta
+    
     Venta venta = new Venta();
     venta.setProductos(productosVenta);
     venta.setImporte("$ " + String.format("%.2f", importeTotal));
     venta.setFecha(fecha);
 
-    // Guardar en base de datos (manejar cantidades en la persistencia)
+    
     VentaPersistencia.agregarVenta(venta, cantidades);
 
     JOptionPane.showMessageDialog(this, "Venta registrada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -282,7 +281,7 @@ private static class FechaPanel extends JPanel {
         public FechaPanel() {
             setLayout(new FlowLayout());
 
-            // Crear un JSpinner con un modelo de fecha
+            
             SpinnerDateModel dateModel = new SpinnerDateModel();
             dateSpinner = new JSpinner(dateModel);
             JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");

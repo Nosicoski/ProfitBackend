@@ -28,14 +28,14 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
    
     public FrmAgregarProducto() {
     initComponents();
-     // Placeholders (ajustados para que coincidan con los focusGained)
+    
     setPlaceholder(txtNombreDelProductoAgregar, "Ingresa el nombre del producto");
     setPlaceholder(txtCodigoDelProductoAgregar, "Ingresa el código del producto");
     setPlaceholder(txtProveedorDelProductoAgregar, "Ingresa el Proveedor");
     setPlaceholder(txtPrecioCompraAgregar, "Ingresa el precio de compra");
     setPlaceholder(txtPrecioVentaAgregar, "Ingresa el precio de venta");
     setPlaceholder(txtCantidadDelProcuto, "Ingresa la cantidad");
-    // Filtro para solo números en cantidad (ya lo tenías)
+    
     ((AbstractDocument) txtCantidadDelProcuto.getDocument()).setDocumentFilter(
         new DocumentFilter() {
             @Override
@@ -397,10 +397,10 @@ private void setPlaceholder(JTextField field, String placeholder) {
     String precioCompraStr = txtPrecioCompraAgregar.getText();
     String precioVentaStr = txtPrecioVentaAgregar.getText();
     String categoria = (String) cbxCategoriaProductoAgregar.getSelectedItem();
-    String cantidadStr = txtCantidadDelProcuto.getText(); // Nuevo campo
+    String cantidadStr = txtCantidadDelProcuto.getText();
 
     try {
-        // Validar campos numéricos
+       
         double precioCompra = Double.parseDouble(precioCompraStr);
         double precioVenta = Double.parseDouble(precioVentaStr);
         int cantidad = Integer.parseInt(cantidadStr);
@@ -409,7 +409,7 @@ private void setPlaceholder(JTextField field, String placeholder) {
             throw new NumberFormatException();
         }
 
-        // Crear producto con cantidad
+       
         Producto producto = new Producto(
             nombre, codigo, proveedor, 
             precioCompra, precioVenta, 
