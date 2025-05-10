@@ -23,6 +23,7 @@ com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$13.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarVenta$5.class
 com\juanma\profit\interfaz\FrmLogin$2.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProveedor$8.class
+com\juanma\profit\persistencia\GenericDAO$TransactionOperation.class
 com\juanma\profit\interfaz\FrmPrincipal$5.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$6.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$9.class
@@ -89,6 +90,7 @@ com\juanma\profit\interfaz\secondLayer\FrmAgregarProveedor$4.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$4.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$2.class
 com\juanma\profit\interfaz\FrmLogin.class
+com\juanma\profit\persistencia\GenericDAO.class
 com\juanma\profit\interfaz\secondLayer\FrmAgenda.class
 com\juanma\profit\interfaz\FrmCrearCuenta.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProveedor$1.class
