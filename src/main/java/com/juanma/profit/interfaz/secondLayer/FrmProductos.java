@@ -38,6 +38,7 @@ public class FrmProductos extends javax.swing.JFrame {
         configurarFiltrado();
         setLocationRelativeTo(null);
         pack();
+        
     }
 
     /**
@@ -94,6 +95,7 @@ public class FrmProductos extends javax.swing.JFrame {
 
         jTable2.setModel(tableModel);
     }
+    
 
     public static void main(String args[]) {
 

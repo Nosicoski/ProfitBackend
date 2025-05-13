@@ -7,6 +7,7 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
@@ -30,12 +31,11 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
     initComponents();
     
     setPlaceholder(txtNombreDelProductoAgregar, "Ingresa el nombre del producto");
-    setPlaceholder(txtCodigoDelProductoAgregar, "Ingresa el código del producto");
     setPlaceholder(txtProveedorDelProductoAgregar, "Ingresa el Proveedor");
     setPlaceholder(txtPrecioCompraAgregar, "Ingresa el precio de compra");
     setPlaceholder(txtPrecioVentaAgregar, "Ingresa el precio de venta");
     setPlaceholder(txtCantidadDelProcuto, "Ingresa la cantidad");
-    
+    txtCodigoDelProductoAgregar.requestFocusInWindow();
     ((AbstractDocument) txtCantidadDelProcuto.getDocument()).setDocumentFilter(
         new DocumentFilter() {
             @Override
@@ -55,7 +55,14 @@ public class FrmAgregarProducto extends javax.swing.JFrame {
             }
         }
     );
-    
+    // En el constructor, después de inicializar componentes
+txtCodigoDelProductoAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+    public void keyPressed(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtNombreDelProductoAgregar.requestFocusInWindow();
+        }
+    }
+});
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setLocationRelativeTo(null);
     pack();
@@ -385,31 +392,76 @@ private void setPlaceholder(JTextField field, String placeholder) {
     }//GEN-LAST:event_txtCodigoDelProductoAgregarFocusGained
 
     private void txtCodigoDelProductoAgregarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoDelProductoAgregarFocusLost
-        if(txtCodigoDelProductoAgregar.getText().trim().equals("")){
-        txtCodigoDelProductoAgregar.setText("Ingresa el Codigo");
+         if (txtCodigoDelProductoAgregar.getText().trim().equals("")) {
+        txtCodigoDelProductoAgregar.setText("Ingresa el código del producto");
+    } else {
+        // Verificar si el código ya existe
+        String codigo = txtCodigoDelProductoAgregar.getText().trim();
+        Producto existente = ProductoPersistencia.obtenerPorCodigo(codigo);
+        if (existente != null) {
+            JOptionPane.showMessageDialog(this, "¡Código ya registrado!", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCodigoDelProductoAgregar.setText("");
+            txtCodigoDelProductoAgregar.requestFocusInWindow();
+        }
+    
     }
     }//GEN-LAST:event_txtCodigoDelProductoAgregarFocusLost
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        String nombre = txtNombreDelProductoAgregar.getText();
-    String codigo = txtCodigoDelProductoAgregar.getText();
-    String proveedor = txtProveedorDelProductoAgregar.getText();
-    String precioCompraStr = txtPrecioCompraAgregar.getText();
-    String precioVentaStr = txtPrecioVentaAgregar.getText();
+         // Obtener valores de los campos
+    String nombre = txtNombreDelProductoAgregar.getText().trim();
+    String codigo = txtCodigoDelProductoAgregar.getText().trim();
+    String proveedor = txtProveedorDelProductoAgregar.getText().trim();
+    String precioCompraStr = txtPrecioCompraAgregar.getText().trim();
+    String precioVentaStr = txtPrecioVentaAgregar.getText().trim();
     String categoria = (String) cbxCategoriaProductoAgregar.getSelectedItem();
-    String cantidadStr = txtCantidadDelProcuto.getText();
+    String cantidadStr = txtCantidadDelProcuto.getText().trim();
 
     try {
-       
+        // Validar campos obligatorios
+        if (nombre.isEmpty() || nombre.equals("Ingresa el nombre del producto")) {
+            throw new IllegalArgumentException("El nombre del producto es obligatorio");
+        }
+        
+        if (codigo.isEmpty() || codigo.equals("Ingresa el código del producto")) {
+            throw new IllegalArgumentException("El código del producto es obligatorio");
+        }
+        
+        // Verificar si el código ya existe
+        Producto existente = ProductoPersistencia.obtenerPorCodigo(codigo);
+        if (existente != null) {
+            JOptionPane.showMessageDialog(this, 
+                "El código ya está registrado en otro producto", 
+                "Error de duplicado", 
+                JOptionPane.ERROR_MESSAGE);
+            txtCodigoDelProductoAgregar.requestFocusInWindow();
+            return;
+        }
+
+        // Validar valores numéricos
+        if (precioCompraStr.isEmpty() || precioVentaStr.isEmpty() || cantidadStr.isEmpty()) {
+            throw new IllegalArgumentException("Los campos numéricos son obligatorios");
+        }
+
         double precioCompra = Double.parseDouble(precioCompraStr);
         double precioVenta = Double.parseDouble(precioVentaStr);
         int cantidad = Integer.parseInt(cantidadStr);
-        
-        if (cantidad < 0) {
+
+        // Validar valores positivos
+        if (precioCompra <= 0 || precioVenta <= 0 || cantidad < 0) {
             throw new NumberFormatException();
         }
 
-       
+        // Validar relación de precios
+        if (precioVenta <= precioCompra) {
+            JOptionPane.showMessageDialog(this, 
+                "El precio de venta debe ser mayor al de compra", 
+                "Error de precios", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Crear y guardar el producto
         Producto producto = new Producto(
             nombre, codigo, proveedor, 
             precioCompra, precioVenta, 
@@ -417,13 +469,34 @@ private void setPlaceholder(JTextField field, String placeholder) {
         );
         
         ProductoPersistencia.agregarProducto(producto);
-        JOptionPane.showMessageDialog(this, "Producto agregado exitosamente");
-        this.dispose();
+        
+        JOptionPane.showMessageDialog(this, 
+            "Producto agregado exitosamente", 
+            "Éxito", 
+            JOptionPane.INFORMATION_MESSAGE);
+        
+        this.dispose(); // Cerrar ventana
         
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(
             this, 
-            "Ingrese valores numéricos válidos para precios y cantidad", 
+            "Error en formatos numéricos:\n"
+            + "- Los precios deben ser números positivos\n"
+            + "- La cantidad debe ser un número entero positivo", 
+            "Error de formato", 
+            JOptionPane.ERROR_MESSAGE
+        );
+    } catch (IllegalArgumentException ex) {
+        JOptionPane.showMessageDialog(
+            this, 
+            ex.getMessage(), 
+            "Campos obligatorios", 
+            JOptionPane.WARNING_MESSAGE
+        );
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(
+            this, 
+            "Error inesperado: " + ex.getMessage(), 
             "Error", 
             JOptionPane.ERROR_MESSAGE
         );
