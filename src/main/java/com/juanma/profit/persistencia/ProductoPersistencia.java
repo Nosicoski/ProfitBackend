@@ -22,19 +22,20 @@ public class ProductoPersistencia {
     private static final String PASSWORD = "lolateamo123";
     
    
-    private static final String CREATE_TABLE = """
-        CREATE TABLE IF NOT EXISTS productos (
-            codigo VARCHAR(50) PRIMARY KEY,
-            nombre VARCHAR(100) NOT NULL,
-            proveedor VARCHAR(100),
-            precio_compra DECIMAL(10, 2),
-            precio_venta DECIMAL(10, 2),
-            categoria VARCHAR(50)
-        )""";
+ private static final String CREATE_TABLE = """
+    CREATE TABLE IF NOT EXISTS productos (
+        codigo VARCHAR(50) PRIMARY KEY,
+        nombre VARCHAR(100) NOT NULL,
+        proveedor VARCHAR(100),
+        precio_compra DECIMAL(10, 2) NOT NULL,
+        precio_venta DECIMAL(10, 2) NOT NULL,
+        categoria VARCHAR(50) NOT NULL,
+        cantidad INT NOT NULL  
+    )""";
     
     private static final String INSERT_PRODUCTO = """
-        INSERT INTO productos (nombre, codigo, proveedor, precio_compra, precio_venta, categoria)
-        VALUES (?, ?, ?, ?, ?, ?)""";
+    INSERT INTO productos (nombre, codigo, proveedor, precio_compra, precio_venta, categoria, cantidad)
+    VALUES (?, ?, ?, ?, ?, ?, ?)"""; 
     
     private static final String SELECT_ALL = "SELECT * FROM productos";
     private static final String DELETE_PRODUCTO = "DELETE FROM productos WHERE codigo = ?";
@@ -106,6 +107,7 @@ public class ProductoPersistencia {
         pstmt.setDouble(4, producto.getPrecioCompra());
         pstmt.setDouble(5, producto.getPrecioVenta());
         pstmt.setString(6, producto.getCategoria());
+         pstmt.setInt(7, producto.getCantidad());
     }
     
     private static Producto mapearResultSetAProducto(ResultSet rs) throws SQLException {

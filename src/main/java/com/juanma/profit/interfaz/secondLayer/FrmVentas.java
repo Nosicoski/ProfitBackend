@@ -49,6 +49,7 @@ public class FrmVentas extends javax.swing.JFrame {
         tableModelCaja.addColumn("Precio Producto");
         tableModelCaja.addColumn("Nombre del Producto");
         tableModelCaja.addColumn("Cantidad Vendida");
+        
 
         double totalVendido = 0;
         Map<String, Integer> cantidadPorProducto = new HashMap<>();
@@ -87,7 +88,7 @@ public class FrmVentas extends javax.swing.JFrame {
     private void cargarVentas() {
     List<Venta> ventas = VentaPersistencia.obtenerTodas();
 
-    tableModelVentas = new DefaultTableModel(new Object[]{"ID Venta", "Producto", "Código", "Precio de Venta", "Cantidad Vendida", "Importe Total"}, 0) {
+    tableModelVentas = new DefaultTableModel(new Object[]{"ID Venta", "Producto", "codigo", "Precio de Venta", "Cantidad Vendida", "Importe Total"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
