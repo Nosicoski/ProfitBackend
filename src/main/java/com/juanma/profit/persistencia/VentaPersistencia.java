@@ -61,6 +61,7 @@ public class VentaPersistencia {
                 Producto producto = new Producto();
                 
                 producto.setCodigo(rs.getString("codigo_producto"));
+                producto.setNombre(rs.getString("nombre_producto"));    
                 producto.setCantidad(rs.getInt("cantidad_vendida"));
                 producto.setPrecioVenta(rs.getDouble("importe") / producto.getCantidad()); 
 

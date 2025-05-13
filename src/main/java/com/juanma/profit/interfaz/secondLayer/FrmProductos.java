@@ -120,7 +120,7 @@ public class FrmProductos extends javax.swing.JFrame {
         cmbxFiltrarProductos = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
@@ -204,7 +204,12 @@ public class FrmProductos extends javax.swing.JFrame {
         jLabel3.setToolTipText("");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Excel.png")); // NOI18N
+        btnExportarExcel.setIcon(new javax.swing.ImageIcon("C:\\Users\\juanm\\Documents\\NetBeansProjects\\Profit\\src\\main\\java\\com\\juanma\\profit\\src\\imagenes\\Excel.png")); // NOI18N
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelActionPerformed(evt);
+            }
+        });
 
         jTable2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -243,7 +248,7 @@ public class FrmProductos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnActualizar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(btnExportarExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnAgregarProducto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,7 +278,7 @@ public class FrmProductos extends javax.swing.JFrame {
                             .addComponent(jButton3)
                             .addComponent(BtnAgregarProducto)
                             .addComponent(btnActualizar)
-                            .addComponent(jButton1))
+                            .addComponent(btnExportarExcel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbxFiltrarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -357,6 +362,10 @@ public class FrmProductos extends javax.swing.JFrame {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + categoriaSeleccionada, 5));
         }
     }//GEN-LAST:event_cmbxFiltrarProductosActionPerformed
+
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
     
      
 
@@ -365,8 +374,8 @@ public class FrmProductos extends javax.swing.JFrame {
     private javax.swing.JButton BtnAgregarProducto;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExportarExcel;
     private javax.swing.JComboBox<String> cmbxFiltrarProductos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
     private de.wannawork.jcalendar.JCalendarPanel jCalendarPanel1;
