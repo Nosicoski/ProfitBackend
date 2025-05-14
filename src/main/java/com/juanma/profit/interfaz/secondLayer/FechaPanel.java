@@ -18,7 +18,7 @@ public class FechaPanel extends JPanel {
     public FechaPanel() {
         setLayout(new FlowLayout());
 
-        // Crear un JSpinner con un modelo de fecha
+      
         SpinnerDateModel dateModel = new SpinnerDateModel();
         dateSpinner = new JSpinner(dateModel);
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");
