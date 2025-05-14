@@ -38,7 +38,7 @@ public class FrmProductos extends javax.swing.JFrame {
         configurarFiltrado();
         setLocationRelativeTo(null);
         pack();
-        
+      
     }
 
     /**
@@ -111,10 +111,6 @@ public class FrmProductos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jCalendarComboBox1 = new de.wannawork.jcalendar.JCalendarComboBox();
-        jCalendarPanel1 = new de.wannawork.jcalendar.JCalendarPanel();
-        jMonthPanel1 = new de.wannawork.jcalendar.JMonthPanel();
-        testFrame1 = new de.wannawork.jcalendar.TestFrame();
         BtnAgregarProducto = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -244,7 +240,7 @@ public class FrmProductos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1203, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1398, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -379,15 +375,11 @@ public class FrmProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnExportarExcel;
     private javax.swing.JComboBox<String> cmbxFiltrarProductos;
     private javax.swing.JButton jButton3;
-    private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBox1;
-    private de.wannawork.jcalendar.JCalendarPanel jCalendarPanel1;
     private javax.swing.JLabel jLabel3;
-    private de.wannawork.jcalendar.JMonthPanel jMonthPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private de.wannawork.jcalendar.TestFrame testFrame1;
     private javax.swing.JTextField txtBuscarProducto;
     // End of variables declaration//GEN-END:variables
 }
