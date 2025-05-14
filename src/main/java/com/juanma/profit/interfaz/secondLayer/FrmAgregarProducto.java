@@ -26,6 +26,7 @@ import javax.swing.text.DocumentFilter;
  */
 public class FrmAgregarProducto extends javax.swing.JFrame {
 
+
    
     public FrmAgregarProducto() {
     initComponents();
@@ -70,6 +71,10 @@ txtCodigoDelProductoAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
 private void setPlaceholder(JTextField field, String placeholder) {
     field.setText(placeholder);
     field.setForeground(Color.GRAY);
+}
+public void setCodigoPrecargado(String codigo) {
+    txtCodigoDelProductoAgregar.setText(codigo);
+    txtCodigoDelProductoAgregar.setEditable(false); // Opcional: si el código no debe modificarse
 }
   
     @SuppressWarnings("unchecked")
