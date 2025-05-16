@@ -333,7 +333,7 @@ public class FrmProductos extends javax.swing.JFrame {
 
     
     private void txtBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarProductoActionPerformed
-
+    filtrarTabla();
     }//GEN-LAST:event_txtBuscarProductoActionPerformed
 
     private void BtnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProductoMouseClicked
