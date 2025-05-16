@@ -5,6 +5,8 @@
 package com.juanma.profit.interfaz;
 
 import com.juanma.profit.persistencia.UsuarioPersistencia;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +23,17 @@ public class FrmLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);// centra la pestaña
         TxtUsuario.setToolTipText("Ingrese el usuario");
         TxtContraseña.setToolTipText("Ingrese el usuario");
+        TxtUsuario.addKeyListener(new EnterKeyListener());
+        TxtContraseña.addKeyListener(new EnterKeyListener());
     }
-
+    private class EnterKeyListener extends KeyAdapter {
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnIniciarSesionActionPerformed(null); // Ejecutar la acción de login
+        }
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -226,16 +237,16 @@ public class FrmLogin extends javax.swing.JFrame {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         //Aca voy a hacer la logica para confirmar si el usuario puede iniciar sesion (verifico los datos txt usuario y contraseña)
 
-        String usuario = TxtUsuario.getText();
-        String contraseña = new String(TxtContraseña.getPassword());
-        //Empty = vacio
-        if (usuario.isEmpty() || contraseña.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor, complete todos los campos.",
-                    "Campos vacíos",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        String usuario = TxtUsuario.getText().trim(); // Usar trim() para eliminar espacios
+    String contraseña = new String(TxtContraseña.getPassword()).trim();
+    
+    if (usuario.isEmpty() || contraseña.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Complete todos los campos", 
+            "Campos vacíos", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
         //Con este boolean consulto a la clase persistencia y almaceno el dato esValido.
         boolean esValido = UsuarioPersistencia.validarUsuario(usuario, contraseña);

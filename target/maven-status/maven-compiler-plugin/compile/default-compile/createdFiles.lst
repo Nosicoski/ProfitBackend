@@ -35,6 +35,7 @@ com\juanma\profit\interfaz\FrmPrincipal$8.class
 com\juanma\profit\entidad\Cliente.class
 com\juanma\profit\interfaz\secondLayer\FrmProductos$8.class
 com\juanma\profit\interfaz\FrmCrearCuenta$5.class
+com\juanma\profit\interfaz\FrmLogin$EnterKeyListener.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$16.class
 com\juanma\profit\interfaz\secondLayer\FrmProveedores$7.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProveedor$12.class
