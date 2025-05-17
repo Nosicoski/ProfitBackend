@@ -106,6 +106,7 @@ com\juanma\profit\interfaz\FrmCrearCuenta.class
 com\juanma\profit\interfaz\secondLayer\FrmAgregarProveedor$1.class
 com\juanma\profit\interfaz\secondLayer\FrmVentas$1.class
 com\juanma\profit\interfaz\secondLayer\FrmEditarProducto$3.class
+com\juanma\profit\interfaz\secondLayer\FrmAgregarProducto$19.class
 com\juanma\profit\entidad\Venta.class
 com\juanma\profit\interfaz\secondLayer\FrmMostrarCajaVentas.class
 com\juanma\profit\interfaz\FrmPrincipal$18.class

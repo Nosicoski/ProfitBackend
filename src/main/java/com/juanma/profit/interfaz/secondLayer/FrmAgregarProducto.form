@@ -335,11 +335,17 @@
     <Component class="javax.swing.JComboBox" name="cbxCategoriaProductoAgregar">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Seleccionar"/>
-            <StringItem index="1" value="Cigarrillos"/>
-            <StringItem index="2" value="Bebidas"/>
-            <StringItem index="3" value="Otros"/>
+          <StringArray count="10">
+            <StringItem index="0" value="Otros"/>
+            <StringItem index="1" value="Bebidas"/>
+            <StringItem index="2" value="Cigarrillos"/>
+            <StringItem index="3" value="Snacks"/>
+            <StringItem index="4" value="Golosinas"/>
+            <StringItem index="5" value="Panificados"/>
+            <StringItem index="6" value="Limpieza"/>
+            <StringItem index="7" value="Higiene"/>
+            <StringItem index="8" value=" "/>
+            <StringItem index="9" value=" "/>
           </StringArray>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

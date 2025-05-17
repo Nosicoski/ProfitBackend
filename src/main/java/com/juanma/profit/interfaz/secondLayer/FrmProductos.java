@@ -305,30 +305,31 @@ public class FrmProductos extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        int filaSeleccionada = jTable2.getSelectedRow();
+       int filaSeleccionada = jTable2.getSelectedRow();
 
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1);
+    String codigo = (String) jTable2.getValueAt(filaSeleccionada, 1);
 
-        int confirmacion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que desea eliminar este producto?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION
-        );
+    int confirmacion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de eliminar este producto?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+    );
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-
-            ProductoPersistencia.eliminarProducto(codigo);
-
-            cargarProductosEnTabla();
-
-            JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        }
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        ProductoPersistencia.eliminarProducto(codigo);
+        
+        // Actualización automática sin necesidad de botón
+        cargarProductosEnTabla(); 
+        configurarFiltrado(); // Reiniciar filtros
+        
+        JOptionPane.showMessageDialog(this, "Producto eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     
@@ -337,7 +338,7 @@ public class FrmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarProductoActionPerformed
 
     private void BtnAgregarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAgregarProductoMouseClicked
-        FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
+       FrmAgregarProducto agregarProducto = new FrmAgregarProducto();
         agregarProducto.setVisible(true);
 
 
@@ -345,7 +346,11 @@ public class FrmProductos extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         cargarProductosEnTabla();
-        configurarFiltrado();
+    configurarFiltrado();
+    JOptionPane.showMessageDialog(this, 
+        "Lista de productos actualizada", 
+        "Actualización exitosa", 
+        JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void txtBuscarProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProductoKeyReleased

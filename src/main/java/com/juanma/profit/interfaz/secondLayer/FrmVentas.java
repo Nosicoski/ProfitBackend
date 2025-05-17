@@ -36,10 +36,25 @@ public class FrmVentas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         cargarVentas();
-
+        configurarFiltrado();
         pack();
         cargarCajaEnTabla();
 
+    }
+
+      private void configurarFiltrado() {
+        rowSorter = new TableRowSorter<>(tableModelVentas);
+        tblRegistroDeVentas.setRowSorter(rowSorter);
+    }
+
+    private void filtrarTabla() {
+        String textoBusqueda = txtBuscarVenta.getText().trim();
+        
+        if (textoBusqueda.isEmpty()) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda));
+        }
     }
 
     private void cargarCajaEnTabla() {
@@ -49,24 +64,23 @@ public class FrmVentas extends javax.swing.JFrame {
         tableModelCaja.addColumn("Precio Producto");
         tableModelCaja.addColumn("Nombre del Producto");
         tableModelCaja.addColumn("Cantidad Vendida");
-        
 
         double totalVendido = 0;
         Map<String, Integer> cantidadPorProducto = new HashMap<>();
         Map<String, Double> precioPorProducto = new HashMap<>();
 
         for (Venta venta : ventas) {
-        List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
-        for (Producto producto : productosVenta) {
-            String nombreProducto = producto.getNombre();
-            double precioVenta = producto.getPrecioVenta();
-            int cantidad = producto.getCantidad(); // Usar cantidad real
-            
-            cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + cantidad); // Sumar cantidad
-            precioPorProducto.put(nombreProducto, precioVenta);
-            totalVendido += precioVenta * cantidad;
+            List<Producto> productosVenta = Optional.ofNullable(venta.getProductos()).orElse(Collections.emptyList());
+            for (Producto producto : productosVenta) {
+                String nombreProducto = producto.getNombre();
+                double precioVenta = producto.getPrecioVenta();
+                int cantidad = producto.getCantidad();
+
+                cantidadPorProducto.put(nombreProducto, cantidadPorProducto.getOrDefault(nombreProducto, 0) + cantidad);
+                precioPorProducto.put(nombreProducto, precioVenta);
+                totalVendido += precioVenta * cantidad;
+            }
         }
-    }
 
         for (Map.Entry<String, Integer> entry : cantidadPorProducto.entrySet()) {
             String nombreProducto = entry.getKey();
@@ -81,52 +95,35 @@ public class FrmVentas extends javax.swing.JFrame {
         }
 
         tblMostrarCajaVentas.setModel(tableModelCaja);
-
         txtTotalVendidoMostrarCajaVentas.setText("$ " + String.format("%.2f", totalVendido));
     }
 
     private void cargarVentas() {
-    List<Venta> ventas = VentaPersistencia.obtenerTodas();
+        List<Venta> ventas = VentaPersistencia.obtenerTodas();
 
-    tableModelVentas = new DefaultTableModel(new Object[]{"ID Venta", "Producto", "codigo", "Precio de Venta", "Cantidad Vendida", "Importe Total"}, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
+        tableModelVentas = new DefaultTableModel(new Object[]{"ID Venta", "Producto", "Código", "Precio de Venta", "Cantidad Vendida", "Importe Total"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        for (Venta venta : ventas) {
+            for (Producto producto : venta.getProductos()) {
+                Object[] fila = new Object[]{
+                    venta.getId(),
+                    producto.getNombre(),
+                    producto.getCodigo(),
+                    "$ " + String.format("%.2f", producto.getPrecioVenta()),
+                    producto.getCantidad(),
+                    "$ " + String.format("%.2f", producto.getPrecioVenta() * producto.getCantidad())
+                };
+                tableModelVentas.addRow(fila);
+            }
         }
-    };
 
-    for (Venta venta : ventas) {
-        for (Producto producto : venta.getProductos()) {
-            Object[] fila = new Object[]{
-                venta.getId(), // ID de la venta
-                producto.getNombre(),
-                producto.getCodigo(),
-                "$ " + String.format("%.2f", producto.getPrecioVenta()),
-                producto.getCantidad(),
-                "$ " + String.format("%.2f", producto.getPrecioVenta() * producto.getCantidad())
-            };
-            tableModelVentas.addRow(fila);
-        }
-    }
-
-    tblRegistroDeVentas.setModel(tableModelVentas);
-    // Ocultar columna ID
-    tblRegistroDeVentas.getColumnModel().getColumn(0).setMinWidth(0);
-    tblRegistroDeVentas.getColumnModel().getColumn(0).setMaxWidth(0);
-    tblRegistroDeVentas.getColumnModel().getColumn(0).setWidth(0);
-}
-    
-
-    private void filtrarTabla() {
-
-        String textoBusqueda = txtBuscarVenta.getText().trim();
-
-        if (textoBusqueda.length() == 0) {
-            rowSorter.setRowFilter(null);
-        } else {
-
-            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + textoBusqueda));
-        }
+        tblRegistroDeVentas.setModel(tableModelVentas);
+        configurarFiltrado(); // Reconfigurar filtrado con nuevos datos
     }
 
     @SuppressWarnings("unchecked")
@@ -388,25 +385,25 @@ public class FrmVentas extends javax.swing.JFrame {
 
     private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
 
-          int selectedRow = tblRegistroDeVentas.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    try {
-        String idStr = tblRegistroDeVentas.getValueAt(selectedRow, 0).toString(); // Columna 0 = ID
-        int id = Integer.parseInt(idStr);
-        VentaPersistencia.eliminarVenta(id);
-        JOptionPane.showMessageDialog(this, "Venta eliminada correctamente");
-        cargarVentas();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Formato de ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        int selectedRow = tblRegistroDeVentas.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            String idStr = tblRegistroDeVentas.getValueAt(selectedRow, 0).toString(); // Columna 0 = ID
+            int id = Integer.parseInt(idStr);
+            VentaPersistencia.eliminarVenta(id);
+            JOptionPane.showMessageDialog(this, "Venta eliminada correctamente");
+            cargarVentas();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Formato de ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarVentaActionPerformed
 
     private void txtBuscarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarVentaActionPerformed
-
+        filtrarTabla();
     }//GEN-LAST:event_txtBuscarVentaActionPerformed
 
     private void txtBuscarVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarVentaKeyReleased

@@ -7,7 +7,10 @@ package com.juanma.profit.interfaz.secondLayer;
 import com.juanma.profit.entidad.Producto;
 import com.juanma.profit.persistencia.ProductoPersistencia;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
@@ -228,7 +231,7 @@ public void setCodigoPrecargado(String codigo) {
             }
         });
 
-        cbxCategoriaProductoAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Cigarrillos", "Bebidas", "Otros" }));
+        cbxCategoriaProductoAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Otros", "Bebidas", "Cigarrillos", "Snacks", "Golosinas", "Panificados", "Limpieza", "Higiene", " ", " " }));
         cbxCategoriaProductoAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cbxCategoriaProductoAgregar.setPreferredSize(new java.awt.Dimension(64, 24));
         cbxCategoriaProductoAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -374,7 +377,16 @@ public void setCodigoPrecargado(String codigo) {
     }//GEN-LAST:event_btnCancelarProductoActionPerformed
 
     private void cbxCategoriaProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaProductoAgregarActionPerformed
-       
+       cbxCategoriaProductoAgregar.setRenderer(new DefaultListCellRenderer() {
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value, 
+        int index, boolean isSelected, boolean cellHasFocus) {
+        if (value == null || value.toString().isEmpty()) {
+            value = "Seleccione categoría ▼";
+        }
+        return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+    }
+});
     }//GEN-LAST:event_cbxCategoriaProductoAgregarActionPerformed
 
     private void txtNombreDelProductoAgregarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreDelProductoAgregarFocusGained
